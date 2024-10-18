@@ -1,2 +1,39 @@
 #root {
 }
+
+.music-bar {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+
+  display: flex;
+  justify-content: center;
+
+  min-height: 63px;
+  width: 100%;
+}
+
+.music-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  max-width: 420px;
+  width: 100%;
+}
+
+.music-box {
+  /* display: none; */
+}
+
+.progress {
+  width: 100%;
+  height: 4px;
+  background-color: darkgray;
+}
+.progress-bar {
+  width: 0%;
+  height: 100%;
+
+  background-color: crimson;
+}
