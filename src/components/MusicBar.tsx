@@ -54,11 +54,11 @@ export default function MusicBar() {
 
   return (
     <>
-      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-[95%]">
+      <div className="fixed bottom-2 left-1/2 -translate-x-1/2 w-[95%]">
         <div className="p-[3px] relative">
           <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg" />
           {/*  music bar container */}
-          <div className="flex justify-center min-h-14  px-8 py-2 bg-black rounded-[6px] relative group transition duration-200 text-white">
+          <div className="flex justify-center h-16 px-8 py-2 bg-black rounded-[6px] relative group transition duration-200 text-white">
             {/* center block */}
             <div className="flex flex-col items-center max-w-96 w-full">
               <audio ref={audioRef}>
