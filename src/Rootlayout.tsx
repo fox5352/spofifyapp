@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom'
-import MusicBar from './ui/MusicBar'
-import Sidebar from './ui/sidebar'
+import Musicbar from './ui/Musicbar'
+import Sidebar from './ui/Sidebar'
 
 export default function RootLayout() {
   return (
@@ -13,7 +13,7 @@ export default function RootLayout() {
         </div>
       </main>
       {/* audio controls */}
-      <MusicBar />
+      <Musicbar />
     </>
   )
 }

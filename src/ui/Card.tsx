@@ -1,15 +1,14 @@
 'use client'
 import { Preview } from '../api/requests'
-import { cn } from '../lib/utils'
 
 export function Card({
-  id,
+  // id,
   title,
   description,
   seasons,
   image,
-  genres,
-  updated,
+  // genres,
+  // updated,
 }: Preview) {
   // TODO: add links later
   // TODO: add genres reel and date stamp

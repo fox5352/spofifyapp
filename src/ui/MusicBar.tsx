@@ -6,7 +6,7 @@ import {
   MdPlayCircle,
 } from 'react-icons/md'
 
-export default function MusicBar() {
+export default function Musicbar() {
   const src = 'https://podcast-api.netlify.app/placeholder-audio.mp3' // TODO: replace with real data
   const [isPaused, setIsPaused] = useState(true)
   const audioRef = useRef<HTMLAudioElement | null>(null)
