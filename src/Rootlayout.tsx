@@ -1,4 +1,5 @@
 import { Outlet } from 'react-router-dom'
+// local imports
 import Musicbar from './ui/Musicbar'
 import Sidebar from './ui/Sidebar'
 
