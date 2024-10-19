@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { getPreview, Preview } from '../../api/requests'
-import ErrorMessage from '../../ui/ErrorMessage'
-import Loading from '../../ui/Loading'
-import { Card } from '../../ui/Card'
+import ErrorMessage from '../../components/ErrorMessage'
+import Loading from '../../components/Loading'
+import { Card } from '../../components/Card'
 import { MdArrowBack, MdArrowForward } from 'react-icons/md'
 
 function Home() {

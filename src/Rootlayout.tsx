@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom'
 // local imports
-import Musicbar from './ui/Musicbar'
-import Sidebar from './ui/Sidebar'
+import Sidebar from './components/Sidebar'
+import Musicbar from './components/Musicbar'
 
 export default function RootLayout() {
   return (
