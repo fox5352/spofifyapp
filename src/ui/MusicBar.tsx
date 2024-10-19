@@ -54,7 +54,7 @@ export default function MusicBar() {
 
   return (
     <>
-      <div className="fixed bottom-1 left-1/2 -translate-x-1/2 w-[95%] max-w-3xl">
+      <div className="fixed z-50 bottom-1 left-1/2 -translate-x-1/2 w-[95%] max-w-3xl">
         <div className="p-[3px] relative">
           <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg" />
           {/*  music bar container */}

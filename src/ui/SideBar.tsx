@@ -15,9 +15,9 @@ function Sidebar() {
   }
 
   return (
-    <div className="w-10">
+    <div className="w-5">
       <aside
-        className={`flex h-fit my-1 mr-1 text-white bg-zinc-950 rounded-tr-lg rounded-br-lg w-10 overflow-hidden group  ${tf('w-44 fixed')} transition-all ease-in-out duration-300`}
+        className={`flex fixed z-40 h-fit my-1 mr-1 text-white bg-zinc-950 rounded-tr-lg rounded-br-lg w-10 overflow-hidden group  ${tf('w-44 fixed')} transition-all ease-in-out duration-300`}
       >
         <nav
           className={`w-10 ${tf('w-40')} transition-all ease-in-out duration-300 p-2`}
@@ -27,9 +27,7 @@ function Sidebar() {
             <button className="hover:text-purple-500" onClick={toggleMenu}>
               {isExpanded ? <MdHeadphones /> : <MdMenu />}
             </button>
-            <span
-              className={`text-transparent underline ${tf('text-inherit')}`}
-            >
+            <span className={`text-transparent underline ${tf('text-white')}`}>
               Spofify
             </span>
           </h3>
@@ -44,7 +42,7 @@ function Sidebar() {
               <span className="text-2xl">
                 <MdHome />
               </span>
-              <span className={`text-transparent ${tf('text-inherit')}`}>
+              <span className={`text-transparent ${tf('text-white')}`}>
                 Home
               </span>
             </NavLink>
@@ -57,7 +55,7 @@ function Sidebar() {
               <span className="text-2xl">
                 <MdFavorite />
               </span>
-              <span className={`text-transparent ${tf('text-inherit')}`}>
+              <span className={`text-transparent ${tf('text-white')}`}>
                 Favorites
               </span>
             </NavLink>
