@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom'
-import MusicBar from './components/MusicBar'
+import MusicBar from './ui/MusicBar'
 
 export default function RootLayout() {
   return (

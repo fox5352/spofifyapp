@@ -54,28 +54,28 @@ export default function MusicBar() {
 
   return (
     <>
-      <div className="fixed bottom-2 left-1/2 -translate-x-1/2 w-[95%]">
+      <div className="fixed bottom-1 left-1/2 -translate-x-1/2 w-[95%] max-w-3xl">
         <div className="p-[3px] relative">
           <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg" />
           {/*  music bar container */}
           <div className="flex justify-center h-16 px-8 py-2 bg-black rounded-[6px] relative group transition duration-200 text-white">
-            {/* center block */}
+            {/* controls block */}
             <div className="flex flex-col items-center max-w-96 w-full">
               <audio ref={audioRef}>
                 <source type="audio/mp3" />
               </audio>
               {/* controls */}
               <nav className="flex gap-2 mb-1">
-                <button className="text-4xl text-black rounded-full bg-rose-500 duration-200 ease-in-out hover:bg-indigo-500 ">
+                <button className="text-4xl text-black rounded-full duration-200 ease-in-out bg-indigo-500 hover:scale-90 transition-all">
                   <MdArrowCircleLeft />
                 </button>
                 <button
-                  className="text-4xl text-black rounded-full bg-rose-500 duration-200 ease-in-out hover:bg-gradient-to-r hover:from-indigo-500 hover:to-purple-500"
+                  className="text-4xl text-black rounded-full duration-200 ease-in-out bg-gradient-to-r from-indigo-500 to-purple-500 hover:scale-90 transition-all"
                   onClick={togglePlayPause}
                 >
                   {isPaused ? <MdPlayCircle /> : <MdPauseCircle />}
                 </button>
-                <button className="text-4xl text-black rounded-full bg-rose-500 duration-200 ease-in-out hover:bg-purple-500 ">
+                <button className="text-4xl text-black rounded-full duration-200 ease-in-out bg-purple-500 hover:scale-90 transition-all">
                   <MdArrowCircleRight />
                 </button>
               </nav>
