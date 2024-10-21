@@ -4,6 +4,27 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  safelist: [
+    'bg-blue-500',
+    'bg-red-500',
+    'bg-lime-500',
+    'bg-purple-500',
+    'bg-lime-500',
+    'bg-orange-500',
+    'bg-green-500',
+    'bg-fuchsia-500',
+    'bg-indigo-500',
+
+    'border-blue-500',
+    'border-red-500',
+    'border-lime-500',
+    'border-purple-500',
+    'border-lime-500',
+    'border-orange-500',
+    'border-green-500',
+    'border-fuchsia-500',
+    'border-indigo-500',
+  ],
   theme: {
     extend: {
       animation: {
