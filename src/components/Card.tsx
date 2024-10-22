@@ -58,7 +58,9 @@ export function Card({
         <div className="absolute z-20 top-0 left-0 hidden w-full h-full group-hover/card:flex  justify-evenly items-center">
           {genreTitles &&
             genreTitles.map((title) => (
-              <GenreTag variant="filled">{title}</GenreTag>
+              <GenreTag key={title} variant="filled">
+                {title}
+              </GenreTag>
             ))}
         </div>
       </div>
