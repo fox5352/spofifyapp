@@ -6,51 +6,114 @@ import { MdArrowBack, MdArrowForward } from 'react-icons/md'
 import { useSearchParams } from 'react-router-dom'
 import { getPreview, Preview } from '../../api/requests'
 import PreviewFilterBar from './components/PreviewFilterBar'
+import { getGenres } from '../../api/requests'
 
+/**
+ * Represents a genre category with its title and ID
+ */
+export interface GenreTag {
+  title: string
+  id: number
+}
+
+/**
+ * Home component that displays a paginated grid of preview cards with genre filtering
+ * and sorting capabilities.
+ */
 function Home() {
-  // page pagination
+  // Pagination and filtering state
   const [searchParams, setSearchParams] = useSearchParams()
-  const getPageNum = Number(searchParams.get('page') || 0)
-  const getAmount = 10
-  const getOrder = searchParams.get('order') || 'new'
-  const [previews, setPreviews] = useState<Preview[] | null>()
+  const currentPage = Number(searchParams.get('page') || 0)
+  const sortOrder = searchParams.get('order') || 'new'
+  const ITEMS_PER_PAGE = 10
+  const [previewCards, setPreviewCards] = useState<Preview[] | null>()
 
-  // page states
+  // UI state
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [availableGenres, setAvailableGenres] = useState<GenreTag[]>([])
 
-  // gets the previews
+  /**
+   * Fetches available genres from the database
+   * Currently hardcoded to fetch genres with IDs 1-8
+   */
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchGenres = async () => {
       setIsLoading(true)
+      const genreIds = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
-      const data = await getPreview()
-
-      if (!data) {
-        setError('Failed to find previews')
+      const genreData = await getGenres(genreIds)
+      if (!genreData) {
+        setError('Failed to retrieve genres')
         setIsLoading(false)
         return
       }
 
-      const filteredData = [...data].sort((a, b) => {
-        const aDate = new Date(a.updated).getTime() // prev
-        const bDate = new Date(b.updated).getTime() // next
-        if (getOrder === 'new') {
-          // if aDate is larger than bDate, returns positive (newer comes first)
-          return bDate - aDate
-        } else {
-          // if aDate is smaller than bDate, returns negative (older comes first)
-          return aDate - bDate
-        }
-      })
-
-      setPreviews(filteredData)
-
+      setError(null)
+      setAvailableGenres(genreData)
       setIsLoading(false)
     }
 
-    fetchData()
-  }, [getOrder])
+    fetchGenres()
+  }, [])
+
+  /**
+   * Fetches and sorts preview cards based on selected order and genre
+   */
+  useEffect(() => {
+    const fetchPreviewCards = async () => {
+      setIsLoading(true)
+
+      const previewData = await getPreview()
+
+      if (!previewData) {
+        setError('Failed to fetch preview cards')
+        setIsLoading(false)
+        return
+      }
+
+      previewData.sort((a, b) => {
+        const previousDate = new Date(a.updated).getTime()
+        const nextDate = new Date(b.updated).getTime()
+        return sortOrder === 'new'
+          ? nextDate - previousDate // Newer first
+          : previousDate - nextDate // Older first
+      })
+
+      setPreviewCards(previewData)
+      setIsLoading(false)
+    }
+
+    fetchPreviewCards()
+  }, [sortOrder])
+
+  /**
+   * filter preview data on selectedGenre change
+   */
+  useEffect(() => {
+    const filterData = async () => {
+      const selectedGenre = searchParams.get('q') || '*'
+      if (selectedGenre === '*') {
+        setPreviewCards(await getPreview())
+      }
+      if (availableGenres.length > 0) {
+        const selectedGenreId = availableGenres.find((g) => {
+          return g.title === selectedGenre
+        })
+
+        if (selectedGenreId) {
+          const filteredPreviewData = (await getPreview())?.filter(
+            (preview) => {
+              return preview.genres.includes(selectedGenreId.id)
+            }
+          )
+
+          setPreviewCards(filteredPreviewData)
+        }
+      }
+    }
+    filterData()
+  }, [availableGenres, searchParams])
 
   if (error) {
     return <ErrorMessage message={error} size="text-3xl" />
@@ -58,62 +121,76 @@ function Home() {
 
   if (isLoading) {
     return (
-      <div className="w-screen h-screen flex justify-center items-center ">
+      <div className="w-screen h-screen flex justify-center items-center">
         <Loading className="text-7xl" />
       </div>
     )
   }
 
-  const mapCards = () => {
-    if (previews) {
-      const startIndex = getPageNum * getAmount
-      const endIndex = Math.min(startIndex + getAmount, previews.length)
-      return previews
+  /**
+   * Returns a slice of preview cards for the current page
+   */
+  const getCurrentPageCards = () => {
+    if (previewCards) {
+      const startIndex = currentPage * ITEMS_PER_PAGE
+      const endIndex = Math.min(
+        startIndex + ITEMS_PER_PAGE,
+        previewCards.length
+      )
+      return previewCards
         .slice(startIndex, endIndex)
         .map((preview) => <Card key={Number(preview.id)} {...preview} />)
     }
   }
 
-  const handleScrollToTop = () => {
+  /**
+   * Smoothly scrolls the window to the top
+   */
+  const scrollToTop = () => {
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
     })
   }
 
-  const nextPage = () => {
-    if (getPageNum < previews!.length / getAmount) {
-      searchParams.set('page', (getPageNum + 1).toString())
+  /**
+   * Handles navigation to the next page
+   */
+  const navigateToNextPage = () => {
+    if (previewCards && currentPage < previewCards.length / ITEMS_PER_PAGE) {
+      searchParams.set('page', (currentPage + 1).toString())
       setSearchParams(searchParams)
-
-      handleScrollToTop()
+      scrollToTop()
     }
   }
 
-  const prevPage = () => {
-    if (getPageNum > 0) {
-      searchParams.set('page', (getPageNum - 1).toString())
+  /**
+   * Handles navigation to the previous page
+   */
+  const navigateToPreviousPage = () => {
+    if (currentPage > 0) {
+      searchParams.set('page', (currentPage - 1).toString())
       setSearchParams(searchParams)
-      handleScrollToTop()
+      scrollToTop()
     }
   }
 
   return (
     <div className="flex flex-col w-full justify-center items-center mb-[5rem]">
-      <PreviewFilterBar />
+      <PreviewFilterBar genres={availableGenres} />
       <div className="w-full flex flex-wrap justify-evenly gap-4 overflow-auto p-1">
-        {previews && mapCards()}
+        {previewCards && getCurrentPageCards()}
       </div>
       <div>
         <button
-          onClick={prevPage}
+          onClick={navigateToPreviousPage}
           className="px-2 py-1 rounded-md border border-neutral-300 bg-transparent text-sm hover:-translate-y-[2px] transform transition duration-200 hover:shadow-md"
         >
           <MdArrowBack />
         </button>
 
         <button
-          onClick={nextPage}
+          onClick={navigateToNextPage}
           className="px-2 py-1 rounded-md border border-neutral-300 bg-transparent text-sm hover:-translate-y-[2px] transform transition duration-200 hover:shadow-md"
         >
           <MdArrowForward />
