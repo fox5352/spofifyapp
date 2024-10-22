@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { memo, useEffect, useState } from 'react'
 import TagButton from './TagButton'
 import { getGenres } from '../../../api/requests'
 import { MdArrowDropDown, MdArrowDropUp, MdClose, MdMenu } from 'react-icons/md'
@@ -10,7 +10,7 @@ interface GenreTag {
   id: number
 }
 
-function PreviewFilterBar() {
+const PreviewFilterBar = memo(function PreviewFilterBar() {
   // toggle menu bar
   const [isMenuActive, setIsMenuActive] = useState(false)
   // query management
@@ -92,6 +92,6 @@ function PreviewFilterBar() {
       </div>
     </nav>
   )
-}
+})
 
 export default PreviewFilterBar
