@@ -1,47 +1,75 @@
 import { useEffect, useState } from 'react'
-import { getPreview, Preview } from '../../api/requests'
 import ErrorMessage from '../../components/ErrorMessage'
 import Loading from '../../components/Loading'
 import { Card } from '../../components/Card'
 import { MdArrowBack, MdArrowForward } from 'react-icons/md'
+import { useSearchParams } from 'react-router-dom'
+import { getPreview, Preview } from '../../api/requests'
+import PreviewFilterBar from './components/PreviewFilterBar'
 
 function Home() {
-  // page data
-  const amount = 15
-  const [page, setPage] = useState(0)
+  // page pagination
+  const [searchParams, setSearchParams] = useSearchParams()
+  const getPageNum = Number(searchParams.get('page') || 0)
+  const getAmount = 10
+  const getOrder = searchParams.get('order') || 'new'
   const [previews, setPreviews] = useState<Preview[] | null>()
 
   // page states
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
+  // gets the previews
   useEffect(() => {
-    setIsLoading(true)
-    getPreview()
-      .then((data) => {
-        setPreviews(data)
-        setError(null)
+    const fetchData = async () => {
+      setIsLoading(true)
+
+      const data = await getPreview()
+
+      if (!data) {
+        setError('Failed to find previews')
+        setIsLoading(false)
+        return
+      }
+
+      const filteredData = [...data].sort((a, b) => {
+        const aDate = new Date(a.updated).getTime() // prev
+        const bDate = new Date(b.updated).getTime() // next
+        if (getOrder === 'new') {
+          // if aDate is larger than bDate, returns positive (newer comes first)
+          return bDate - aDate
+        } else {
+          // if aDate is smaller than bDate, returns negative (older comes first)
+          return aDate - bDate
+        }
       })
-      .catch((error) => {
-        setError(error.message)
-      })
-      .finally(() => setIsLoading(false))
-  }, [])
+
+      setPreviews(filteredData)
+
+      setIsLoading(false)
+    }
+
+    fetchData()
+  }, [getOrder])
 
   if (error) {
     return <ErrorMessage message={error} size="text-3xl" />
   }
 
   if (isLoading) {
-    return <Loading />
+    return (
+      <div className="w-screen h-screen flex justify-center items-center ">
+        <Loading className="text-7xl" />
+      </div>
+    )
   }
 
   const mapCards = () => {
     if (previews) {
-      const curPage = page * amount
-      const cap = Math.min(curPage + amount, previews.length)
+      const startIndex = getPageNum * getAmount
+      const endIndex = Math.min(startIndex + getAmount, previews.length)
       return previews
-        .slice(curPage, cap)
+        .slice(startIndex, endIndex)
         .map((preview) => <Card key={Number(preview.id)} {...preview} />)
     }
   }
@@ -54,24 +82,25 @@ function Home() {
   }
 
   const nextPage = () => {
-    if (page < Math.floor(previews!.length / amount)) {
-      setPage((prevPage) => prevPage + 1)
+    if (getPageNum < previews!.length / getAmount) {
+      searchParams.set('page', (getPageNum + 1).toString())
+      setSearchParams(searchParams)
+
       handleScrollToTop()
     }
   }
 
   const prevPage = () => {
-    if (page > 0) {
-      setPage((prevPage) => prevPage - 1)
+    if (getPageNum > 0) {
+      searchParams.set('page', (getPageNum - 1).toString())
+      setSearchParams(searchParams)
       handleScrollToTop()
     }
   }
 
   return (
     <div className="flex flex-col w-full justify-center items-center mb-[5rem]">
-      <nav>
-        <button>awda</button>
-      </nav>
+      <PreviewFilterBar />
       <div className="w-full flex flex-wrap justify-evenly gap-4 overflow-auto p-1">
         {previews && mapCards()}
       </div>
