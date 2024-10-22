@@ -177,8 +177,8 @@ function Home() {
 
   if (isLoading) {
     return (
-      <div className="w-screen h-screen flex justify-center items-center">
-        <Loading className="text-7xl" />
+      <div className="w-screen h-screen flex justify-center items-center overflow-hidden">
+        <Loading className="text-7xl h-full w-1/2 max-w-xs" />
       </div>
     )
   }
