@@ -1,12 +1,13 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
+
 import ErrorMessage from '../../components/ErrorMessage'
 import Loading from '../../components/Loading'
 import { Card } from '../../components/Card'
-import { MdArrowBack, MdArrowForward } from 'react-icons/md'
-import { useSearchParams } from 'react-router-dom'
 import { getPreview, Preview } from '../../api/requests'
 import PreviewFilterBar from './components/PreviewFilterBar'
 import { getGenres } from '../../api/requests'
+import PageNavButtons from './components/PageNavButtons'
 
 /**
  * Represents a genre category with its title and ID
@@ -23,7 +24,7 @@ const ITEMS_PER_PAGE = 10
  */
 function Home() {
   // Pagination and filtering state
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [searchParams] = useSearchParams()
   const currentPage = Number(searchParams.get('page') || 0)
   const selectedGenre = searchParams.get('q') || '*'
 
@@ -138,38 +139,6 @@ function Home() {
     }
   }
 
-  /**
-   * Smoothly scrolls the window to the top
-   */
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    })
-  }
-
-  /**
-   * Handles navigation to the next page
-   */
-  const navigateToNextPage = () => {
-    if (previewCards && currentPage < previewCards.length / ITEMS_PER_PAGE) {
-      searchParams.set('page', (currentPage + 1).toString())
-      setSearchParams(searchParams)
-      scrollToTop()
-    }
-  }
-
-  /**
-   * Handles navigation to the previous page
-   */
-  const navigateToPreviousPage = () => {
-    if (currentPage > 0) {
-      searchParams.set('page', (currentPage - 1).toString())
-      setSearchParams(searchParams)
-      scrollToTop()
-    }
-  }
-
   // ----------------------------------------------- other page states -----------------------------------------------
   if (error) {
     return <ErrorMessage message={error} size="text-3xl" />
@@ -189,21 +158,7 @@ function Home() {
       <div className="w-full flex flex-wrap justify-evenly gap-4 overflow-auto p-1">
         {previewCards && getCurrentPageCards()}
       </div>
-      <div>
-        <button
-          onClick={navigateToPreviousPage}
-          className="px-2 py-1 rounded-md border border-neutral-300 bg-transparent text-sm hover:-translate-y-[2px] transform transition duration-200 hover:shadow-md"
-        >
-          <MdArrowBack />
-        </button>
-
-        <button
-          onClick={navigateToNextPage}
-          className="px-2 py-1 rounded-md border border-neutral-300 bg-transparent text-sm hover:-translate-y-[2px] transform transition duration-200 hover:shadow-md"
-        >
-          <MdArrowForward />
-        </button>
-      </div>
+      <PageNavButtons currentPage={currentPage} />
     </div>
   )
 }

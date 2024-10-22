@@ -26,7 +26,7 @@ function GenreTag({
 
   return (
     <span
-      className={`rounded-full border text-nowrap py-1 px-2 text-center text-xs transition-all shadow-sm ${variant === 'outline' ? 'text-inherit' : `text-white bg-${randomColor} border-${randomColor}`} ${className}`}
+      className={`rounded-full border text-nowrap py-1 px-2 text-center text-xs transition-all shadow-sm ${variant === 'outline' ? 'text-inherit border-black' : `text-white bg-${randomColor} border-${randomColor}`} ${className}`}
     >
       {children}
     </span>

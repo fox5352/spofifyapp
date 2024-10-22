@@ -4,14 +4,6 @@ import TagButton from './TagButton'
 import Loading from '../../../components/Loading'
 
 /**
- * Interface for the PreviewFilterBar component props
- */
-interface PreviewFilterBarProps {
-  /** Array of genre tags to display as filter buttons */
-  genres: GenreTag[]
-}
-
-/**
  * PreviewFilterBar Component
  *
  * A navigation bar that displays genre filter buttons. Shows a loading state
@@ -26,7 +18,9 @@ interface PreviewFilterBarProps {
  */
 const PreviewFilterBar = memo(function PreviewFilterBar({
   genres,
-}: PreviewFilterBarProps) {
+}: {
+  genres: GenreTag[]
+}) {
   // Track loading state of genre data
   const [isLoading, setIsLoading] = useState(true)
 
@@ -56,7 +50,7 @@ const PreviewFilterBar = memo(function PreviewFilterBar({
   return (
     <nav
       aria-label="Genre filters"
-      className="flex justify-center items-center flex-wrap gap-x-1 gap-y-1.5 my-2 px-2 py-1 text-white bg-zinc-950 w-5/6 max-w-xl md:max-w-2xl rounded-md relative"
+      className="flex justify-center items-center flex-wrap gap-x-1 gap-y-1.5 my-2 px-2 py-1 text-black w-5/6 max-w-xl md:max-w-2xl rounded-md relative"
     >
       {isLoading ? (
         <div

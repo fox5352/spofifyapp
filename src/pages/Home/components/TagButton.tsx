@@ -23,6 +23,7 @@ function TagButton({
     if (searchParams.get(query) === param) {
       searchParams.delete(query)
     } else {
+      searchParams.set('page', '0')
       searchParams.set(query, param)
     }
     setSearchParams(searchParams)
