@@ -49,6 +49,22 @@ export async function getGenre(id: string): Promise<Genre | null> {
   }
 }
 
+export async function getGenres(id: number[]): Promise<Genre[] | null> {
+  try {
+    const genres: Genre[] = []
+
+    for (const genreId of id) {
+      const genre = await getGenre(genreId.toString())
+      if (genre) genres.push(genre)
+    }
+
+    return genres.length > 0 ? genres : null
+  } catch (error) {
+    console.error('Error on getGenres:', error)
+    return null
+  }
+}
+
 export interface Episode {
   title: string
   description: string
