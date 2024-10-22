@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import ErrorMessage from '../../components/ErrorMessage'
 import Loading from '../../components/Loading'
 import { Card } from '../../components/Card'
@@ -24,47 +24,44 @@ const ITEMS_PER_PAGE = 10
 function Home() {
   // Pagination and filtering state
   const [searchParams, setSearchParams] = useSearchParams()
-  const currentPage = 0 // Number(searchParams.get('page') || 0)
-  console.log('rerendered')
+  const currentPage = Number(searchParams.get('page') || 0)
+  const selectedGenre = searchParams.get('q') || '*'
+  //TODO: const selectedOrder = searchParams.get('order') || 'new'
 
   const [previewCards, setPreviewCards] = useState<Preview[] | null>()
 
   // UI state
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [availableGenres, setAvailableGenres] = useState<GenreTag[] | null>(
+    null
+  )
 
   // ----------------------------------------------- fetching functionality -----------------------------------------------
   /**
    * Fetches available genres from the database
    * Currently hardcoded to fetch genres with IDs 1-8
    */
-  const availableGenres = useMemo(async () => {
-    setIsLoading(true)
-    const genreIds = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-
-    return []
-    // return await getGenres(genreIds)
+  useEffect(() => {
+    const fetchGenre = async () => {
+      const genreIds = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+      const data: GenreTag[] =
+        (await getGenres(genreIds))?.map((genres) => ({
+          title: genres.title,
+          id: genres.id,
+        })) || []
+      setAvailableGenres(data)
+    }
+    fetchGenre()
   }, [])
-  // useEffect(() => {
-  //   const fetchGenres = async () => {
-  //     setIsLoading(true)
-  //     const genreIds = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-
-  //     const genreData = await getGenres(genreIds)
-  //     setAvailableGenres(genreData)
-  //   }
-
-  //   fetchGenres()
-  // }, [])
 
   /**
    * Fetches preview cards
    */
-
   const fetchPreviewCards = useMemo(async () => {
     setIsLoading(true)
     const previewData = await getPreview()
-    if (!previewData) {
+    if (previewData == null) {
       setError('Failed to fetch preview cards')
       setIsLoading(false)
       return
@@ -94,60 +91,36 @@ function Home() {
   }, [fetchPreviewCards])
 
   // ----------------------------------------------- filter functionality -----------------------------------------------
+  const filterPreviewData = useCallback(async () => {
+    if (selectedGenre === '*') {
+      const previewData = await getPreview()
+
+      if (!previewData) {
+        return
+      }
+
+      setPreviewCards(previewData)
+    }
+    if (availableGenres) {
+      const selectedGenreId = availableGenres.find((g) => {
+        return g.title === selectedGenre
+      })
+
+      if (selectedGenreId) {
+        const filteredPreviewData = (await getPreview())?.filter((preview) => {
+          return preview.genres.includes(selectedGenreId.id)
+        })
+
+        setPreviewCards(filteredPreviewData)
+      }
+    }
+  }, [selectedGenre, availableGenres])
   /**
    * filter preview data on selectedGenre change
    */
-  // useEffect(() => {
-  //   const selectedGenre = searchParams.get('q') || '*'
-  //   const filterData = async () => {
-  //     if (selectedGenre === '*') {
-  //       setPreviewCards(await getPreview())
-  //     }
-  //     if (availableGenres.length > 0) {
-  //       const selectedGenreId = availableGenres.find((g) => {
-  //         return g.title === selectedGenre
-  //       })
-
-  //       if (selectedGenreId) {
-  //         const filteredPreviewData = (await getPreview())?.filter(
-  //           (preview) => {
-  //             return preview.genres.includes(selectedGenreId.id)
-  //           }
-  //         )
-
-  //         setPreviewCards(filteredPreviewData)
-  //       }
-  //     }
-  //   }
-  //   filterData()
-  // }, [availableGenres])
-
-  // ----------------------------------------------- sort functionality -----------------------------------------------
-  // const sortPreviewCards = useCallback(
-  //   (previewData: Preview[], sortOrder: string): Preview[] => {
-  //     return [...previewData].sort((a, b) => {
-  //       const previousDate = new Date(a.updated).getTime()
-  //       const nextDate = new Date(b.updated).getTime()
-  //       return sortOrder === 'new'
-  //         ? nextDate - previousDate // Newer first
-  //         : previousDate - nextDate // Older first})
-  //     })
-  //   },
-  //   []
-  // )
-
-  /**
-   * runs the sort function on the preview data when it changes
-   */
-  // useEffect(() => {
-  //   const sortOrder = searchParams.get('order') || 'new'
-  //   const func = async () => {
-  //     if (!previewCards) return
-
-  //     setPreviewCards(sortPreviewCards(previewCards, sortOrder))
-  //   }
-  //   func()
-  // }, [sortPreviewCards, previewCards])
+  useEffect(() => {
+    filterPreviewData()
+  }, [filterPreviewData])
 
   // ----------------------------------------------- ui functionality -----------------------------------------------
   /**
