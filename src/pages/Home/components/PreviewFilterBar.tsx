@@ -77,9 +77,9 @@ const PreviewFilterBar = memo(function PreviewFilterBar() {
       </button>
 
       <div
-        className={`absolute flex flex-wrap flex-shrink ${
+        className={`absolute flex flex-wrap flex-shrink gap-x-1 gap-y-1.5 min-w-full w-min z-20 top-[110%] right-0 p-2 rounded-md bg-zinc-950 duration-200 transition-all ease-linear ${
           isMenuActive ? 'scale-100' : 'scale-0'
-        } min-w-full w-min z-20 top-[110%] right-0 p-2 rounded-md bg-zinc-950 duration-200 transition-all ease-linear`}
+        }`}
       >
         {error && <p>{error}</p>}
         {isLoading ? (
