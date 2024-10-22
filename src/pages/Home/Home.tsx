@@ -26,7 +26,6 @@ function Home() {
   const [searchParams, setSearchParams] = useSearchParams()
   const currentPage = Number(searchParams.get('page') || 0)
   const selectedGenre = searchParams.get('q') || '*'
-  //TODO: const selectedOrder = searchParams.get('order') || 'new'
 
   const [previewCards, setPreviewCards] = useState<Preview[] | null>()
 
