@@ -24,7 +24,10 @@ function Sidebar() {
         >
           {/*  */}
           <h3 className="flex items-center text-2xl mb-3">
-            <button className="hover:text-purple-500" onClick={toggleMenu}>
+            <button
+              className="text-2xl hover:text-purple-500"
+              onClick={toggleMenu}
+            >
               {isExpanded ? <MdHeadphones /> : <MdMenu />}
             </button>
             <span className={`text-transparent underline ${tf('text-white')}`}>
