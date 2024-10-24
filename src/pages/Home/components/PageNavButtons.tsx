@@ -36,6 +36,8 @@ function PageNavButtons({ currentPage }: { currentPage: number }) {
     }
   }
 
+  // TODO: style better
+
   return (
     <div>
       <button

@@ -51,6 +51,7 @@ export default function Musicbar() {
       setIsPaused(true)
     }
   }
+  // TODO: made hidden when playlist is empty
 
   return (
     <>

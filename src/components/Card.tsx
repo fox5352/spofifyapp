@@ -14,7 +14,6 @@ export function Card({
 }: Preview) {
   const [genreTitles, setGenresTitles] = useState<string[] | null>(null) // genre titles for reel
 
-  // TODO: add genres reel
   // Gets the genre titles from api
   useEffect(() => {
     const getGenresTitles = async () => {
@@ -39,7 +38,7 @@ export function Card({
               <p className="font-normal text-base text-gray-50 relative z-10">
                 {title}
               </p>
-              <p className="text-sm text-gray-400">{seasons} seasons</p>
+              <p className="text-sm text-white">{seasons} seasons</p>
             </div>
           </div>
           {/* image */}
