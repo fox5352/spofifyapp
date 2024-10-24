@@ -28,7 +28,7 @@ export function Card({
   }, [genres])
 
   return (
-    <Link to={`post/${id}`}>
+    <Link to={`/posts/${id}`}>
       <div className="max-w-xs w-full group/card relative">
         <div className="cursor-pointer relative card h-96 rounded-md shadow-xl  max-w-sm mx-auto backgroundImage flex flex-col justify-between p-4 bg-zinc-950">
           <div className="absolute w-full h-full top-0 left-0" />

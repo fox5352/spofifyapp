@@ -1,6 +1,6 @@
 import { MouseEvent, ReactNode, useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import GenreTag from '../../../components/GenreTag'
+import GenreTag from '../../components/GenreTag'
 
 function TagButton({
   param,

@@ -1,7 +1,7 @@
 import { memo, useEffect, useState } from 'react'
-import { GenreTag } from '../Home'
+import { GenreTag } from '../../pages/Home/Home'
 import TagButton from './TagButton'
-import Loading from '../../../components/Loading'
+import Loading from '../../components/Loading'
 
 /**
  * PreviewFilterBar Component

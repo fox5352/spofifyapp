@@ -1,10 +1,12 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
+import { getAllGenres, getPreview, Preview } from '../../api/requests'
+
 import ErrorMessage from '../../components/ErrorMessage'
 import Loading from '../../components/Loading'
 import { Card } from '../../components/Card'
-import { getAllGenres, getPreview, Preview } from '../../api/requests'
+
 import PreviewFilterBar from '../../assets/components/PreviewFilterBar'
 import PageNavButtons from '../../assets/components/PageNavButtons'
 
@@ -17,11 +19,8 @@ export interface GenreTag {
 }
 
 const ITEMS_PER_PAGE = 10
-/**
- * Home component that displays a paginated grid of preview cards with genre filtering
- * and sorting capabilities.
- */
-function Home() {
+
+function Posts() {
   // Pagination and filtering state
   const [searchParams] = useSearchParams()
   const currentPage = Number(searchParams.get('page') || 0)
@@ -162,4 +161,4 @@ function Home() {
   )
 }
 
-export default Home
+export default Posts
