@@ -9,6 +9,7 @@ import { Card } from '../../components/Card'
 
 import PreviewFilterBar from '../../assets/components/PreviewFilterBar'
 import PageNavButtons from '../../assets/components/PageNavButtons'
+import SearchBar from '../../components/SearchBar'
 
 /**
  * Represents a genre category with its title and ID
@@ -25,6 +26,7 @@ function Posts() {
   const [searchParams] = useSearchParams()
   const currentPage = Number(searchParams.get('page') || 0)
   const selectedGenre = searchParams.get('q') || '*'
+  const titleQuery = searchParams.get('title') || '*'
 
   const [previewCards, setPreviewCards] = useState<Preview[] | null>()
 
@@ -42,12 +44,10 @@ function Posts() {
    */
   useEffect(() => {
     const fetchGenre = async () => {
-      // const genreIds = [1, 2, 3, 4, 5, 6, 7, 8, 9]
       const data: GenreTag[] = (await getAllGenres()).map((genres) => ({
         title: genres.title,
         id: genres.id,
       }))
-      // (await getGenres(genreIds))? || []
       setAvailableGenres(data)
     }
     fetchGenre()
@@ -90,31 +90,50 @@ function Posts() {
 
   // ----------------------------------------------- filter functionality -----------------------------------------------
   const filterPreviewData = useCallback(async () => {
-    if (selectedGenre === '*') {
+    const getFilteredPreviewsByGenre = async (): Promise<
+      Preview[] | undefined
+    > => {
       const previewData = await getPreview()
+      if (!previewData) return undefined
 
-      if (!previewData) {
-        return
+      // Return all previews if no genre filter is applied
+      if (selectedGenre === '*') {
+        return previewData
       }
 
-      setPreviewCards(previewData)
-    }
-    if (availableGenres) {
-      const selectedGenreId = availableGenres.find((g) => {
-        return g.title === selectedGenre
-      })
+      // Return undefined if no genres are available
+      if (!availableGenres) return undefined
 
-      if (selectedGenreId) {
-        const filteredPreviewData = (await getPreview())?.filter((preview) => {
-          return preview.genres.includes(selectedGenreId.id)
-        })
+      const selectedGenreData = availableGenres.find(
+        (genre) => genre.title === selectedGenre
+      )
 
-        setPreviewCards(filteredPreviewData)
-      }
+      if (!selectedGenreData) return undefined
+
+      return previewData.filter((preview) =>
+        preview.genres.includes(selectedGenreData.id)
+      )
     }
-  }, [selectedGenre, availableGenres])
+
+    const filterPreviewsByTitle = (previews: Preview[]): Preview[] => {
+      if (titleQuery === '*') return previews
+
+      const normalizedQuery = titleQuery.toLowerCase()
+      return previews.filter((preview) =>
+        preview.title.toLowerCase().includes(normalizedQuery)
+      )
+    }
+
+    // Apply filters sequentially
+    const genreFilteredPreviews = await getFilteredPreviewsByGenre()
+    if (!genreFilteredPreviews) return
+
+    const filteredPreviews = filterPreviewsByTitle(genreFilteredPreviews)
+    setPreviewCards(filteredPreviews)
+  }, [selectedGenre, availableGenres, titleQuery])
+
   /**
-   * filter preview data on selectedGenre change
+   * filter preview data on selectedGenre and searched title
    */
   useEffect(() => {
     filterPreviewData()
@@ -152,6 +171,7 @@ function Posts() {
 
   return (
     <div className="flex flex-col w-full justify-center items-center mb-[5rem]">
+      <SearchBar />
       <PreviewFilterBar genres={availableGenres || []} />
       <div className="w-full flex flex-wrap justify-evenly gap-4 overflow-auto p-1">
         {previewCards && getCurrentPageCards()}

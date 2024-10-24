@@ -1,5 +1,11 @@
 import { useState } from 'react'
-import { MdFavorite, MdHeadphones, MdHome, MdMenu } from 'react-icons/md'
+import {
+  MdFavorite,
+  MdHeadphones,
+  MdHome,
+  MdMenu,
+  MdSearch,
+} from 'react-icons/md'
 import { NavLink } from 'react-router-dom'
 
 function Sidebar() {
@@ -47,6 +53,19 @@ function Sidebar() {
               </span>
               <span className={`text-transparent ${tf('text-white')}`}>
                 Home
+              </span>
+            </NavLink>
+            <NavLink
+              className={({ isActive }) =>
+                `flex items-center gap-1 text-lg hover:text-purple-500 ${isActive ? 'text-purple-500' : ''}`
+              }
+              to="/posts"
+            >
+              <span className="text-2xl">
+                <MdSearch />
+              </span>
+              <span className={`text-transparent ${tf('text-white')}`}>
+                Search
               </span>
             </NavLink>
             <NavLink

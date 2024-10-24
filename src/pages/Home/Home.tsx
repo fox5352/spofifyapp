@@ -16,6 +16,8 @@ export interface GenreTag {
   id: number
 }
 
+// TODO: change home page to have a carousel and dashboard
+
 const ITEMS_PER_PAGE = 10
 /**
  * Home component that displays a paginated grid of preview cards with genre filtering
