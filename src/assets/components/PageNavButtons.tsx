@@ -39,19 +39,23 @@ function PageNavButtons({ currentPage }: { currentPage: number }) {
   // TODO: style better
 
   return (
-    <div>
+    <div className="flex gap-2 my-2 ">
       <button
+        type="button"
+        className="bg-transparent hover:bg-zinc-950 hover:text-white focus:ring-4 focus:outline-none focus:ring-zinc-300 font-medium rounded-full border-[1px] border-zinc-950 text-zinc-950 text-sm p-1.5 text-center inline-flex items-center duration-200 transition-all ease-linear"
         onClick={navigateToPreviousPage}
-        className="px-2 py-1 rounded-md border border-neutral-300 bg-transparent text-sm hover:-translate-y-[2px] transform transition duration-200 hover:shadow-md"
       >
         <MdArrowBack />
+        <span className="sr-only">Previous Page</span>
       </button>
 
       <button
+        type="button"
+        className="bg-transparent hover:bg-zinc-950 hover:text-white focus:ring-4 focus:outline-none focus:ring-zinc-300 font-medium rounded-full border-[1px] border-zinc-950 text-zinc-950 text-sm p-1.5 text-center inline-flex items-center duration-200 transition-all ease-linear"
         onClick={navigateToNextPage}
-        className="px-2 py-1 rounded-md border border-neutral-300 bg-transparent text-sm hover:-translate-y-[2px] transform transition duration-200 hover:shadow-md"
       >
         <MdArrowForward />
+        <span className="sr-only">Next Page</span>
       </button>
     </div>
   )
