@@ -4,9 +4,8 @@ import { useSearchParams } from 'react-router-dom'
 import ErrorMessage from '../../components/ErrorMessage'
 import Loading from '../../components/Loading'
 import { Card } from '../../components/Card'
-import { getPreview, Preview } from '../../api/requests'
+import { getAllGenres, getPreview, Preview } from '../../api/requests'
 import PreviewFilterBar from './components/PreviewFilterBar'
-import { getGenres } from '../../api/requests'
 import PageNavButtons from './components/PageNavButtons'
 
 /**
@@ -44,12 +43,12 @@ function Home() {
    */
   useEffect(() => {
     const fetchGenre = async () => {
-      const genreIds = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-      const data: GenreTag[] =
-        (await getGenres(genreIds))?.map((genres) => ({
-          title: genres.title,
-          id: genres.id,
-        })) || []
+      // const genreIds = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+      const data: GenreTag[] = (await getAllGenres()).map((genres) => ({
+        title: genres.title,
+        id: genres.id,
+      }))
+      // (await getGenres(genreIds))? || []
       setAvailableGenres(data)
     }
     fetchGenre()

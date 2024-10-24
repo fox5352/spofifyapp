@@ -61,7 +61,7 @@ export interface Genre {
  * @param id - The genre ID to fetch
  * @returns Promise<Genre | null> Genre information or null if error occurs
  */
-export async function getGenre(id: string): Promise<Genre | null> {
+export async function getGenre(id: string | number): Promise<Genre | null> {
   try {
     const res = await fetch(`https://podcast-api.netlify.app/genre/${id}`)
 
@@ -95,6 +95,26 @@ export async function getGenres(id: number[]): Promise<Genre[] | null> {
     console.error('Error on getGenres:', error)
     return null
   }
+}
+
+/**
+ * gets all Genres
+ */
+export async function getAllGenres(): Promise<Genre[]> {
+  const genres: Genre[] = []
+
+  let counter = 1
+  while (counter < 10) {
+    const res = await getGenre(counter)
+
+    if (res === null) {
+      break
+    }
+
+    genres.push(res)
+    counter++
+  }
+  return genres
 }
 
 /**
