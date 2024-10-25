@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { FaMinusCircle, FaPlusCircle } from 'react-icons/fa'
 import {
   MdFavorite,
   MdHeadphones,
@@ -8,12 +9,19 @@ import {
 } from 'react-icons/md'
 import { NavLink } from 'react-router-dom'
 
-function Sidebar() {
+function SideBar() {
   const [isExpanded, setIsExpanded] = useState(false)
+  const SideBarRef = useRef<HTMLElement | null>(null)
+
+  useEffect(() => {
+    if (SideBarRef.current && isExpanded) {
+      SideBarRef.current.focus()
+    }
+  }, [isExpanded])
 
   // toggle function
-  const tf = (style: string) => {
-    return isExpanded ? style : ''
+  const tf = function <T>(activeStyle: T, defaultStyle: T): T {
+    return isExpanded ? activeStyle : defaultStyle
   }
 
   const toggleMenu = () => {
@@ -21,12 +29,23 @@ function Sidebar() {
   }
 
   return (
-    <div className="w-5">
+    <div className="md:w-5">
+      <button
+        onClick={toggleMenu}
+        className="fixed z-30 right-10 bottom-[100px] md:hidden p-0.5 h-12 w-12 text-4xl text-black rounded-full duration-200 ease-in-out bg-gradient-to-r from-indigo-500 to-purple-500 hover:animate-heartbeat active:text-opacity-60 transition-all"
+      >
+        {tf(
+          <FaMinusCircle className="w-full h-full" />,
+          <FaPlusCircle className="w-full h-full" />
+        )}
+      </button>
+
       <aside
-        className={`flex fixed z-40 h-fit my-1 mr-1 text-white bg-zinc-950 rounded-tr-lg rounded-br-lg w-10 overflow-hidden group  ${tf('w-44 fixed')} transition-all ease-in-out duration-300`}
+        className={`z-40 h-fit my-1 mr-1 text-white bg-zinc-950 rounded-tr-lg rounded-br-lg w-10 overflow-hidden group  ${tf('w-44 fixed', 'hidden md:flex fixed ')} transition-all ease-in-out duration-300`}
       >
         <nav
-          className={`w-10 ${tf('w-40')} transition-all ease-in-out duration-300 p-2`}
+          ref={SideBarRef}
+          className={`w-10 ${tf('w-40', '')} transition-all ease-in-out duration-300 p-2`}
         >
           {/*  */}
           <h3 className="flex items-center text-2xl mb-3">
@@ -36,7 +55,9 @@ function Sidebar() {
             >
               {isExpanded ? <MdHeadphones /> : <MdMenu />}
             </button>
-            <span className={`text-transparent underline ${tf('text-white')}`}>
+            <span
+              className={`text-transparent underline ${tf('text-white', '')}`}
+            >
               Spofify
             </span>
           </h3>
@@ -51,7 +72,7 @@ function Sidebar() {
               <span className="text-2xl">
                 <MdHome />
               </span>
-              <span className={`text-transparent ${tf('text-white')}`}>
+              <span className={`text-transparent ${tf('text-white', '')}`}>
                 Home
               </span>
             </NavLink>
@@ -64,7 +85,7 @@ function Sidebar() {
               <span className="text-2xl">
                 <MdSearch />
               </span>
-              <span className={`text-transparent ${tf('text-white')}`}>
+              <span className={`text-transparent ${tf('text-white', '')}`}>
                 Search
               </span>
             </NavLink>
@@ -77,7 +98,7 @@ function Sidebar() {
               <span className="text-2xl">
                 <MdFavorite />
               </span>
-              <span className={`text-transparent ${tf('text-white')}`}>
+              <span className={`text-transparent ${tf('text-white', '')}`}>
                 Favorites
               </span>
             </NavLink>
@@ -88,4 +109,4 @@ function Sidebar() {
   )
 }
 
-export default Sidebar
+export default SideBar
