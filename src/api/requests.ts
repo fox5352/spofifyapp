@@ -81,12 +81,12 @@ export async function getGenre(id: string | number): Promise<Genre | null> {
  * @param ids - Array of genre IDs to fetch
  * @returns Promise<Genre[] | null> Array of genre information or null if error occurs
  */
-export async function getGenres(id: number[]): Promise<Genre[] | null> {
+export async function getGenres(id: unknown[]): Promise<Genre[] | null> {
   try {
     const genres: Genre[] = []
 
     for (const genreId of id) {
-      const genre = await getGenre(genreId.toString())
+      const genre = await getGenre(`${genreId}`)
       if (genre) genres.push(genre)
     }
 
@@ -149,7 +149,6 @@ export interface Show {
   description: string
   seasons: Season[]
   image: string
-  genres: string[]
   updated: string
 }
 

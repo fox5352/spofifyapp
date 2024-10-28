@@ -34,7 +34,6 @@ export function cn(...inputs: ClassValue[]) {
  * @example
  * // For event handlers
  * const handleInput = debounce<[ChangeEvent<HTMLInputElement>]>((event) => {
- *   console.log(event.target.value);
  * }, 300);
  *
  * // For regular functions

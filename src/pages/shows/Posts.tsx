@@ -170,7 +170,7 @@ function Posts() {
   }
 
   return (
-    <div className="flex flex-col w-full justify-center items-center mb-[5rem]">
+    <div className="flex flex-col w-full justify-center items-center">
       <SearchBar />
       <PreviewFilterBar genres={availableGenres || []} />
       <div className="w-full flex flex-wrap justify-evenly gap-4 overflow-auto p-1">
