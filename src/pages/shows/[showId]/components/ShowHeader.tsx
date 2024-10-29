@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { type Show } from '../../../../api/requests'
 import { MdArrowCircleLeft } from 'react-icons/md'
 
@@ -13,6 +13,7 @@ export default function ShowHeader({
   isDescriptionExpanded,
   onToggleDescription,
 }: ShowHeaderProps) {
+  const navigate = useNavigate()
   const formatDate = (date: string): string => {
     const data = new Date(date)
     return data.toLocaleDateString('en-US', {
@@ -29,13 +30,12 @@ export default function ShowHeader({
     >
       <div className="flex flex-col basis-1/2 w-full text-center md:text-start md:pt-4 md:pl-4">
         <h1 className=" text-4xl font-bold">
-          <Link className="mr-3" to="..">
-            <button className="text-4xl text-black rounded-full duration-200 ease-in-out bg-indigo-500 hover:scale-90 transition-all">
-              <MdArrowCircleLeft />
-            </button>
-          </Link>
+          <button className="mr-3 text-4xl text-black rounded-full duration-200 ease-in-out bg-indigo-500 hover:scale-90 transition-all" onClick={() => (navigate(-1))}>
+            <MdArrowCircleLeft />
+          </button>
           Show: {show.title}
         </h1>
+        {/* TODO:added fav button */}
         <div className="p-1 pt-1.5">
           <p className="text-indigo-500">
             <span className="sr-only">Number of seasons:</span>

@@ -2,11 +2,12 @@ import { Link } from 'react-router-dom'
 import { Season } from '../../../../api/requests'
 
 export default function SeasonCard(data: Season) {
-  const { image, title, season, episodes } = data
+  const { image, title, season } = data
 
   return (
     <Link
-      to={season.toString()}
+      to="season"
+      state={data}
       className="max-w-xs w-full cursor-pointer relative h-96 rounded-md shadow-xl text-white bg-zinc-950 overflow-hidden"
     >
       <div className="relative w-full h-[85%] top-0 left-0">

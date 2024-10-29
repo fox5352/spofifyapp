@@ -80,7 +80,7 @@ function SideBar() {
               className={({ isActive }) =>
                 `flex items-center gap-1 text-lg hover:text-purple-500 ${isActive ? 'text-purple-500' : ''}`
               }
-              to="/posts"
+              to="/shows"
             >
               <span className="text-2xl">
                 <MdSearch />

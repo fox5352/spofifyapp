@@ -21,7 +21,7 @@ export interface GenreTag {
 
 const ITEMS_PER_PAGE = 10
 
-function Posts() {
+function Shows() {
   // Pagination and filtering state
   const [searchParams] = useSearchParams()
   const currentPage = Number(searchParams.get('page') || 0)
@@ -181,4 +181,4 @@ function Posts() {
   )
 }
 
-export default Posts
+export default Shows
