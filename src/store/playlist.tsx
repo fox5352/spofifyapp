@@ -1,17 +1,17 @@
-import { create } from "zustand"
+import { create } from 'zustand'
 //
-import type { Season } from "../api/requests"
+import type { Season } from '../api/requests'
 
 type Playlist = {
-  data: Season | null;
-  index: number;
+  data: Season | null
+  index: number
 }
 
 type Actions = {
-  add: (data: Season) => void;
-  setTrack: (episode: number) => void;
-  next: () => void;
-  previous: () => void;
+  add: (data: Season) => void
+  setTrack: (episode: number) => void
+  next: () => void
+  previous: () => void
 }
 
 export const usePlaylist = create<Playlist & Actions>()((set) => ({
@@ -25,7 +25,7 @@ export const usePlaylist = create<Playlist & Actions>()((set) => ({
       if (state.data && episode > 0 && episode < state.data.episodes.length) {
         return {
           ...state,
-          index: episode
+          index: episode,
         }
       } else {
         return state
@@ -33,7 +33,7 @@ export const usePlaylist = create<Playlist & Actions>()((set) => ({
     })
   },
   next: () => {
-    set(state => {
+    set((state) => {
       if (state.data && state.index < state.data.episodes.length - 1) {
         return { ...state, index: state.index + 1 }
       } else {
@@ -49,6 +49,6 @@ export const usePlaylist = create<Playlist & Actions>()((set) => ({
         return state
       }
     })
-    return ""
-  }
+    return ''
+  },
 }))

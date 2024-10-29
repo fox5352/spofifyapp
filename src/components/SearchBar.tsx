@@ -19,7 +19,7 @@ function SearchBar() {
   }, 600)
 
   return (
-    <form className="flex w-11/12 my-1.5 max-w-md ml-6 md:ml-0">
+    <form className="flex w-11/12 my-1.5 max-w-md">
       <label className="hidden" htmlFor="search-bar">
         search bar
       </label>

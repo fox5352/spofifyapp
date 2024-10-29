@@ -30,7 +30,10 @@ export default function ShowHeader({
     >
       <div className="flex flex-col basis-1/2 w-full text-center md:text-start md:pt-4 md:pl-4">
         <h1 className=" text-4xl font-bold">
-          <button className="mr-3 text-4xl text-black rounded-full duration-200 ease-in-out bg-indigo-500 hover:scale-90 transition-all" onClick={() => (navigate(-1))}>
+          <button
+            className="mr-3 text-4xl text-black rounded-full duration-200 ease-in-out bg-indigo-500 hover:scale-90 transition-all"
+            onClick={() => navigate(-1)}
+          >
             <MdArrowCircleLeft />
           </button>
           Show: {show.title}

@@ -66,14 +66,16 @@ export default function Musicbar() {
 
   return (
     <>
-      <div className={`fixed ${hasPlaylist ? "" : " hidden"} z-50 bottom-1 left-1/2 -translate-x-1/2 w-[95%] max-w-3xl`}>
+      <div
+        className={`fixed ${hasPlaylist ? '' : ' hidden'} z-50 bottom-1 left-1/2 -translate-x-1/2 w-[95%] max-w-3xl`}
+      >
         <div className="p-[3px] relative">
           <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg" />
           {/*  music bar container */}
           <div className="flex justify-between h-16 px-1 md:px-4 py-2 bg-black rounded-[6px] relative group transition duration-200 text-white">
             {/* TODO: track title */}
-            <div className='flex h-full items-center min-w-20'>
-              <h3 className='text-md'>Episode: {index + 1}</h3>
+            <div className="flex h-full items-center min-w-20">
+              <h3 className="text-md">Episode: {index + 1}</h3>
             </div>
             {/* controls block */}
             <div className="flex flex-col items-center max-w-32 md:max-w-none w-full">
@@ -82,7 +84,10 @@ export default function Musicbar() {
               </audio>
               {/* controls */}
               <nav className="flex gap-2 mb-1">
-                <button className="text-4xl text-black rounded-full duration-200 ease-in-out bg-indigo-500 hover:scale-90 transition-all" onClick={previous}>
+                <button
+                  className="text-4xl text-black rounded-full duration-200 ease-in-out bg-indigo-500 hover:scale-90 transition-all"
+                  onClick={previous}
+                >
                   <MdArrowCircleLeft />
                 </button>
                 <button
@@ -91,7 +96,10 @@ export default function Musicbar() {
                 >
                   {isPaused ? <MdPlayCircle /> : <MdPauseCircle />}
                 </button>
-                <button className="text-4xl text-black rounded-full duration-200 ease-in-out bg-purple-500 hover:scale-90 transition-all" onClick={next}>
+                <button
+                  className="text-4xl text-black rounded-full duration-200 ease-in-out bg-purple-500 hover:scale-90 transition-all"
+                  onClick={next}
+                >
                   <MdArrowCircleRight />
                 </button>
               </nav>
@@ -104,7 +112,7 @@ export default function Musicbar() {
               </div>
             </div>
             {/* TODO: selection dropdown */}
-            <div className='w-20'></div>
+            <div className="w-20"></div>
           </div>
         </div>
       </div>
