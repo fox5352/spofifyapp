@@ -6,7 +6,7 @@ export default function SeasonsSection() {
   const data: Season[] = useOutletContext()
 
   return (
-    <div className="flex flex-col justify-center items-center md: md:flex-row gap-2 md:gap-8 p-2">
+    <div className="flex flex-col flex-wrap justify-center items-center md: md:flex-row gap-2 md:gap-8 p-2">
       {data &&
         data.map((season) => <SeasonCard key={season.title} {...season} />)}
     </div>
