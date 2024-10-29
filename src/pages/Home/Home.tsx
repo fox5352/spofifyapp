@@ -45,7 +45,6 @@ function Home() {
    */
   useEffect(() => {
     const fetchGenre = async () => {
-      // const genreIds = [1, 2, 3, 4, 5, 6, 7, 8, 9]
       const data: GenreTag[] = (await getAllGenres()).map((genres) => ({
         title: genres.title,
         id: genres.id,
@@ -154,7 +153,7 @@ function Home() {
   }
 
   return (
-    <div className="flex flex-col w-full justify-center items-center mb-[5rem]">
+    <div className="flex flex-col w-full justify-center items-center ">
       <PreviewFilterBar genres={availableGenres || []} />
       <div className="w-full flex flex-wrap justify-evenly gap-4 overflow-auto p-1">
         {previewCards && getCurrentPageCards()}

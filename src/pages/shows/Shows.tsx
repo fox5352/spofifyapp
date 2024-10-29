@@ -21,7 +21,7 @@ export interface GenreTag {
 
 const ITEMS_PER_PAGE = 10
 
-function Posts() {
+function Shows() {
   // Pagination and filtering state
   const [searchParams] = useSearchParams()
   const currentPage = Number(searchParams.get('page') || 0)
@@ -170,7 +170,7 @@ function Posts() {
   }
 
   return (
-    <div className="flex flex-col w-full justify-center items-center mb-[5rem]">
+    <div className="flex flex-col w-full justify-center items-center">
       <SearchBar />
       <PreviewFilterBar genres={availableGenres || []} />
       <div className="w-full flex flex-wrap justify-evenly gap-4 overflow-auto p-1">
@@ -181,4 +181,4 @@ function Posts() {
   )
 }
 
-export default Posts
+export default Shows

@@ -7,7 +7,7 @@ export default function RootLayout() {
   return (
     <>
       {/* TODO: header */}
-      <main className="flex">
+      <main className="flex mb-[5rem]">
         <Sidebar />
         <div className="flex w-full h-full">
           <Outlet />

@@ -29,7 +29,7 @@ function SideBar() {
   }
 
   return (
-    <div className="md:w-5">
+    <div className="md:w-10">
       <button
         onClick={toggleMenu}
         className="fixed z-30 right-10 bottom-[100px] md:hidden p-0.5 h-12 w-12 text-4xl text-black rounded-full duration-200 ease-in-out bg-gradient-to-r from-indigo-500 to-purple-500 hover:animate-heartbeat active:text-opacity-60 transition-all"
@@ -80,7 +80,7 @@ function SideBar() {
               className={({ isActive }) =>
                 `flex items-center gap-1 text-lg hover:text-purple-500 ${isActive ? 'text-purple-500' : ''}`
               }
-              to="/posts"
+              to="/shows"
             >
               <span className="text-2xl">
                 <MdSearch />
