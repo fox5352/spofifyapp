@@ -1,8 +1,14 @@
 import { memo, useEffect, useState } from 'react'
-import { GenreTag } from '../../pages/Home/Home'
 import TagButton from './TagButton'
 import Loading from '../../components/Loading'
 
+/**
+ * Represents a genre category with its title and ID
+ */
+export interface GenreTag {
+  title: string
+  id: number
+}
 /**
  * PreviewFilterBar Component
  *
