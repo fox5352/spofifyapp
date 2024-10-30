@@ -1,6 +1,9 @@
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { type Show } from '../../../../api/requests'
-import { MdArrowCircleLeft } from 'react-icons/md'
+import { MdArrowCircleLeft, MdFavorite } from 'react-icons/md'
+import { formatDate } from '../../../../lib/utils'
+import { useEffect, useState } from 'react'
+import { useFavorite } from '../../../../store/favorites'
 
 interface ShowHeaderProps {
   show: Show
@@ -14,13 +17,24 @@ export default function ShowHeader({
   onToggleDescription,
 }: ShowHeaderProps) {
   const navigate = useNavigate()
-  const formatDate = (date: string): string => {
-    const data = new Date(date)
-    return data.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: '2-digit',
-    })
+  const { id } = useParams()
+  const { data: favs, add, remove } = useFavorite()
+  const [isFaved, setisFaved] = useState(false)
+
+  useEffect(() => {
+    const resBool = favs.find((fav) => fav.id === id) ? true : false
+    setisFaved(resBool)
+    console.log(favs)
+  }, [id, favs])
+
+  const toggleSaveToFav = () => {
+    if (!id) return
+
+    if (isFaved) {
+      remove(id)
+    } else {
+      add({ id: show.id })
+    }
   }
 
   return (
@@ -29,15 +43,24 @@ export default function ShowHeader({
       role="banner"
     >
       <div className="flex flex-col basis-1/2 w-full text-center md:text-start md:pt-4 md:pl-4">
-        <h1 className=" text-4xl font-bold">
+        <div className='flex gap-2'>
           <button
-            className="mr-3 text-4xl text-black rounded-full duration-200 ease-in-out bg-indigo-500 hover:scale-90 transition-all"
+            className="w-10 h-auto text-black rounded-full duration-200 ease-in-out bg-indigo-500 hover:scale-90 transition-all"
             onClick={() => navigate(-1)}
           >
-            <MdArrowCircleLeft />
+            <MdArrowCircleLeft className='w-full h-full p-0.5' />
           </button>
-          Show: {show.title}
-        </h1>
+          <h1 className=" text-4xl font-bold">
+            Show: {show.title}
+          </h1>
+          <button
+            className={`w-10 h-auto text-white border-transparent border-2 rounded-full duration-200 ease-in-out hover:scale-90 transition-all ${isFaved ? "text-rose-500 " : ""}`}
+            onClick={toggleSaveToFav}
+          >
+            <MdFavorite className='w-full h-full p-0.5' />
+          </button>
+
+        </div>
         {/* TODO:added fav button */}
         <div className="p-1 pt-1.5">
           <p className="text-indigo-500">

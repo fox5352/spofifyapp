@@ -62,3 +62,42 @@ export function debounce<T extends unknown[]>(
     }, time)
   }
 }
+
+
+/**
+ * Takes a data string from the api and converts it into a better format month day year november, eg. 02, 2022
+ * @param {string} date date from api
+ * @returns {string} formatted date in the desired format
+*/
+export function formatDate(date: string): string {
+  const data = new Date(date)
+  return data.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: '2-digit',
+  })
+}
+
+
+export function saveToLocal<T>(data: T, name: string): booloen {
+  try {
+    localStorage.setItem(name, JSON.stringify(data))
+    return true
+  } catch (error) {
+    console.error('Error on SaveToLocal:', error)
+    return false
+  }
+}
+
+export function getfromLocal<T>(name: string): T | null {
+  try {
+    const data = localStorage.getItem(name)
+    if (data) {
+      return JSON.parse(data) as T
+    }
+    return null
+  } catch (error) {
+    console.error('Error on getfromLocal:', error)
+    return null
+  }
+}
