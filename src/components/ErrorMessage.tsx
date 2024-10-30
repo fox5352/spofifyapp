@@ -8,7 +8,7 @@ type textStize =
 
 function ErrorMessage({ message, size }: { message: string; size: textStize }) {
   return (
-    <div className="w-full h-[80vh] flex justify-center items-center">
+    <div className="w-full h-full flex justify-center items-center">
       <h3 className={`font-bold text-center text-red-600 ${size}`}>
         {message}
       </h3>
