@@ -1,43 +1,26 @@
 import { Link } from 'react-router-dom'
-import { getPreview, Preview } from '../../../api/requests'
+import type { Preview } from '../../../api/requests'
 import { useEffect, useState } from 'react'
 import Loading from '../../../components/Loading'
 import ErrorMessage from '../../../components/ErrorMessage'
 import { MdArrowLeft, MdArrowRight } from 'react-icons/md'
 import { formatDate } from '../../../lib/utils'
 
-export default function Carousel() {
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const [previews, setPreviews] = useState<Preview[] | null>(null)
+export default function Carousel({
+  previews,
+  error,
+}: {
+  previews: Preview[] | null
+  error: string | null
+}) {
+  const [isLoading, setIsLoading] = useState(true)
   const [activeImageIndex, setActiveImageIndex] = useState(0)
 
   useEffect(() => {
-    const fetchPreviews = async () => {
-      setIsLoading(true)
-
-      const res = await getPreview()
-
-      if (!res) {
-        setError('failed to fetch preview data')
-        setIsLoading(false)
-        return
-      }
-
-      const getlatest = [...res]
-        .sort((a, b) => {
-          const aDate = new Date(a.updated).getTime()
-          const bDate = new Date(b.updated).getTime()
-          return bDate - aDate
-        })
-        .slice(0, 5)
-
-      setError(null)
-      setPreviews(getlatest)
+    if (previews) {
       setIsLoading(false)
     }
-    fetchPreviews()
-  }, [])
+  }, [previews])
 
   const prevSlide = () => {
     if (!previews) return
@@ -54,39 +37,41 @@ export default function Carousel() {
 
   return (
     <div className="flex justify-center w-full h-56 md:h-[420px]">
-      {isLoading && (
-        <div className="w-full h-full">
-          <Loading className="h-full w-auto" />
-        </div>
-      )}
       {error && (
         <div className="w-full h-full text-red-500">
           <ErrorMessage message={error} size="text-2xl" />
         </div>
       )}
-      <div className="max-w-4xl w-full h-full md:m-2 bg-zinc-950 md:rounded-md relative overflow-hidden md:bg-gradient-to-r from-zinc-950 to-white">
-        <button
-          className="absolute z-10 left-0 h-full px-1 text-white bg-zinc-950 opacity-30 duration-200 transition-all ease-linear hover:opacity-65"
-          onClick={prevSlide}
-        >
-          <MdArrowLeft className="h-8 w-auto" />
-        </button>
-        {previews &&
-          previews.map((prev, index) => (
-            <CarouselImage
-              key={prev.id}
-              {...prev}
-              index={index}
-              activeImageIndex={activeImageIndex}
-            />
-          ))}
-        <button
-          className="absolute z-10 right-0 h-full px-1 text-white bg-zinc-950 opacity-30 duration-200 transition-all ease-linear hover:opacity-65"
-          onClick={nextSlide}
-        >
-          <MdArrowRight className="h-8 w-auto" />
-        </button>
-      </div>
+
+      {isLoading ? (
+        <div className="w-full h-full flex justify-center">
+          <Loading className="h-full w-auto" />
+        </div>
+      ) : (
+        <div className="max-w-4xl w-full h-full md:m-2 bg-zinc-950 md:rounded-md relative overflow-hidden md:bg-gradient-to-r from-zinc-950 to-white">
+          <button
+            className="absolute z-10 left-0 h-full px-1 text-white bg-zinc-950 opacity-30 duration-200 transition-all ease-linear hover:opacity-65"
+            onClick={prevSlide}
+          >
+            <MdArrowLeft className="h-8 w-auto" />
+          </button>
+          {previews &&
+            previews.map((prev, index) => (
+              <CarouselImage
+                key={prev.id}
+                {...prev}
+                index={index}
+                activeImageIndex={activeImageIndex}
+              />
+            ))}
+          <button
+            className="absolute z-10 right-0 h-full px-1 text-white bg-zinc-950 opacity-30 duration-200 transition-all ease-linear hover:opacity-65"
+            onClick={nextSlide}
+          >
+            <MdArrowRight className="h-8 w-auto" />
+          </button>
+        </div>
+      )}
     </div>
   )
 }
