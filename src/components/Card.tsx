@@ -48,7 +48,7 @@ export function Card({
           </div>
           {/* main content */}
           <div className="text content relative">
-            <div className="relative z-20 flex gap-1">
+            <div className="relative z-20 flex gap-1 text-sm overflow-x-auto">
               {genreTitles &&
                 genreTitles.map((title) => (
                   <GenreTag key={title} variant="filled">
