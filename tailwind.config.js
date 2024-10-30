@@ -1,9 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
- content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   safelist: [
     'bg-blue-500',
     'bg-red-500',
@@ -28,17 +25,21 @@ export default {
   theme: {
     extend: {
       animation: {
-        move: "move 5s linear infinite",
-        spinslow: "spin 2s linear infinite both"
+        move: 'move 5s linear infinite',
+        spinslow: 'spin 2s linear infinite both',
+        slidin: 'slide 350ms linear forwards',
       },
       keyframes: {
         move: {
-          "0%": { transform: "translateX(-200px)" },
-          "100%": { transform: "translateX(200px)" },
+          '0%': { transform: 'translateX(-200px)' },
+          '100%': { transform: 'translateX(200px)' },
+        },
+        slide: {
+          '0%': { transform: 'translateX(-100%)' },
+          '100%': { transform: 'translateX(0%)' },
         },
       },
     },
   },
   plugins: [],
 }
-

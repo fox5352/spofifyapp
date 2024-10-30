@@ -2,8 +2,16 @@ import { Outlet } from 'react-router-dom'
 // local imports
 import Sidebar from './components/Sidebar'
 import Musicbar from './components/Musicbar'
+import { useFavorite } from './store/favorites'
+import { useEffect } from 'react'
 
 export default function RootLayout() {
+  const { sync } = useFavorite()
+
+  useEffect(() => {
+    sync() // synchronize favorite data with local storage
+  }, [sync])
+
   return (
     <>
       {/* TODO: header */}
