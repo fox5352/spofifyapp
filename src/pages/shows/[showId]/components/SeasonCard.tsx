@@ -6,7 +6,7 @@ export default function SeasonCard(data: Season) {
 
   return (
     <Link
-      to="season"
+      to={`${season}`}
       state={data}
       className="max-w-xs w-full cursor-pointer relative h-96 rounded-md shadow-xl text-white bg-zinc-950 overflow-hidden"
     >

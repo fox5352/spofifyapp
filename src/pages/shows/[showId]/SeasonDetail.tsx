@@ -1,8 +1,10 @@
-import { useLocation } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import { type Season } from '../../../api/requests'
 
-import { MdPlayCircle } from 'react-icons/md'
+import { MdFavorite, MdPlayCircle } from 'react-icons/md'
 import { usePlaylist } from '../../../store/playlist'
+import { FavShow, useFavorite } from '../../../store/favorites'
+import { MouseEvent, useMemo } from 'react'
 
 export default function SeasonDetail() {
   const { state }: { state: Season } = useLocation()
@@ -55,8 +57,13 @@ const EpisodeButton = ({
   season: Season
 }) => {
   const { data, add, setTrack } = usePlaylist()
+  const { id } = useParams()
 
-  const handleClick = () => {
+
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault()
+    event.stopPropagation()
+
     if (!data) {
       add(season)
     }
@@ -65,13 +72,51 @@ const EpisodeButton = ({
 
   return (
     <li className="w-full" key={title}>
-      <button
-        className="flex items-center gap-1.5 w-full p-1.5 text-start border-2 border-white rounded group hover:border-indigo-500 duration-200 transition-all ease-linear"
-        onClick={handleClick}
-      >
+      <FavButton title={title} ep={episode} showId={id || '0'} season={season.season} onClick={handleClick} />
+    </li>
+  )
+}
+
+
+type Func = (event: MouseEvent<HTMLButtonElement>) => void
+
+function FavButton({ title, showId, season, ep, onClick }: { title: string, showId: string, ep: number, season: number, onClick: Func }) {
+  const { data, add, remove } = useFavorite()
+  const isFaved: boolean = useMemo(() => {
+    return data.find(fav => fav.showId === showId && fav.season === season && fav.episode === ep) ? true : false
+  }, [data])
+
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault()
+    event.stopPropagation()
+    // create new fav item to add to faveplaylist
+
+    const newFav: FavShow = {
+      showId: showId,
+      season: Number(season),
+      episode: Number(ep),
+    }
+
+    if (!isFaved) {
+      console.log("saving fav:", newFav)
+      add(newFav)
+    } else {
+      remove(newFav)
+    }
+  }
+
+  return (
+    <div
+      className="flex items-center gap-1.5 w-full text-start"
+    >
+      <button className='flex flex-grow items-center p-1.5 border-2 rounded-md border-indigo-500 duration-200 transition-all ease-linear' onClick={onClick}>
         <MdPlayCircle className="text-xl group-hover:bg-gradient-to-r from-indigo-500 to-purple-500 group-hover:text-zinc-950 rounded-full duration-200 transition-all ease-linear" />
         {title}
       </button>
-    </li>
+      <button className={`flex p-1.5 border-2 rounded-md border-white duration-200 transition-all ease-linear ${isFaved ? "text-rose-500 border-rose-500" : ""}`} onClick={handleClick}>
+        <MdFavorite className='text-xl' />
+      </button>
+    </div>
+
   )
 }
