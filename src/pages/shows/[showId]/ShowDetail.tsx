@@ -3,8 +3,8 @@ import { useParams, Outlet } from 'react-router-dom'
 // utils
 import { getShow } from '../../../api/requests'
 // components
-import ErrorMessage from '../../../components/ErrorMessage'
-import Loading from '../../../components/Loading'
+import ErrorMessage from '../../../ui/ErrorMessage'
+import Loading from '../../../ui/Loading'
 import ShowHeader from './components/ShowHeader'
 // types
 import type { Show } from '../../../api/requests'

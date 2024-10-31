@@ -8,6 +8,7 @@ import Shows from './pages/shows/Shows'
 import PostDetail from './pages/shows/[showId]/ShowDetail'
 import SeasonsSection from './pages/shows/[showId]/SeasonsSection'
 import SeasonDetail from './pages/shows/[showId]/SeasonDetail'
+import Dashboard from './pages/DashBoard/Dashboard'
 
 function App() {
   return (
@@ -20,6 +21,8 @@ function App() {
             <Route index element={<SeasonsSection />} />
             <Route path="/shows/:id/:season" element={<SeasonDetail />} />
           </Route>
+
+          <Route path="dashboard" element={<Dashboard />} />
 
           <Route path="*" element={<h1>404 ...</h1>} />
         </Route>

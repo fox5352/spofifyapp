@@ -93,13 +93,13 @@ function SideBar() {
               className={({ isActive }) =>
                 `flex items-center gap-1 text-lg hover:text-purple-500 ${isActive ? 'text-purple-500' : ''}`
               }
-              to="Favorites"
+              to="dashboard"
             >
               <span className="text-2xl">
                 <MdFavorite />
               </span>
               <span className={`text-transparent ${tf('text-white', '')}`}>
-                Favorites
+                Dashboard
               </span>
             </NavLink>
           </div>

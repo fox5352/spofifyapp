@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom'
 import type { Preview } from '../../../api/requests'
 import { useEffect, useState } from 'react'
-import Loading from '../../../components/Loading'
-import ErrorMessage from '../../../components/ErrorMessage'
+import Loading from '../../../ui/Loading'
+import ErrorMessage from '../../../ui/ErrorMessage'
 import { MdArrowLeft, MdArrowRight } from 'react-icons/md'
 import { formatDate } from '../../../lib/utils'
 

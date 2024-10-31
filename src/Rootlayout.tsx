@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom'
 // local imports
-import Sidebar from './components/Sidebar'
-import Musicbar from './components/Musicbar'
+import Sidebar from './ui/Sidebar'
+import Musicbar from './ui/Musicbar'
 import { useFavorite } from './store/favorites'
 import { useEffect } from 'react'
 

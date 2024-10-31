@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
-import Carousel from './components/Carousel'
+
 import { getPreview, Preview } from '../../api/requests'
-import { PreviewGallery } from './components/PreviewGallery'
+
+import Carousel from './components/Carousel'
+import PreviewGallery from './components/PreviewGallery'
 
 /**
  * Home component that displays a carousel of latest previews and genre-based preview galleries
