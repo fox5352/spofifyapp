@@ -1,4 +1,4 @@
-import { Navigate, useLocation, useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import { getShow, type Season } from '../../../api/requests'
 
 import { MdFavorite, MdPlayCircle } from 'react-icons/md'
@@ -33,9 +33,7 @@ export default function SeasonDetail() {
           return
         }
 
-
         const season = show.seasons[Number(seasonId) - 1]
-
 
         setError(null)
         setIsLoading(false)
@@ -55,9 +53,7 @@ export default function SeasonDetail() {
   }
 
   if (isLoading) {
-    return (
-      <Loading className='h-60 w-auto mx-auto mt-10' />
-    )
+    return <Loading className="h-60 w-auto mx-auto mt-10" />
   }
 
   if (error) {
@@ -112,7 +108,6 @@ const EpisodeButton = ({
   const { data, add, setTrack } = usePlaylist()
   const { id } = useParams()
 
-
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
     event.stopPropagation()
@@ -125,18 +120,40 @@ const EpisodeButton = ({
 
   return (
     <li className="w-full" key={title}>
-      <FavButton title={title} ep={episode} showId={id || '0'} season={season?.season} onClick={handleClick} />
+      <FavButton
+        title={title}
+        ep={episode}
+        showId={id || '0'}
+        season={season?.season}
+        onClick={handleClick}
+      />
     </li>
   )
 }
 
-
 type Func = (event: MouseEvent<HTMLButtonElement>) => void
 
-function FavButton({ title, showId, season, ep, onClick }: { title: string, showId: string, ep: number, season: number, onClick: Func }) {
+function FavButton({
+  title,
+  showId,
+  season,
+  ep,
+  onClick,
+}: {
+  title: string
+  showId: string
+  ep: number
+  season: number
+  onClick: Func
+}) {
   const { data, add, remove } = useFavorite()
   const isFaved: boolean = useMemo(() => {
-    return data.find(fav => fav.showId === showId && fav.season === season && fav.episode === ep) ? true : false
+    return data.find(
+      (fav) =>
+        fav.showId === showId && fav.season === season && fav.episode === ep
+    )
+      ? true
+      : false
   }, [data])
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
@@ -151,7 +168,7 @@ function FavButton({ title, showId, season, ep, onClick }: { title: string, show
     }
 
     if (!isFaved) {
-      console.log("saving fav:", newFav)
+      console.log('saving fav:', newFav)
       add(newFav)
     } else {
       remove(newFav)
@@ -159,17 +176,20 @@ function FavButton({ title, showId, season, ep, onClick }: { title: string, show
   }
 
   return (
-    <div
-      className="flex items-center gap-1.5 w-full text-start"
-    >
-      <button className='flex flex-grow items-center p-1.5 border-2 rounded-md border-indigo-500 duration-200 transition-all ease-linear' onClick={onClick}>
+    <div className="flex items-center gap-1.5 w-full text-start">
+      <button
+        className="flex flex-grow items-center p-1.5 border-2 rounded-md border-indigo-500 duration-200 transition-all ease-linear"
+        onClick={onClick}
+      >
         <MdPlayCircle className="text-xl group-hover:bg-gradient-to-r from-indigo-500 to-purple-500 group-hover:text-zinc-950 rounded-full duration-200 transition-all ease-linear" />
         {title}
       </button>
-      <button className={`flex p-1.5 border-2 rounded-md border-white duration-200 transition-all ease-linear ${isFaved ? "text-rose-500 border-rose-500" : ""}`} onClick={handleClick}>
-        <MdFavorite className='text-xl' />
+      <button
+        className={`flex p-1.5 border-2 rounded-md border-white duration-200 transition-all ease-linear ${isFaved ? 'text-rose-500 border-rose-500' : ''}`}
+        onClick={handleClick}
+      >
+        <MdFavorite className="text-xl" />
       </button>
     </div>
-
   )
 }

@@ -19,7 +19,11 @@ type Actions = {
 }
 
 function compare(state: FavShow, newData: FavShow): boolean {
-  return state.showId === newData.showId && state.season === newData.season && state.episode === newData.episode
+  return (
+    state.showId === newData.showId &&
+    state.season === newData.season &&
+    state.episode === newData.episode
+  )
 }
 
 export const useFavorite = create<Favorite & Actions>()((set) => ({
@@ -43,7 +47,7 @@ export const useFavorite = create<Favorite & Actions>()((set) => ({
     set((state) => {
       state.sync()
 
-      if (!state.data.find(fav => compare(fav, newData))) {
+      if (!state.data.find((fav) => compare(fav, newData))) {
         const newList = [...state.data, newData]
         saveToLocal(newList, state.name)
         return {
@@ -57,11 +61,11 @@ export const useFavorite = create<Favorite & Actions>()((set) => ({
     set((state) => {
       state.sync()
 
-      const filteredList = state.data.filter(fav => !compare(fav, newData))
+      const filteredList = state.data.filter((fav) => !compare(fav, newData))
       saveToLocal(filteredList, state.name)
       return {
         ...state,
-        data: filteredList
+        data: filteredList,
       }
     }),
 }))
