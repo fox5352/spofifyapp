@@ -1,28 +1,81 @@
-import { useLocation, useParams } from 'react-router-dom'
-import { type Season } from '../../../api/requests'
+import { Navigate, useLocation, useParams } from 'react-router-dom'
+import { getShow, type Season } from '../../../api/requests'
 
 import { MdFavorite, MdPlayCircle } from 'react-icons/md'
 import { usePlaylist } from '../../../store/playlist'
 import { FavShow, useFavorite } from '../../../store/favorites'
-import { MouseEvent, useMemo } from 'react'
+import { MouseEvent, useEffect, useMemo, useState } from 'react'
+import Loading from '../../../components/Loading'
+import ErrorMessage from '../../../components/ErrorMessage'
 
 export default function SeasonDetail() {
-  const { state }: { state: Season } = useLocation()
+  // params
+  const { id, season: seasonId } = useParams()
+  // store
   const { add, setTrack } = usePlaylist()
+  // page states
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  // page data
+  const [season, setSeason] = useState<Season | null>(null)
+  const { state }: { state: Season } = useLocation()
+
+  useEffect(() => {
+    const manageData = async () => {
+      setIsLoading(true)
+
+      if (!state && id && seasonId) {
+        const show = await getShow(id)
+
+        if (!show) {
+          setError('Failed to fetch show')
+          setIsLoading(false)
+          return
+        }
+
+
+        const season = show.seasons[Number(seasonId) - 1]
+
+
+        setError(null)
+        setIsLoading(false)
+        setSeason(season)
+        return
+      }
+      setError(null)
+      setSeason(state)
+      setIsLoading(false)
+    }
+    manageData()
+  }, [])
 
   const addAndPlay = () => {
     add(state)
     setTrack(0)
   }
 
+  if (isLoading) {
+    return (
+      <Loading className='h-60 w-auto mx-auto mt-10' />
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="w-full h-full text-red-500">
+        <ErrorMessage message={error} size="text-2xl" />
+      </div>
+    )
+  }
+
   return (
     <div className="flex flex-col items-center w-full mt-2 text-white bg-zinc-950 rounded-md">
       <div className="max-w-4xl w-full px-1 py-2">
-        <h2 className="text-2xl">{state.title}</h2>
+        <h2 className="text-2xl">{season?.title}</h2>
         <div className="p-1 pt-1.5">
-          <h4 className="text-xl text-indigo-500">Season: {state.season}</h4>
+          <h4 className="text-xl text-indigo-500">Season: {season?.season}</h4>
           <h5 className="text-xl text-purple-500">
-            Episodes: {state.episodes.length}
+            Episodes: {season?.episodes.length}
           </h5>
         </div>
         <nav>
@@ -39,8 +92,8 @@ export default function SeasonDetail() {
         </nav>
       </div>
       <ul className="flex flex-col max-w-5xl w-full space-y-1 py-2">
-        {state.episodes.map((episode) => (
-          <EpisodeButton {...episode} season={state} />
+        {season?.episodes.map((episode, index) => (
+          <EpisodeButton key={index} {...episode} season={state} />
         ))}
       </ul>
     </div>
@@ -72,7 +125,7 @@ const EpisodeButton = ({
 
   return (
     <li className="w-full" key={title}>
-      <FavButton title={title} ep={episode} showId={id || '0'} season={season.season} onClick={handleClick} />
+      <FavButton title={title} ep={episode} showId={id || '0'} season={season?.season} onClick={handleClick} />
     </li>
   )
 }
