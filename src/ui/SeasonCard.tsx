@@ -1,14 +1,22 @@
 import { Link } from 'react-router-dom'
-import { Season } from '../../../../api/requests'
+import { Season } from '../api/requests'
 
-export default function SeasonCard(data: Season) {
+export default function SeasonCard({
+  showId,
+  data,
+  className = '',
+}: {
+  showId: string
+  data: Season
+  className?: string
+}) {
   const { image, title, season } = data
 
   return (
     <Link
-      to={`${season}`}
+      to={`/shows/${showId}/${season}`}
       state={data}
-      className="max-w-xs w-full cursor-pointer relative h-96 rounded-md shadow-xl text-white bg-zinc-950 overflow-hidden"
+      className={`max-w-xs w-full cursor-pointer relative h-96 rounded-md shadow-xl text-white bg-zinc-950 overflow-hidden ${className}`}
     >
       <div className="relative w-full h-[85%] top-0 left-0">
         <img className="w-full h-full" src={image} alt="season banner" />
