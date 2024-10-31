@@ -22,7 +22,7 @@ export default function ShowHeader({
       role="banner"
     >
       <div className="flex flex-col basis-1/2 w-full text-center md:text-start md:pt-4 md:pl-4">
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           <button
             className="w-10 h-auto text-black rounded-full duration-200 ease-in-out bg-indigo-500 hover:scale-90 transition-all"
             onClick={() => navigate(-1)}
