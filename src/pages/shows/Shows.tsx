@@ -3,13 +3,13 @@ import { useSearchParams } from 'react-router-dom'
 
 import { getAllGenres, getPreview, Preview } from '../../api/requests'
 
-import ErrorMessage from '../../components/ErrorMessage'
-import Loading from '../../components/Loading'
-import { Card } from '../../components/Card'
+import ErrorMessage from '../../ui/ErrorMessage'
+import Loading from '../../ui/Loading'
+import { Card } from '../../ui/Card'
 
 import PreviewFilterBar from '../../assets/components/PreviewFilterBar'
 import PageNavButtons from '../../assets/components/PageNavButtons'
-import SearchBar from '../../components/SearchBar'
+import SearchBar from '../../ui/SearchBar'
 
 /**
  * Represents a genre category with its title and ID

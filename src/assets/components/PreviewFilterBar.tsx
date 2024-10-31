@@ -1,6 +1,6 @@
 import { memo, useEffect, useState } from 'react'
 import TagButton from './TagButton'
-import Loading from '../../components/Loading'
+import Loading from '../../ui/Loading'
 
 /**
  * Represents a genre category with its title and ID

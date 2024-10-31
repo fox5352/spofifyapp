@@ -1,8 +1,8 @@
 import type { Preview } from '../../../api/requests'
-import Loading from '../../../components/Loading'
-import { Card } from '../../../components/Card'
+import Loading from '../../../ui/Loading'
+import { Card } from '../../../ui/Card'
 
-export function PreviewGallery({
+export default function PreviewGallery({
   previews,
   title,
 }: {

@@ -5,8 +5,8 @@ import { MdFavorite, MdPlayCircle } from 'react-icons/md'
 import { usePlaylist } from '../../../store/playlist'
 import { FavShow, useFavorite } from '../../../store/favorites'
 import { MouseEvent, useEffect, useMemo, useState } from 'react'
-import Loading from '../../../components/Loading'
-import ErrorMessage from '../../../components/ErrorMessage'
+import Loading from '../../../ui/Loading'
+import ErrorMessage from '../../../ui/ErrorMessage'
 
 export default function SeasonDetail() {
   // params
