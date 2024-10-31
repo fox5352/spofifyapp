@@ -18,7 +18,7 @@ function App() {
           <Route path="shows" element={<Shows />} />
           <Route path="shows/:id" element={<PostDetail />}>
             <Route index element={<SeasonsSection />} />
-            <Route path="season" element={<SeasonDetail />} />
+            <Route path="/shows/:id/:season" element={<SeasonDetail />} />
           </Route>
 
           <Route path="*" element={<h1>404 ...</h1>} />

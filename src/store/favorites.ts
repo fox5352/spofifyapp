@@ -1,8 +1,10 @@
 import { create } from 'zustand'
 import { getfromLocal, saveToLocal } from '../lib/utils'
 
-type FavShow = {
-  id: string
+export type FavShow = {
+  showId: string
+  season: number
+  episode: number
 }
 
 type Favorite = {
@@ -13,7 +15,11 @@ type Favorite = {
 type Actions = {
   sync: () => void
   add: (data: FavShow) => void
-  remove: (id: string) => void
+  remove: (id: FavShow) => void
+}
+
+function compare(state: FavShow, newData: FavShow): boolean {
+  return state.showId === newData.showId && state.season === newData.season && state.episode === newData.episode
 }
 
 export const useFavorite = create<Favorite & Actions>()((set) => ({
@@ -36,8 +42,8 @@ export const useFavorite = create<Favorite & Actions>()((set) => ({
   add: (newData) =>
     set((state) => {
       state.sync()
-      // check if the show is already in the favorites
-      if (!state.data.find((fav) => fav.id === newData.id)) {
+
+      if (!state.data.find(fav => compare(fav, newData))) {
         const newList = [...state.data, newData]
         saveToLocal(newList, state.name)
         return {
@@ -47,15 +53,15 @@ export const useFavorite = create<Favorite & Actions>()((set) => ({
       }
       return state
     }),
-  remove: (id) =>
+  remove: (newData) =>
     set((state) => {
       state.sync()
-      // remove the show from the favorites
-      const newList = (state.data = state.data.filter((fav) => fav.id !== id))
-      saveToLocal(newList, state.name)
+
+      const filteredList = state.data.filter(fav => !compare(fav, newData))
+      saveToLocal(filteredList, state.name)
       return {
         ...state,
-        data: newList,
+        data: filteredList
       }
     }),
 }))
