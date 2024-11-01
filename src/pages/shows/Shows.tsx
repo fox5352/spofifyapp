@@ -27,7 +27,9 @@ function Shows() {
   const currentPage = Number(searchParams.get('page') || 0)
   const selectedGenre = searchParams.get('q') || '*'
   const titleQuery = searchParams.get('title') || '*'
-
+  // page ordering
+  const order = searchParams.get('order') || 'a-z'
+  // page data
   const [previewCards, setPreviewCards] = useState<Preview[] | null>()
 
   // UI state
@@ -40,7 +42,6 @@ function Shows() {
   // ----------------------------------------------- fetching functionality -----------------------------------------------
   /**
    * Fetches available genres from the database
-   * Currently hardcoded to fetch genres with IDs 1-8
    */
   useEffect(() => {
     const fetchGenre = async () => {
@@ -139,6 +140,40 @@ function Shows() {
     filterPreviewData()
   }, [filterPreviewData])
 
+  useEffect(() => {
+    if (!previewCards) return
+    setPreviewCards(filterOrder(order, previewCards))
+  }, [order])
+
+  const filterOrder = (order: string, preview: Preview[]): Preview[] => {
+    const copy = [...preview]
+
+    switch (order) {
+      case 'a-z':
+        return [...copy].sort((a, b) => a.title.localeCompare(b.title))
+
+      case 'z-a':
+        return [...copy].sort((a, b) => b.title.localeCompare(a.title))
+
+      case 'asc':
+        return [...copy].sort((a, b) => {
+          const aDate = new Date(a.updated).getTime()
+          const bDate = new Date(b.updated).getTime()
+          return bDate - aDate // Sort by updated date descending
+        })
+
+      case 'dsc':
+        return [...copy].sort((a, b) => {
+          const aDate = new Date(a.updated).getTime()
+          const bDate = new Date(b.updated).getTime()
+          return aDate - bDate // Sort by updated date ascending
+        })
+
+      default:
+        return copy
+    }
+  }
+
   // ----------------------------------------------- ui functionality -----------------------------------------------
   /**
    * Returns a slice of preview cards for the current page
@@ -150,7 +185,7 @@ function Shows() {
         startIndex + ITEMS_PER_PAGE,
         previewCards.length
       )
-      return previewCards
+      return filterOrder(order, previewCards)
         .slice(startIndex, endIndex)
         .map((preview) => <Card key={Number(preview.id)} {...preview} />)
     }
