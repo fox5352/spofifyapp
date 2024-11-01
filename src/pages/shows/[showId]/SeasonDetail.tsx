@@ -147,6 +147,7 @@ function FavButton({
   onClick: Func
 }) {
   const { data, add, remove } = useFavorite()
+
   const isFaved: boolean = useMemo(() => {
     return data.find(
       (fav) =>
@@ -165,6 +166,7 @@ function FavButton({
       showId: showId,
       season: Number(season),
       episode: Number(ep),
+      date: new Date(),
     }
 
     if (!isFaved) {

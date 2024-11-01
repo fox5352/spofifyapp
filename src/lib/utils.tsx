@@ -68,13 +68,13 @@ export function debounce<T extends unknown[]>(
  * @param {string} date date from api
  * @returns {string} formatted date in the desired format
  */
-export function formatDate(date: string): string {
+export function formatDate(date: string, opts: Intl.DateTimeFormatOptions = {
+  year: 'numeric',
+  month: 'long',
+  day: '2-digit',
+}): string {
   const data = new Date(date)
-  return data.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: '2-digit',
-  })
+  return data.toLocaleDateString('en-US', opts)
 }
 
 export function saveToLocal<T>(data: T, name: string): boolean {

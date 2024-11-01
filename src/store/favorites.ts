@@ -5,6 +5,7 @@ export type FavShow = {
   showId: string
   season: number
   episode: number
+  date: Date
 }
 
 type Favorite = {
