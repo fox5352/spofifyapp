@@ -1,10 +1,14 @@
 import { useState, useEffect } from 'react'
-import { getPreview, getShow, Season } from '../../api/requests'
+import { useSearchParams } from 'react-router-dom'
+
 import { FavShow, useFavorite } from '../../store/favorites'
-import SeasonCard, { SeasonCardProps } from '../../ui/SeasonCard'
-import Loading from '../../ui/Loading'
+import { getShow, Season } from '../../api/requests'
+
 import ErrorMessage from '../../ui/ErrorMessage'
-import { formatDate } from '../../lib/utils'
+import Loading from '../../ui/Loading'
+
+import DashBoardFilterModal from './component/DashBoardFilterModal'
+import FavoriteCard from './component/FavoriteCard'
 
 /**
  * Extended Season type that includes the show ID for reference
@@ -25,6 +29,9 @@ export default function Dashboard() {
     FavoriteSeason[] | null
   >(null)
   const { data: favoritesData } = useFavorite()
+  //
+  const [searchParams,] = useSearchParams()
+  const order = searchParams.get("order") || "a-z"
 
   /**
    * Removes duplicate favorite entries based on show ID and season
@@ -64,6 +71,36 @@ export default function Dashboard() {
       return null
     }
   }
+
+  const filterOrder = (order: string, preview: FavoriteSeason[]): FavoriteSeason[] => {
+    const copy = [...preview]
+
+    switch (order) {
+      case 'a-z':
+        return [...copy].sort((a, b) => a.title.localeCompare(b.title))
+
+      case 'z-a':
+        return [...copy].sort((a, b) => b.title.localeCompare(a.title))
+
+      case 'asc':
+        return [...copy].sort((a, b) => {
+          const aDate = a.date.getTime()
+          const bDate = b.date.getTime()
+          return bDate - aDate // Sort by updated date descending
+        })
+
+      case 'dsc':
+        return [...copy].sort((a, b) => {
+          const aDate = a.date.getTime()
+          const bDate = b.date.getTime()
+          return aDate - bDate // Sort by updated date ascending
+        })
+
+      default:
+        return copy
+    }
+  }
+
 
   useEffect(() => {
     /**
@@ -108,11 +145,15 @@ export default function Dashboard() {
     fetchFavoriteSeasons()
   }, [favoritesData])
 
+  if (!favoriteSeasons) return <></>
+
   return (
     <section
       className="flex flex-col items-center max-w-screen-xl w-full min-h-[320px] mx-auto my-2 p-2 bg-zinc-950 rounded-md"
       aria-label="Favorite Shows Dashboard"
     >
+
+      <DashBoardFilterModal />
       <h1 className="flex justify-start w-full text-4xl font-bold py-1 pl-2 bg-gradient-to-r from-indigo-500 via-violet-500 to-purple-500 bg-clip-text text-transparent">
         Favorites
       </h1>
@@ -128,8 +169,8 @@ export default function Dashboard() {
             aria-label="Loading favorite seasons"
           />
         ) : (
-          favoriteSeasons?.map((season) => (
-            <FavCard
+          filterOrder(order, favoriteSeasons).map((season) => (
+            <FavoriteCard
               className="border-2 border-white"
               key={`${season.showId}-season-${season.season}`}
               showId={season.showId}
@@ -140,46 +181,5 @@ export default function Dashboard() {
         )}
       </div>
     </section>
-  )
-}
-
-interface FavCardProps extends SeasonCardProps {
-  date: Date
-}
-
-function FavCard({ data, date, className, showId }: FavCardProps) {
-  const [title, setTitle] = useState("loading...")
-  const formatedDate = formatDate(date.toString(), {
-    year: '2-digit',
-    month: 'short',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit'
-  })
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await getPreview()
-      if (!res) return
-
-      const show = res.find((show) => `${show.id}` === showId)
-      if (!show) return
-
-      setTitle(show.title)
-    }
-    fetchData()
-  }, [])
-
-  return (
-    <div className={`h-96 ${className} rounded-md overflow-hidden relative`}>
-      <div className='absolute z-20 top-0 left-0 w-full p-2 px-4 text-white bg-zinc-950 rounded-md'>
-        <h2 className='text-xl text-white'>{title}</h2>
-        <h4 className=''>{formatedDate}</h4>
-      </div>
-      <SeasonCard key={`${showId}-season-${data.season}`}
-        showId={showId}
-        data={data}
-      />
-    </div>
   )
 }
