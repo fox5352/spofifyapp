@@ -46,21 +46,14 @@ function SearchBar() {
     {
       title: 'Sort alphabetically',
       onChange: handleChange,
-      name: "order",
+      name: 'order',
       options: [
+        { text: 'A-z', value: 'a-z' },
+        { text: 'Z-a', value: 'z-a' },
         { text: 'newest', value: 'dsc' },
-        { text: 'oldst', value: 'asc' },
+        { text: 'oldest', value: 'asc' },
       ],
     },
-    {
-      title: "Sort By Date",
-      onChange: handleChange,
-      name: "date",
-      options: [
-        { text: 'newest', value: 'dsc' },
-        { text: 'oldest', value: 'asc' }
-      ]
-    }
   ]
 
   return (
