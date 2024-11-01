@@ -9,7 +9,6 @@ import { usePlaylist } from '../store/playlist'
 
 export default function Musicbar() {
   const [isPaused, setIsPaused] = useState(true)
-  const [hasPlaylist, setHasPlaylist] = useState(false)
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const progressBarRef = useRef<HTMLDivElement | null>(null)
   // playlist store
@@ -42,7 +41,6 @@ export default function Musicbar() {
     }
 
     if (data) {
-      setHasPlaylist(true)
       loadAudio(data.episodes[index].file)
     }
 
@@ -67,7 +65,7 @@ export default function Musicbar() {
   return (
     <>
       <div
-        className={`fixed ${hasPlaylist ? '' : ' hidden'} z-50 bottom-1 left-1/2 -translate-x-1/2 w-[95%] max-w-3xl`}
+        className={`fixed z-50 bottom-1 left-1/2 -translate-x-1/2 w-[95%] max-w-3xl`}
       >
         <div className="p-[3px] relative">
           <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg" />
