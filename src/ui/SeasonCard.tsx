@@ -1,15 +1,17 @@
 import { Link } from 'react-router-dom'
 import { Season } from '../api/requests'
 
+export interface SeasonCardProps {
+  showId: string
+  data: Season
+  className?: string
+}
+
 export default function SeasonCard({
   showId,
   data,
   className = '',
-}: {
-  showId: string
-  data: Season
-  className?: string
-}) {
+}: SeasonCardProps) {
   const { image, title, season } = data
 
   return (

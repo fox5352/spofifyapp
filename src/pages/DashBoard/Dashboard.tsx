@@ -1,15 +1,17 @@
 import { useState, useEffect } from 'react'
-import { getShow, Season } from '../../api/requests'
+import { getPreview, getShow, Season } from '../../api/requests'
 import { FavShow, useFavorite } from '../../store/favorites'
-import SeasonCard from '../../ui/SeasonCard'
+import SeasonCard, { SeasonCardProps } from '../../ui/SeasonCard'
 import Loading from '../../ui/Loading'
 import ErrorMessage from '../../ui/ErrorMessage'
+import { formatDate } from '../../lib/utils'
 
 /**
  * Extended Season type that includes the show ID for reference
  */
 interface FavoriteSeason extends Season {
   showId: string
+  date: Date
 }
 
 /**
@@ -29,6 +31,7 @@ export default function Dashboard() {
    */
   const removeDuplicateFavorites = (favorites: FavShow[]): FavShow[] => {
     return favorites.reduce((unique: FavShow[], current: FavShow) => {
+
       const exists = unique.find(
         (fav) => fav.showId === current.showId && fav.season === current.season
       )
@@ -54,6 +57,7 @@ export default function Dashboard() {
       return {
         ...season,
         showId: favorite.showId,
+        date: new Date(favorite.date)
       }
     } catch (err) {
       console.error(`Error fetching show ${favorite.showId}:`, err)
@@ -125,15 +129,57 @@ export default function Dashboard() {
           />
         ) : (
           favoriteSeasons?.map((season) => (
-            <SeasonCard
+            <FavCard
               className="border-2 border-white"
               key={`${season.showId}-season-${season.season}`}
               showId={season.showId}
               data={season}
+              date={season.date}
             />
           ))
         )}
       </div>
     </section>
+  )
+}
+
+interface FavCardProps extends SeasonCardProps {
+  date: Date
+}
+
+function FavCard({ data, date, className, showId }: FavCardProps) {
+  const [title, setTitle] = useState("loading...")
+  const formatedDate = formatDate(date.toString(), {
+    year: '2-digit',
+    month: 'short',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit'
+  })
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await getPreview()
+      if (!res) return
+
+      const show = res.find((show) => `${show.id}` === showId)
+      if (!show) return
+
+      setTitle(show.title)
+    }
+    fetchData()
+  }, [])
+
+  return (
+    <div className={`h-96 ${className} rounded-md overflow-hidden relative`}>
+      <div className='absolute z-20 top-0 left-0 w-full p-2 px-4 text-white bg-zinc-950 rounded-md'>
+        <h2 className='text-xl text-white'>{title}</h2>
+        <h4 className=''>{formatedDate}</h4>
+      </div>
+      <SeasonCard key={`${showId}-season-${data.season}`}
+        showId={showId}
+        data={data}
+      />
+    </div>
   )
 }
