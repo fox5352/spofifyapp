@@ -17,9 +17,9 @@ export default function QueryFilterModel({
   const handleClickOutside = (event: MouseEvent) => {
     if (!event.target) return
 
-    const target = event.target as Node; // Assert event.target as Node
+    const target = event.target as Node // Assert event.target as Node
     if (modalRef.current && !modalRef.current.contains(target)) {
-      toggleFunction();
+      toggleFunction()
     }
   }
 
@@ -36,13 +36,16 @@ export default function QueryFilterModel({
 
   return (
     <>
-      <div aria-hidden="true"
+      <div
+        aria-hidden="true"
         className={`${isActive ? '' : 'hidden'} overflow-y-auto overflow-x-hidden fixed top-0 right-1/2 left-0 z-50 flex justify-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full`}
       >
         <div className="relative p-4 w-full max-w-2xl max-h-full">
           {/*<!-- Modal content --> */}
-          <div ref={modalRef}
-            className="relative text-white bg-zinc-950 rounded-lg shadow">
+          <div
+            ref={modalRef}
+            className="relative text-white bg-zinc-950 rounded-lg shadow"
+          >
             {/*<!-- Modal header -->*/}
             <div className="flex items-center justify-between p-4 md:p-5 rounded-t">
               <h3 className="text-2xl font-semibold bg-gradient-to-r from-indigo-500 via-violet-500 to-purple-500 bg-clip-text text-transparent">
@@ -57,7 +60,7 @@ export default function QueryFilterModel({
                 <span className="sr-only">Close modal</span>
               </button>
             </div>
-            <div className='w-full max-w-xl h-1 mx-auto bg-gradient-to-r from-indigo-500 via-violet-500 to-purple-500 rounded-full' />
+            <div className="w-full max-w-xl h-1 mx-auto bg-gradient-to-r from-indigo-500 via-violet-500 to-purple-500 rounded-full" />
             {/*<!-- Modal body -->*/}
             <div className="p-4 md:p-5 space-y-4">
               {filters.map((filter, idx) => (
