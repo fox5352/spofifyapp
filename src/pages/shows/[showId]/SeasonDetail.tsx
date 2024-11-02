@@ -48,7 +48,8 @@ export default function SeasonDetail() {
   }, [])
 
   const addAndPlay = () => {
-    add(state)
+    if (!season) return
+    add(season)
     setTrack(0)
   }
 
