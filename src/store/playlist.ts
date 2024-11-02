@@ -2,13 +2,17 @@ import { create } from 'zustand'
 //
 import type { Season } from '../api/requests'
 
+interface PlayListData extends Season {
+  showId: string
+}
+
 type Playlist = {
-  data: Season | null
+  data: PlayListData | null
   index: number
 }
 
 type Actions = {
-  add: (data: Season) => void
+  add: (data: PlayListData) => void
   setTrack: (episode: number) => void
   next: () => void
   previous: () => void

@@ -6,10 +6,10 @@ import {
   MdPlayCircle,
 } from 'react-icons/md'
 import { usePlaylist } from '../store/playlist'
+import { Listened, saveToListened } from '../lib/utils'
 
 export default function Musicbar() {
   const [isPaused, setIsPaused] = useState(true)
-  const [hasPlaylist, setHasPlaylist] = useState(false)
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const progressBarRef = useRef<HTMLDivElement | null>(null)
   // playlist store
@@ -26,6 +26,17 @@ export default function Musicbar() {
         const progress =
           (audioRef.current.currentTime / audioRef.current.duration) * 100
         progressBarRef.current.style.width = `${progress}%`
+        const markAsListend = progress >= 15
+        if (markAsListend && data) {
+          // TODO: mark as listened
+          const newSave: Listened = {
+            showId: data.showId,
+            season: `${data.season}`,
+            episode: `${index + 1}`,
+            url: data.episodes[index].file,
+          }
+          saveToListened(newSave)
+        }
       }
     }
 
@@ -42,7 +53,6 @@ export default function Musicbar() {
     }
 
     if (data) {
-      setHasPlaylist(true)
       loadAudio(data.episodes[index].file)
     }
 
@@ -53,6 +63,22 @@ export default function Musicbar() {
     }
   }, [data, index])
 
+  // beforeuload when audio is playing
+  useEffect(() => {
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      event.preventDefault()
+      // TODO: add timstamp with auido path
+    }
+
+    if (audioRef.current && !audioRef.current.paused && !isPaused) {
+      window.addEventListener('beforeunload', handleBeforeUnload)
+    } else {
+      window.removeEventListener('beforeunload', handleBeforeUnload)
+    }
+
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload)
+  }, [isPaused, audioRef])
+
   const togglePlayPause = () => {
     if (audioRef.current && audioRef.current.paused) {
       audioRef.current.play()
@@ -62,12 +88,11 @@ export default function Musicbar() {
       setIsPaused(true)
     }
   }
-  // TODO: made hidden when playlist is empty
 
   return (
     <>
       <div
-        className={`fixed ${hasPlaylist ? '' : ' hidden'} z-50 bottom-1 left-1/2 -translate-x-1/2 w-[95%] max-w-3xl`}
+        className={`fixed z-50 bottom-1 left-1/2 -translate-x-1/2 w-[95%] max-w-3xl`}
       >
         <div className="p-[3px] relative">
           <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg" />

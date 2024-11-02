@@ -5,9 +5,10 @@ import RootLayout from './Rootlayout'
 import Home from './pages/Home/Home'
 
 import Shows from './pages/shows/Shows'
-import PostDetail from './pages/shows/[showId]/ShowDetail'
+import ShowLayout from './pages/shows/[showId]/ShowLayout'
 import SeasonsSection from './pages/shows/[showId]/SeasonsSection'
-import SeasonDetail from './pages/shows/[showId]/SeasonDetail'
+import SeasonDetail from './pages/shows/[showId]/[seasonid]/SeasonDetail'
+
 import Dashboard from './pages/DashBoard/Dashboard'
 
 function App() {
@@ -17,7 +18,7 @@ function App() {
         <Route path="/" element={<RootLayout />}>
           <Route index element={<Home />} />
           <Route path="shows" element={<Shows />} />
-          <Route path="shows/:id" element={<PostDetail />}>
+          <Route path="shows/:id" element={<ShowLayout />}>
             <Route index element={<SeasonsSection />} />
             <Route path="/shows/:id/:season" element={<SeasonDetail />} />
           </Route>
