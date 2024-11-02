@@ -68,11 +68,14 @@ export function debounce<T extends unknown[]>(
  * @param {string} date date from api
  * @returns {string} formatted date in the desired format
  */
-export function formatDate(date: string, opts: Intl.DateTimeFormatOptions = {
-  year: 'numeric',
-  month: 'long',
-  day: '2-digit',
-}): string {
+export function formatDate(
+  date: string,
+  opts: Intl.DateTimeFormatOptions = {
+    year: 'numeric',
+    month: 'long',
+    day: '2-digit',
+  }
+): string {
   const data = new Date(date)
   return data.toLocaleDateString('en-US', opts)
 }
@@ -98,4 +101,37 @@ export function getfromLocal<T>(name: string): T | null {
     console.error('Error on getfromLocal:', error)
     return null
   }
+}
+
+export interface Listened {
+  showId: string
+  season: string
+  episode: string
+  url: string
+}
+//
+export function saveToListened(data: Listened) {
+  const name = 'listend'
+  const list = getfromLocal<Listened[]>(name) || []
+  const exist = list.find(
+    (item) =>
+      item.showId === data.showId &&
+      item.season === data.season &&
+      item.episode === data.episode
+  )
+
+  if (!exist) {
+    list.push(data)
+    saveToLocal(list, name)
+  }
+}
+
+export function getFromListened(): Listened[] {
+  const name = 'listend'
+  return getfromLocal<Listened[]>(name) || []
+}
+
+export function resetlisted() {
+  const name = 'listend'
+  saveToLocal([], name)
 }

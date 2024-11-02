@@ -30,15 +30,14 @@ export default function Dashboard() {
   >(null)
   const { data: favoritesData } = useFavorite()
   //
-  const [searchParams,] = useSearchParams()
-  const order = searchParams.get("order") || "a-z"
+  const [searchParams] = useSearchParams()
+  const order = searchParams.get('order') || 'a-z'
 
   /**
    * Removes duplicate favorite entries based on show ID and season
    */
   const removeDuplicateFavorites = (favorites: FavShow[]): FavShow[] => {
     return favorites.reduce((unique: FavShow[], current: FavShow) => {
-
       const exists = unique.find(
         (fav) => fav.showId === current.showId && fav.season === current.season
       )
@@ -64,7 +63,7 @@ export default function Dashboard() {
       return {
         ...season,
         showId: favorite.showId,
-        date: new Date(favorite.date)
+        date: new Date(favorite.date),
       }
     } catch (err) {
       console.error(`Error fetching show ${favorite.showId}:`, err)
@@ -72,7 +71,10 @@ export default function Dashboard() {
     }
   }
 
-  const filterOrder = (order: string, preview: FavoriteSeason[]): FavoriteSeason[] => {
+  const filterOrder = (
+    order: string,
+    preview: FavoriteSeason[]
+  ): FavoriteSeason[] => {
     const copy = [...preview]
 
     switch (order) {
@@ -100,7 +102,6 @@ export default function Dashboard() {
         return copy
     }
   }
-
 
   useEffect(() => {
     /**
@@ -152,7 +153,6 @@ export default function Dashboard() {
       className="flex flex-col items-center max-w-screen-xl w-full min-h-[320px] mx-auto my-2 p-2 bg-zinc-950 rounded-md"
       aria-label="Favorite Shows Dashboard"
     >
-
       <DashBoardFilterModal />
       <h1 className="flex justify-start w-full text-4xl font-bold py-1 pl-2 bg-gradient-to-r from-indigo-500 via-violet-500 to-purple-500 bg-clip-text text-transparent">
         Favorites

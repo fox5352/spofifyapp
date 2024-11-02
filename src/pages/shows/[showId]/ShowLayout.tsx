@@ -13,7 +13,7 @@ import type { Show } from '../../../api/requests'
  * ShowDetail component displays detailed information about a TV show
  * including its title, description, seasons, and episodes
  */
-export default function ShowDetail() {
+export default function ShowLayout() {
   const { id } = useParams()
   const [show, setShow] = useState<Show | null>(null)
   const [isLoading, setIsLoading] = useState(false)

@@ -6,6 +6,7 @@ import {
   MdPlayCircle,
 } from 'react-icons/md'
 import { usePlaylist } from '../store/playlist'
+import { Listened, saveToListened } from '../lib/utils'
 
 export default function Musicbar() {
   const [isPaused, setIsPaused] = useState(true)
@@ -22,11 +23,19 @@ export default function Musicbar() {
         audioRef.current.duration &&
         progressBarRef.current
       ) {
-        const progress = (audioRef.current.currentTime / audioRef.current.duration) * 100
+        const progress =
+          (audioRef.current.currentTime / audioRef.current.duration) * 100
         progressBarRef.current.style.width = `${progress}%`
-        const markAsListend = progress == 90
-        if (markAsListend) {
+        const markAsListend = progress >= 15
+        if (markAsListend && data) {
           // TODO: mark as listened
+          const newSave: Listened = {
+            showId: data.showId,
+            season: `${data.season}`,
+            episode: `${index + 1}`,
+            url: data.episodes[index].file,
+          }
+          saveToListened(newSave)
         }
       }
     }
