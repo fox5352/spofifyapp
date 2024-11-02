@@ -35,7 +35,6 @@ export default function FavButton({
     }
 
     if (!isFaved) {
-      console.log('saving fav:', newFav)
       add(newFav)
     } else {
       remove(newFav)

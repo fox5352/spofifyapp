@@ -38,7 +38,7 @@ export default function DashBoardFilterModal() {
         type="button"
       >
         <MdMenu
-          className={`w-full h-full p-0.5 ${isMenuActive ? 'text-indigo-500 bg-zinc-950' : 'text-zinc-950 bg-indigo-500'} duration-200 transition-all ease-linear overflow-hidden`}
+          className={`w-full h-full p-0.5 ${isMenuActive ? 'text-indigo-500' : 'text-white'} bg-zinc-950 duration-200 transition-all ease-linear overflow-hidden`}
         />
       </button>
       <QueryFilterModel
