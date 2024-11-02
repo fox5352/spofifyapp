@@ -22,9 +22,12 @@ export default function Musicbar() {
         audioRef.current.duration &&
         progressBarRef.current
       ) {
-        const progress =
-          (audioRef.current.currentTime / audioRef.current.duration) * 100
+        const progress = (audioRef.current.currentTime / audioRef.current.duration) * 100
         progressBarRef.current.style.width = `${progress}%`
+        const markAsListend = progress == 90
+        if (markAsListend) {
+          // TODO: mark as listened
+        }
       }
     }
 
@@ -51,6 +54,22 @@ export default function Musicbar() {
     }
   }, [data, index])
 
+  // beforeuload when audio is playing
+  useEffect(() => {
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      event.preventDefault()
+      // TODO: add timstamp with auido path
+    }
+
+    if (audioRef.current && !audioRef.current.paused && !isPaused) {
+      window.addEventListener('beforeunload', handleBeforeUnload)
+    } else {
+      window.removeEventListener('beforeunload', handleBeforeUnload)
+    }
+
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload)
+  }, [isPaused, audioRef])
+
   const togglePlayPause = () => {
     if (audioRef.current && audioRef.current.paused) {
       audioRef.current.play()
@@ -60,7 +79,6 @@ export default function Musicbar() {
       setIsPaused(true)
     }
   }
-  // TODO: made hidden when playlist is empty
 
   return (
     <>
