@@ -108,6 +108,7 @@ export interface Listened {
   season: string
   episode: string
   url: string
+  date: Date
 }
 //
 export function saveToListened(data: Listened) {

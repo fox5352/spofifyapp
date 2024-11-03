@@ -26,7 +26,9 @@ export default function Musicbar() {
         const progress =
           (audioRef.current.currentTime / audioRef.current.duration) * 100
         progressBarRef.current.style.width = `${progress}%`
-        const markAsListend = progress >= 15
+
+        const markAsListend = progress >= 95// TODO: to allow for adjustments later
+
         if (markAsListend && data) {
           // TODO: mark as listened
           const newSave: Listened = {
@@ -34,6 +36,7 @@ export default function Musicbar() {
             season: `${data.season}`,
             episode: `${index + 1}`,
             url: data.episodes[index].file,
+            date: new Date()
           }
           saveToListened(newSave)
         }
