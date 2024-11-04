@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 import { FaTrash } from 'react-icons/fa'
 import { debounce } from '../lib/utils'
 import { MdMenu } from 'react-icons/md'
-import QueryFilterModel, { SelectMenuProps } from './QueryFilterModel'
+import QueryFilterModal, { SelectMenuProps } from './QueryFilterModal'
 
 function SearchBar() {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -83,7 +83,7 @@ function SearchBar() {
         </button>
       </form>
       <div className="flex justify-center w-full">
-        <QueryFilterModel
+        <QueryFilterModal
           isActive={isMenuActive}
           toggleFunction={() => setIsMenuActive((prev) => !prev)}
           filters={filters}

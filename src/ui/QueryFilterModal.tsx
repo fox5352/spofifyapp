@@ -1,17 +1,17 @@
 import { ChangeEvent, useEffect, useRef } from 'react'
 import { MdClose } from 'react-icons/md'
 
-interface QueryFilterModelProps {
+interface QueryFilterModalProps {
   isActive: boolean
   toggleFunction: () => void
   filters: SelectMenuProps[]
 }
 
-export default function QueryFilterModel({
+export default function QueryFilterModal({
   isActive,
   toggleFunction,
   filters,
-}: QueryFilterModelProps) {
+}: QueryFilterModalProps) {
   const modalRef = useRef<HTMLDivElement | null>(null)
 
   const handleClickOutside = (event: MouseEvent) => {

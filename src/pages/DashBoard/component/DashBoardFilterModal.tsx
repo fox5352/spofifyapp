@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import QueryFilterModel, { SelectMenuProps } from '../../../ui/QueryFilterModel'
+import QueryFilterModal, { SelectMenuProps } from '../../../ui/QueryFilterModal'
 import { MdMenu } from 'react-icons/md'
 
 export default function DashBoardFilterModal() {
@@ -41,7 +41,7 @@ export default function DashBoardFilterModal() {
           className={`w-full h-full p-0.5 ${isMenuActive ? 'text-indigo-500' : 'text-white'} bg-zinc-950 duration-200 transition-all ease-linear overflow-hidden`}
         />
       </button>
-      <QueryFilterModel
+      <QueryFilterModal
         isActive={isMenuActive}
         toggleFunction={toggleMenu}
         filters={filters}
