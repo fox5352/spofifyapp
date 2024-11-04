@@ -2,7 +2,7 @@ import { create } from 'zustand'
 //
 import type { Season } from '../api/requests'
 
-interface PlayListData extends Season {
+export interface PlayListData extends Season {
   showId: string
 }
 

@@ -3,7 +3,8 @@ import { useSearchParams } from 'react-router-dom'
 import { FaTrash } from 'react-icons/fa'
 import { debounce } from '../lib/utils'
 import { MdMenu } from 'react-icons/md'
-import QueryFilterModal, { SelectMenuProps } from './QueryFilterModal'
+import QueryFilterModal from './QueryFilterModal'
+import { SelectMenuProps } from './SelectMenu'
 
 function SearchBar() {
   const [searchParams, setSearchParams] = useSearchParams()
