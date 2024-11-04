@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 
 export interface SelectMenuProps {
   name: string
@@ -18,7 +18,11 @@ export default function SelectMenu({
   onChange,
 }: SelectMenuProps) {
   // Setting the initial selected value as the first option
-  const [selectedValue, setSelectedValue] = useState(options[defaultIdx].value)
+  const [selectedValue, setSelectedValue] = useState(options[0].value)
+
+  useEffect(() => {
+    setSelectedValue(options[defaultIdx].value)
+  }, [defaultIdx, options])
 
   const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
     setSelectedValue(event.target.value)

@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useRef, useState } from 'react'
+import { ChangeEvent, MouseEvent, useEffect, useRef, useState } from 'react'
 import {
   MdArrowCircleLeft,
   MdArrowCircleRight,
@@ -9,46 +9,62 @@ import { usePlaylist } from '../store/playlist'
 import { Listened, saveToListened } from '../lib/utils'
 import SelectMenu from './SelectMenu'
 
+interface SelectOption {
+  text: string
+  value: string
+}
+
 /**
  * AudioPlayer - A fixed-position audio player component with playback controls
  * and progress tracking.
  *
- * Features:
- * - Play/pause controls
+ * This component provides a full-featured audio player interface with:
+ * - Play/pause toggle
  * - Next/previous track navigation
- * - Progress bar with visual feedback
- * - Automatic progress tracking and listened status
+ * - Click-to-seek progress bar
+ * - Episode selection dropdown
  * - Responsive design with gradient styling
+ * - Page leave warning when audio is playing
  *
- * @returns {JSX.Element} The AudioPlayer component
+ * The player maintains its state through the usePlaylist hook and automatically
+ * saves listening progress to local storage when episodes are completed.
+ *
+ * @example
+ * ```tsx
+ * <AudioPlayer />
+ * ```
  */
 export default function AudioPlayer() {
-  // Refs
+  // Refs for DOM elements
   const audioElementRef = useRef<HTMLAudioElement | null>(null)
+  const progressBarContainerRef = useRef<HTMLDivElement | null>(null)
   const progressBarElementRef = useRef<HTMLDivElement | null>(null)
 
   // Local state
   const [isPlaying, setIsPlaying] = useState(false)
-  const [selectOptions, setSelectOptions] = useState<
-    { text: string; value: string }[] | null
-  >(null)
+  const [selectOptions, setSelectOptions] = useState<SelectOption[] | null>(
+    null
+  )
 
-  // Playlist state
+  // Global playlist state
   const { data, index, next, previous, setTrack } = usePlaylist()
 
   /**
    * Updates the progress bar and handles episode completion tracking
    */
   const handleProgressUpdate = () => {
-    if (!audioElementRef.current?.duration || !progressBarElementRef.current)
-      return
+    const audio = audioElementRef.current
+    const progressBar = progressBarElementRef.current
 
-    const currentProgress =
-      (audioElementRef.current.currentTime / audioElementRef.current.duration) *
-      100
-    progressBarElementRef.current.style.width = `${currentProgress}%`
+    if (!audio?.duration || !progressBar) return
 
-    const COMPLETION_THRESHOLD = 95 // Mark as listened when 95% complete
+    const COMPLETION_THRESHOLD = 95 // Percentage threshold to mark as listened
+    const currentProgress = (audio.currentTime / audio.duration) * 100
+
+    // Update progress bar
+    progressBar.style.width = `${currentProgress}%`
+
+    // Track completion status
     if (currentProgress >= COMPLETION_THRESHOLD && data) {
       const listenedRecord: Listened = {
         showId: data.showId,
@@ -62,51 +78,85 @@ export default function AudioPlayer() {
   }
 
   /**
+   * Handles click events on the progress bar to seek to a specific position.
+   * Calculates the clicked position as a percentage and updates the audio time.
+   */
+  const handleSeekOnProgressBar = (event: MouseEvent<HTMLDivElement>) => {
+    const container = progressBarContainerRef.current
+    const audio = audioElementRef.current
+
+    if (!container || !audio) return
+
+    // Get the position and dimensions of the container relative to the viewport
+    const rect = container.getBoundingClientRect()
+
+    // Calculate the container's width based on its left and right coordinates
+    const containerWidth = rect.right - rect.left
+
+    // Calculate the horizontal position of the click within the container
+    // by subtracting the left edge of the container from the click's x-coordinate
+    const clickPosition = event.clientX - rect.left
+
+    // Calculate the click position as a percentage of the container's width
+    const clickPercentage = (clickPosition / containerWidth) * 100
+
+    // Update the audio's current time based on the click percentage
+    // The time is set by multiplying the audio's total duration by the click percentage
+    audio.currentTime = (clickPercentage / 100) * audio.duration
+  }
+
+  /**
    * Loads and auto-plays a new audio file
    */
   const loadAudioFile = (audioUrl: string) => {
-    if (!audioElementRef.current) return
+    const audio = audioElementRef.current
+    if (!audio) return
 
-    audioElementRef.current.src = audioUrl
-    audioElementRef.current.load()
+    audio.src = audioUrl
+    audio.load()
 
-    if (audioElementRef.current.canPlayType.length > 0) {
-      audioElementRef.current.play()
+    if (audio.canPlayType.length > 0) {
+      audio.play()
       setIsPlaying(true)
     }
   }
 
-  // Handle audio loading and progress tracking
   useEffect(() => {
-    if (data) {
-      setSelectOptions(
-        data.episodes.map((ep, index) => {
-          return {
-            text: ep.title,
-            value: `${index}`,
-          }
-        })
-      )
-      loadAudioFile(data.episodes[index].file)
-    }
+    if (!data) return
 
-    audioElementRef.current?.addEventListener(
-      'timeupdate',
-      handleProgressUpdate
+    // Set up episode selection options
+    setSelectOptions(
+      data.episodes.map((ep, idx) => ({
+        text: ep.title,
+        value: `${idx}`,
+      }))
     )
+
+    // Load current episode
+    loadAudioFile(data.episodes[index].file)
+
+    // Set up event listeners
+    const audio = audioElementRef.current
+    const progressContainer = progressBarContainerRef.current
+
+    audio?.addEventListener('timeupdate', handleProgressUpdate)
+
+    progressContainer?.addEventListener('click', handleSeekOnProgressBar)
+
+    // Cleanup
     return () => {
-      audioElementRef.current?.removeEventListener(
-        'timeupdate',
-        handleProgressUpdate
-      )
+      audio?.removeEventListener('timeupdate', handleProgressUpdate)
+
+      progressContainer?.removeEventListener('click', handleSeekOnProgressBar)
     }
   }, [data, index])
 
-  // Handle page unload warning when audio is playing
+  // Handle page unload warning
   useEffect(() => {
     const handleBeforeUnload = (event: BeforeUnloadEvent) => {
       event.preventDefault()
-      // TODO: Save current timestamp and audio path for resume functionality
+      return (event.returnValue =
+        'Audio is still playing. Are you sure you want to leave?')
     }
 
     if (
@@ -115,31 +165,51 @@ export default function AudioPlayer() {
       !isPlaying
     ) {
       window.addEventListener('beforeunload', handleBeforeUnload)
-    } else {
-      window.removeEventListener('beforeunload', handleBeforeUnload)
     }
 
     return () => window.removeEventListener('beforeunload', handleBeforeUnload)
   }, [isPlaying])
 
-  // select menu
+  /**
+   * Handles episode selection from the dropdown menu
+   */
   const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
     event.preventDefault()
     setTrack(parseInt(event.target.value, 10))
   }
 
   /**
-   * Toggles play/pause state of the audio
+   * Toggles play/pause state of the audio player
    */
   const togglePlayback = () => {
-    if (!audioElementRef.current || !data) return
+    const audio = audioElementRef.current
+    if (!audio || !data) return
 
-    if (audioElementRef.current.paused) {
-      audioElementRef.current.play()
+    if (audio.paused) {
+      audio.play()
       setIsPlaying(true)
     } else {
-      audioElementRef.current.pause()
+      audio.pause()
       setIsPlaying(false)
+    }
+  }
+
+  /**
+   * handle playing next audio file
+   */
+  const playNext = () => {
+    if (data?.episodes && index >= data.episodes.length - 1) {
+      setTrack(0)
+    } else {
+      next()
+    }
+  }
+
+  const playPrev = () => {
+    if (data && index === 0) {
+      setTrack(data.episodes.length - 1)
+    } else {
+      previous()
     }
   }
 
@@ -177,7 +247,7 @@ export default function AudioPlayer() {
             <nav className="flex gap-2 mb-1">
               <button
                 className="text-4xl text-black rounded-full duration-200 ease-in-out bg-indigo-500 hover:scale-90 transition-all"
-                onClick={previous}
+                onClick={playPrev}
                 aria-label="Previous episode"
               >
                 <MdArrowCircleLeft />
@@ -191,7 +261,7 @@ export default function AudioPlayer() {
               </button>
               <button
                 className="text-4xl text-black rounded-full duration-200 ease-in-out bg-purple-500 hover:scale-90 transition-all"
-                onClick={next}
+                onClick={playNext}
                 aria-label="Next episode"
               >
                 <MdArrowCircleRight />
@@ -199,19 +269,21 @@ export default function AudioPlayer() {
             </nav>
 
             {/* Progress bar */}
-            <div className="h-1 max-w-96 w-full bg-stone-700 rounded-xl overflow-hidden">
-              <div
-                ref={progressBarElementRef}
-                className={`h-full w-0 ${
-                  isPlaying
-                    ? 'bg-gradient-to-r from-indigo-500 to-purple-500'
-                    : 'bg-gradient-to-r from-red-500 to-rose-500'
-                }`}
-              />
+            <div ref={progressBarContainerRef} className="h-4 max-w-96 w-full">
+              <div className="h-1  max-w-96 w-full bg-stone-700 rounded-xl overflow-hidden">
+                <div
+                  ref={progressBarElementRef}
+                  className={`h-full w-0 ${
+                    isPlaying
+                      ? 'bg-gradient-to-r from-indigo-500 to-purple-500'
+                      : 'bg-gradient-to-r from-red-500 to-rose-500'
+                  }`}
+                />
+              </div>
             </div>
           </div>
 
-          <div className="flex h-full items-center md:min-w-28"></div>
+          <div className="flex justify-center items-center md:min-w-16 max-w-28"></div>
         </div>
       </div>
     </div>

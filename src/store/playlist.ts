@@ -26,14 +26,14 @@ export const usePlaylist = create<Playlist & Actions>()((set) => ({
   },
   setTrack: (episode) => {
     set((state) => {
-      if (state.data && episode > 0 && episode < state.data.episodes.length) {
-        return {
-          ...state,
-          index: episode,
-        }
-      } else {
-        return state
+      return {
+        ...state,
+        index: episode,
       }
+      // if (state.data && episode >= 0 && episode < state.data.episodes.length) {
+      // } else {
+      //   return state
+      // }
     })
   },
   next: () => {
