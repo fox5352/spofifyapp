@@ -1,13 +1,13 @@
-import { useEffect, useRef, useState } from 'react'
+import { ChangeEvent, useEffect, useRef, useState } from 'react'
 import {
   MdArrowCircleLeft,
   MdArrowCircleRight,
   MdPauseCircle,
   MdPlayCircle,
 } from 'react-icons/md'
-import { PlayListData, usePlaylist } from '../store/playlist'
+import { usePlaylist } from '../store/playlist'
 import { Listened, saveToListened } from '../lib/utils'
-
+import SelectMenu from './SelectMenu'
 
 /**
  * AudioPlayer - A fixed-position audio player component with playback controls
@@ -29,17 +29,23 @@ export default function AudioPlayer() {
 
   // Local state
   const [isPlaying, setIsPlaying] = useState(false)
+  const [selectOptions, setSelectOptions] = useState<
+    { text: string; value: string }[] | null
+  >(null)
 
   // Playlist state
-  const { data, index, next, previous } = usePlaylist()
+  const { data, index, next, previous, setTrack } = usePlaylist()
 
   /**
    * Updates the progress bar and handles episode completion tracking
    */
   const handleProgressUpdate = () => {
-    if (!audioElementRef.current?.duration || !progressBarElementRef.current) return
+    if (!audioElementRef.current?.duration || !progressBarElementRef.current)
+      return
 
-    const currentProgress = (audioElementRef.current.currentTime / audioElementRef.current.duration) * 100
+    const currentProgress =
+      (audioElementRef.current.currentTime / audioElementRef.current.duration) *
+      100
     progressBarElementRef.current.style.width = `${currentProgress}%`
 
     const COMPLETION_THRESHOLD = 95 // Mark as listened when 95% complete
@@ -49,7 +55,7 @@ export default function AudioPlayer() {
         season: `${data.season}`,
         episode: `${index + 1}`,
         url: data.episodes[index].file,
-        date: new Date()
+        date: new Date(),
       }
       saveToListened(listenedRecord)
     }
@@ -73,12 +79,26 @@ export default function AudioPlayer() {
   // Handle audio loading and progress tracking
   useEffect(() => {
     if (data) {
+      setSelectOptions(
+        data.episodes.map((ep, index) => {
+          return {
+            text: ep.title,
+            value: `${index}`,
+          }
+        })
+      )
       loadAudioFile(data.episodes[index].file)
     }
 
-    audioElementRef.current?.addEventListener('timeupdate', handleProgressUpdate)
+    audioElementRef.current?.addEventListener(
+      'timeupdate',
+      handleProgressUpdate
+    )
     return () => {
-      audioElementRef.current?.removeEventListener('timeupdate', handleProgressUpdate)
+      audioElementRef.current?.removeEventListener(
+        'timeupdate',
+        handleProgressUpdate
+      )
     }
   }, [data, index])
 
@@ -89,7 +109,11 @@ export default function AudioPlayer() {
       // TODO: Save current timestamp and audio path for resume functionality
     }
 
-    if (audioElementRef.current && !audioElementRef.current.paused && !isPlaying) {
+    if (
+      audioElementRef.current &&
+      !audioElementRef.current.paused &&
+      !isPlaying
+    ) {
       window.addEventListener('beforeunload', handleBeforeUnload)
     } else {
       window.removeEventListener('beforeunload', handleBeforeUnload)
@@ -97,6 +121,12 @@ export default function AudioPlayer() {
 
     return () => window.removeEventListener('beforeunload', handleBeforeUnload)
   }, [isPlaying])
+
+  // select menu
+  const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    event.preventDefault()
+    setTrack(parseInt(event.target.value, 10))
+  }
 
   /**
    * Toggles play/pause state of the audio
@@ -121,11 +151,20 @@ export default function AudioPlayer() {
 
         {/* Player container */}
         <div className="flex justify-between h-16 px-1 md:px-4 py-2 bg-black rounded-[6px] relative group transition duration-200 text-white">
-          {/* Episode info */}
-          <div className="flex h-full items-center min-w-20">
-            {data &&
-              (<h3 className="text-md">Episode: {index + 1}</h3>
-              )}
+          {/* Reserved space for future episode selection dropdown */}
+          <div className="flex justify-center items-center min-w-16 max-w-28">
+            {selectOptions ? (
+              <SelectMenu
+                className="flex items-center"
+                title=""
+                onChange={handleChange}
+                name="ep"
+                defaultIdx={index}
+                options={selectOptions}
+              />
+            ) : (
+              'Empty'
+            )}
           </div>
 
           {/* Playback controls */}
@@ -146,7 +185,7 @@ export default function AudioPlayer() {
               <button
                 className="text-4xl text-black rounded-full duration-200 ease-in-out bg-gradient-to-r from-indigo-500 to-purple-500 hover:scale-90 transition-all"
                 onClick={togglePlayback}
-                aria-label={isPlaying ? "Pause" : "Play"}
+                aria-label={isPlaying ? 'Pause' : 'Play'}
               >
                 {isPlaying ? <MdPauseCircle /> : <MdPlayCircle />}
               </button>
@@ -163,16 +202,16 @@ export default function AudioPlayer() {
             <div className="h-1 max-w-96 w-full bg-stone-700 rounded-xl overflow-hidden">
               <div
                 ref={progressBarElementRef}
-                className={`h-full w-0 ${isPlaying
-                  ? 'bg-gradient-to-r from-indigo-500 to-purple-500'
-                  : 'bg-gradient-to-r from-red-500 to-rose-500'
-                  }`}
+                className={`h-full w-0 ${
+                  isPlaying
+                    ? 'bg-gradient-to-r from-indigo-500 to-purple-500'
+                    : 'bg-gradient-to-r from-red-500 to-rose-500'
+                }`}
               />
             </div>
           </div>
 
-          {/* Reserved space for future episode selection dropdown */}
-          <div className="w-20" />
+          <div className="flex h-full items-center md:min-w-28"></div>
         </div>
       </div>
     </div>

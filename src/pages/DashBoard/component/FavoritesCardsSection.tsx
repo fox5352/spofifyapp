@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react"
-import { useSearchParams } from "react-router-dom"
+import { useEffect, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 
-import { getShow, Season } from "../../../api/requests"
+import { getShow, Season } from '../../../api/requests'
 
-import { FavShow, useFavorite } from "../../../store/favorites"
+import { FavShow, useFavorite } from '../../../store/favorites'
 
-import ErrorMessage from "../../../ui/ErrorMessage"
-import Loading from "../../../ui/Loading"
+import ErrorMessage from '../../../ui/ErrorMessage'
+import Loading from '../../../ui/Loading'
 
-import DashBoardFilterModal from "./DashBoardFilterModal"
-import FavoriteCard from "./FavoriteCard"
+import DashBoardFilterModal from './DashBoardFilterModal'
+import FavoriteCard from './FavoriteCard'
 
 /**
  * Extended Season type that includes the show ID for reference
@@ -19,11 +19,12 @@ interface FavoriteSeason extends Season {
   date: Date
 }
 
-
 export default function FavoritesCardsSection() {
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [favoriteSeasons, setFavoriteSeasons] = useState<FavoriteSeason[] | null>(null)
+  const [favoriteSeasons, setFavoriteSeasons] = useState<
+    FavoriteSeason[] | null
+  >(null)
 
   const { data: favoritesData } = useFavorite()
   //
@@ -143,39 +144,40 @@ export default function FavoritesCardsSection() {
     fetchFavoriteSeasons()
   }, [favoritesData])
 
-
-  return (<section
-    className="flex flex-col items-center max-w-screen-xl w-full min-h-[320px] mx-auto my-2 p-2 bg-zinc-950 rounded-md"
-    aria-label="Favorite Shows Dashboard"
-  >
-    <DashBoardFilterModal />
-    <h1 className="flex justify-start w-full md:max-w-[90%] text-4xl font-bold py-1 pl-2 bg-gradient-to-r from-indigo-500 via-violet-500 to-purple-500 bg-clip-text text-transparent">
-      Favorites
-    </h1>
-    <div className="w-full max-w-[90%] h-1 mt-4 mx-auto bg-gradient-to-r from-indigo-500 via-violet-500 to-purple-500 rounded-full" />
-
-    <div
-      className="flex flex-row flex-wrap justify-center gap-3 w-full h-full min-h-96 mt-4 px-2"
-      role="region"
-      aria-label="Favorite Seasons List"
+  return (
+    <section
+      className="flex flex-col items-center max-w-screen-xl w-full min-h-[320px] mx-auto my-2 p-2 bg-zinc-950 rounded-md"
+      aria-label="Favorite Shows Dashboard"
     >
-      {error && <ErrorMessage message={error} size="text-2xl" />}
-      {isLoading || favoriteSeasons == null ? (
-        <Loading
-          className="flex h-full w-auto"
-          aria-label="Loading favorite seasons"
-        />
-      ) : (
-        filterOrder(order, favoriteSeasons).map((season) => (
-          <FavoriteCard
-            className="border-2 border-white"
-            key={`${season.showId}-season-${season.season}`}
-            showId={season.showId}
-            data={season}
-            date={season.date}
+      <DashBoardFilterModal />
+      <h1 className="flex justify-start w-full md:max-w-[90%] text-4xl font-bold py-1 pl-2 bg-gradient-to-r from-indigo-500 via-violet-500 to-purple-500 bg-clip-text text-transparent">
+        Favorites
+      </h1>
+      <div className="w-full max-w-[90%] h-1 mt-4 mx-auto bg-gradient-to-r from-indigo-500 via-violet-500 to-purple-500 rounded-full" />
+
+      <div
+        className="flex flex-row flex-wrap justify-center gap-3 w-full h-full min-h-96 mt-4 px-2"
+        role="region"
+        aria-label="Favorite Seasons List"
+      >
+        {error && <ErrorMessage message={error} size="text-2xl" />}
+        {isLoading || favoriteSeasons == null ? (
+          <Loading
+            className="flex h-full w-auto"
+            aria-label="Loading favorite seasons"
           />
-        ))
-      )}
-    </div>
-  </section>)
+        ) : (
+          filterOrder(order, favoriteSeasons).map((season) => (
+            <FavoriteCard
+              className="border-2 border-white"
+              key={`${season.showId}-season-${season.season}`}
+              showId={season.showId}
+              data={season}
+              date={season.date}
+            />
+          ))
+        )}
+      </div>
+    </section>
+  )
 }

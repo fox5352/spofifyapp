@@ -1,5 +1,6 @@
-import { ChangeEvent, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { MdClose } from 'react-icons/md'
+import SelectMenu, { SelectMenuProps } from './SelectMenu'
 
 interface QueryFilterModalProps {
   isActive: boolean
@@ -71,36 +72,5 @@ export default function QueryFilterModal({
         </div>
       </div>
     </>
-  )
-}
-
-export interface SelectMenuProps {
-  name: string
-  title: string
-  options: { value: string; text: string }[]
-  onChange: (event: ChangeEvent<HTMLSelectElement>) => void
-}
-
-function SelectMenu({ title, name, options, onChange }: SelectMenuProps) {
-  return (
-    <form className="max-w-sm mx-auto">
-      <label
-        htmlFor="countries"
-        className="block mb-2 text-sm font-medium text-white"
-      >
-        {title}
-      </label>
-      <select
-        name={name}
-        className="text-white bg-zinc-950 border border-gray-300 text-sm rounded-lg focus:ring-indigo-500 focus:border-purple-500 block w-full p-2.5"
-        onChange={onChange}
-      >
-        {options.map((opt, idx) => (
-          <option key={idx} selected={idx === 0} value={opt.value}>
-            {opt.text}
-          </option>
-        ))}
-      </select>
-    </form>
   )
 }

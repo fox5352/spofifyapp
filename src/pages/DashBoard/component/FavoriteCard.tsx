@@ -36,7 +36,9 @@ export default function FavoriteCard({
   }, [])
 
   return (
-    <div className={`min-w-[323px] h-96 ${className} rounded-md overflow-hidden relative`}>
+    <div
+      className={`min-w-[323px] h-96 ${className} rounded-md overflow-hidden relative`}
+    >
       <div className="absolute z-20 top-0 left-0 w-full p-2 px-4 text-white bg-zinc-950 rounded-md">
         <h2 className="text-xl text-white">{title}</h2>
         <h4 className="">{formatedDate}</h4>

@@ -1,7 +1,8 @@
 import { ChangeEvent, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import QueryFilterModal, { SelectMenuProps } from '../../../ui/QueryFilterModal'
+import QueryFilterModal from '../../../ui/QueryFilterModal'
 import { MdMenu } from 'react-icons/md'
+import { SelectMenuProps } from '../../../ui/SelectMenu'
 
 export default function DashBoardFilterModal() {
   const [isMenuActive, setIsMenuActive] = useState(false)
