@@ -103,9 +103,7 @@ export default function AudioPlayer() {
 
     // Update the audio's current time based on the click percentage
     // The time is set by multiplying the audio's total duration by the click percentage
-    audio.pause()
     audio.currentTime = (clickPercentage / 100) * audio.duration
-    audio.play()
   }
 
   /**
