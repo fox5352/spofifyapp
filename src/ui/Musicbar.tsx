@@ -74,6 +74,7 @@ export default function AudioPlayer() {
         date: new Date(),
       }
       saveToListened(listenedRecord)
+      next() // play next audio of there is
     }
   }
 
