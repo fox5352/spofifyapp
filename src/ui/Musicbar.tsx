@@ -74,7 +74,6 @@ export default function AudioPlayer() {
         date: new Date(),
       }
       saveToListened(listenedRecord)
-      next() // play next audio of there is
     }
   }
 
@@ -83,6 +82,7 @@ export default function AudioPlayer() {
    * Calculates the clicked position as a percentage and updates the audio time.
    */
   const handleSeekOnProgressBar = (event: MouseEvent<HTMLDivElement>) => {
+    event.stopPropagation()
     const container = progressBarContainerRef.current
     const audio = audioElementRef.current
 
@@ -103,7 +103,9 @@ export default function AudioPlayer() {
 
     // Update the audio's current time based on the click percentage
     // The time is set by multiplying the audio's total duration by the click percentage
+    audio.pause()
     audio.currentTime = (clickPercentage / 100) * audio.duration
+    audio.play()
   }
 
   /**

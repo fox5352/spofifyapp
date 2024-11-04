@@ -47,7 +47,7 @@ export default function SeasonDetail() {
       setIsLoading(false)
     }
     manageData()
-  }, [])
+  }, [id, seasonId])
 
   const addAndPlay = () => {
     if (!season || !id) return
@@ -70,11 +70,11 @@ export default function SeasonDetail() {
   return (
     <div className="flex flex-col items-center w-full mt-2 text-white bg-zinc-950 rounded-md">
       <div className="max-w-4xl w-full px-1 py-2">
-        <h2 className="text-2xl">{season?.title}</h2>
+        <h2 className="text-2xl">{season.title}</h2>
         <div className="p-1 pt-1.5">
-          <h4 className="text-xl text-indigo-500">Season: {season?.season}</h4>
+          <h4 className="text-xl text-indigo-500">Season: {season.season}</h4>
           <h5 className="text-xl text-purple-500">
-            Episodes: {season?.episodes.length}
+            Episodes: {season.episodes.length}
           </h5>
         </div>
         <nav>
