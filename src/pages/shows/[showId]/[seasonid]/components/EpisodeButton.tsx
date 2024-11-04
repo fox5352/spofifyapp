@@ -34,7 +34,7 @@ export default function EpisodeButton({
       : false
 
     setIsMarkedAsListened(isMarked)
-  }, [])
+  }, [id, episode, season.season])
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()

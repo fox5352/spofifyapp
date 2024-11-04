@@ -1,4 +1,5 @@
 import FavoritesCardsSection from './component/FavoritesCardsSection'
+import ListenHistorySection from './component/ListenHistorySection'
 
 
 /**
@@ -7,8 +8,9 @@ import FavoritesCardsSection from './component/FavoritesCardsSection'
  */
 export default function Dashboard() {
   return (
-    <>
+    <div className='flex flex-col items-center w-full'>
       <FavoritesCardsSection />
-    </>
+      <ListenHistorySection />
+    </div>
   )
 }

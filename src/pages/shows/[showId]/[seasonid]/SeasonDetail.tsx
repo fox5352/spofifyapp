@@ -55,7 +55,7 @@ export default function SeasonDetail() {
     setTrack(0)
   }
 
-  if (isLoading) {
+  if (isLoading || season === null) {
     return <Loading className="h-60 w-auto mx-auto mt-10" />
   }
 
@@ -91,8 +91,8 @@ export default function SeasonDetail() {
         </nav>
       </div>
       <ul className="flex flex-col max-w-5xl w-full space-y-1 py-2">
-        {season?.episodes.map((episode, index) => (
-          <EpisodeButton key={index} {...episode} season={state} />
+        {season.episodes.map((episode, index) => (
+          <EpisodeButton key={index} {...episode} season={season} />
         ))}
       </ul>
     </div>

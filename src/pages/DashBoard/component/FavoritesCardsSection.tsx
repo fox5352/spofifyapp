@@ -23,9 +23,8 @@ interface FavoriteSeason extends Season {
 export default function FavoritesCardsSection() {
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [favoriteSeasons, setFavoriteSeasons] = useState<
-    FavoriteSeason[] | null
-  >(null)
+  const [favoriteSeasons, setFavoriteSeasons] = useState<FavoriteSeason[] | null>(null)
+
   const { data: favoritesData } = useFavorite()
   //
   const [searchParams] = useSearchParams()
@@ -144,24 +143,24 @@ export default function FavoritesCardsSection() {
     fetchFavoriteSeasons()
   }, [favoritesData])
 
-  if (!favoriteSeasons) return <></>
-
 
   return (<section
     className="flex flex-col items-center max-w-screen-xl w-full min-h-[320px] mx-auto my-2 p-2 bg-zinc-950 rounded-md"
     aria-label="Favorite Shows Dashboard"
   >
     <DashBoardFilterModal />
-    <h1 className="flex justify-start w-full text-4xl font-bold py-1 pl-2 bg-gradient-to-r from-indigo-500 via-violet-500 to-purple-500 bg-clip-text text-transparent">
+    <h1 className="flex justify-start w-full md:max-w-[90%] text-4xl font-bold py-1 pl-2 bg-gradient-to-r from-indigo-500 via-violet-500 to-purple-500 bg-clip-text text-transparent">
       Favorites
     </h1>
+    <div className="w-full max-w-[90%] h-1 mt-4 mx-auto bg-gradient-to-r from-indigo-500 via-violet-500 to-purple-500 rounded-full" />
+
     <div
-      className="flex flex-row flex-wrap justify-center gap-3 w-full h-full px-2"
+      className="flex flex-row flex-wrap justify-center gap-3 w-full h-full min-h-96 mt-4 px-2"
       role="region"
       aria-label="Favorite Seasons List"
     >
       {error && <ErrorMessage message={error} size="text-2xl" />}
-      {isLoading ? (
+      {isLoading || favoriteSeasons == null ? (
         <Loading
           className="flex h-full w-auto"
           aria-label="Loading favorite seasons"
