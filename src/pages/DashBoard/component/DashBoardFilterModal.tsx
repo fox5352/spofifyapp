@@ -1,21 +1,31 @@
 import { ChangeEvent, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import QueryFilterModal from '../../../ui/QueryFilterModal'
 import { MdMenu } from 'react-icons/md'
+//components
+import QueryFilterModal from '../../../ui/QueryFilterModal'
 import { SelectMenuProps } from '../../../ui/SelectMenu'
 
+/**
+ * Modal component for handling filtering of data
+ */
 export default function DashBoardFilterModal() {
+  // local state
   const [isMenuActive, setIsMenuActive] = useState(false)
+
+  // search params
   const [searchParams, setSearchParams] = useSearchParams()
 
+  // togggle menu functoin
   const toggleMenu = () => setIsMenuActive((prev) => !prev)
 
+  // handle for select menu
   const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
     event.preventDefault()
     searchParams.set(event.target.name, event.target.value)
     setSearchParams(searchParams)
   }
 
+  // select menu options
   const filters: SelectMenuProps[] = [
     {
       title: 'Sort alphabetically',

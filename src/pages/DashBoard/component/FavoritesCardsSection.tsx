@@ -19,15 +19,21 @@ interface FavoriteSeason extends Season {
   date: Date
 }
 
+/**
+ * gets favorite episodes and displays cards of them
+ */
 export default function FavoritesCardsSection() {
+  // pages state
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  // page data
   const [favoriteSeasons, setFavoriteSeasons] = useState<
     FavoriteSeason[] | null
   >(null)
 
+  // global state
   const { data: favoritesData } = useFavorite()
-  //
+  // query params
   const [searchParams] = useSearchParams()
   const order = searchParams.get('order') || 'a-z'
 
@@ -101,10 +107,10 @@ export default function FavoritesCardsSection() {
     }
   }
 
+  /**
+   * Fetches favorite shows data and transforms it into season information
+   */
   useEffect(() => {
-    /**
-     * Fetches favorite shows data and transforms it into season information
-     */
     const fetchFavoriteSeasons = async () => {
       try {
         setIsLoading(true)
