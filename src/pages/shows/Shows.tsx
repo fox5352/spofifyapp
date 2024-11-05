@@ -1,12 +1,11 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
-
+// utils
 import { getAllGenres, getPreview, Preview } from '../../api/requests'
-
+// components
 import ErrorMessage from '../../ui/ErrorMessage'
 import Loading from '../../ui/Loading'
 import { Card } from '../../ui/Card'
-
 import PreviewFilterBar from '../../ui/PreviewFilterBar'
 import PageNavButtons from '../../ui/PageNavButtons'
 import SearchBar from '../../ui/SearchBar'
@@ -57,7 +56,7 @@ function Shows() {
   }, [])
 
   /**
-   * Fetches preview cards
+   * Fetches preview cards and momoizes it
    */
   const fetchPreviewCards = useMemo(async () => {
     setIsLoading(true)
@@ -75,6 +74,9 @@ function Shows() {
     return previewData
   }, [])
 
+  /**
+   * gets momoizesed and sets it as page data
+   */
   useEffect(() => {
     const func = async () => {
       setIsLoading(true)
@@ -99,7 +101,7 @@ function Shows() {
 
   // ----------------------------------------------- filter functionality -----------------------------------------------
   /**
-   * gets preview cards from memoized function and filters them by genre,or title
+   * gets preview cards from memoized function and filters them by genre or title
    */
   const filterPreviewData = useCallback(async () => {
     const getFilteredPreviewsByGenre = async (): Promise<
