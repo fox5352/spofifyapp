@@ -34,7 +34,9 @@ function Shows() {
 
   // UI state
   const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+  const [error, setError] = useState<{ message: string; color: string } | null>(
+    null
+  )
   const [availableGenres, setAvailableGenres] = useState<GenreTag[] | null>(
     null
   )
@@ -61,7 +63,10 @@ function Shows() {
     setIsLoading(true)
     const previewData = await getPreview()
     if (previewData == null) {
-      setError('Failed to fetch preview cards')
+      setError({
+        message: 'Failed to fetch preview cards',
+        color: 'text-rose-500',
+      })
       setIsLoading(false)
       return
     }
@@ -78,7 +83,10 @@ function Shows() {
       const previewData = await fetchPreviewCards
 
       if (!previewData) {
-        setError('Failed to fetch preview cards')
+        setError({
+          message: 'Failed to fetch preview cards',
+          color: 'text-rose-500',
+        })
         setIsLoading(false)
         return
       }
@@ -90,11 +98,14 @@ function Shows() {
   }, [fetchPreviewCards])
 
   // ----------------------------------------------- filter functionality -----------------------------------------------
+  /**
+   * gets preview cards from memoized function and filters them by genre,or title
+   */
   const filterPreviewData = useCallback(async () => {
     const getFilteredPreviewsByGenre = async (): Promise<
       Preview[] | undefined
     > => {
-      const previewData = await getPreview()
+      const previewData = await fetchPreviewCards
       if (!previewData) return undefined
 
       // Return all previews if no genre filter is applied
@@ -103,13 +114,13 @@ function Shows() {
       }
 
       // Return undefined if no genres are available
-      if (!availableGenres) return undefined
+      if (!availableGenres) return
 
       const selectedGenreData = availableGenres.find(
         (genre) => genre.title === selectedGenre
       )
 
-      if (!selectedGenreData) return undefined
+      if (!selectedGenreData) return
 
       return previewData.filter((preview) =>
         preview.genres.includes(selectedGenreData.id)
@@ -131,7 +142,7 @@ function Shows() {
 
     const filteredPreviews = filterPreviewsByTitle(genreFilteredPreviews)
     setPreviewCards(filteredPreviews)
-  }, [selectedGenre, availableGenres, titleQuery])
+  }, [selectedGenre, availableGenres, titleQuery, fetchPreviewCards])
 
   /**
    * filter preview data on selectedGenre and searched title
@@ -140,37 +151,54 @@ function Shows() {
     filterPreviewData()
   }, [filterPreviewData])
 
+  /**
+   * re-runs order filter when order query changes
+   */
   useEffect(() => {
     if (!previewCards) return
     setPreviewCards(filterOrder(order, previewCards))
   }, [order])
 
+  /**
+   * Sorts a list of Preview items based on the specified order.
+   *
+   * @param order - The sorting order. Acceptable values:
+   *                'a-z' for alphabetical ascending,
+   *                'z-a' for alphabetical descending,
+   *                'asc' for ascending by update date,
+   *                'dsc' for descending by update date.
+   * @param preview - Array of Preview items to be sorted.
+   * @returns A new array of Preview items sorted according to the specified order.
+   */
   const filterOrder = (order: string, preview: Preview[]): Preview[] => {
-    const copy = [...preview]
+    const sortedPreviews = [...preview] // Create a copy to avoid mutating the original array
 
     switch (order) {
       case 'a-z':
-        return [...copy].sort((a, b) => a.title.localeCompare(b.title))
+        // Sort alphabetically by title in ascending order (A-Z)
+        return sortedPreviews.sort((a, b) => a.title.localeCompare(b.title))
 
       case 'z-a':
-        return [...copy].sort((a, b) => b.title.localeCompare(a.title))
+        // Sort alphabetically by title in descending order (Z-A)
+        return sortedPreviews.sort((a, b) => b.title.localeCompare(a.title))
 
       case 'asc':
-        return [...copy].sort((a, b) => {
-          const aDate = new Date(a.updated).getTime()
-          const bDate = new Date(b.updated).getTime()
-          return aDate - bDate // Sort by updated date ascending
-        })
+        // Sort by 'updated' date in ascending order (oldest to newest)
+        return sortedPreviews.sort(
+          (a, b) =>
+            new Date(a.updated).getTime() - new Date(b.updated).getTime()
+        )
 
       case 'dsc':
-        return [...copy].sort((a, b) => {
-          const aDate = new Date(a.updated).getTime()
-          const bDate = new Date(b.updated).getTime()
-          return bDate - aDate // Sort by updated date descending
-        })
+        // Sort by 'updated' date in descending order (newest to oldest)
+        return sortedPreviews.sort(
+          (a, b) =>
+            new Date(b.updated).getTime() - new Date(a.updated).getTime()
+        )
 
       default:
-        return copy
+        // Return the original order if no valid sorting order is specified
+        return sortedPreviews
     }
   }
 
@@ -191,9 +219,15 @@ function Shows() {
     }
   }
 
-  // ----------------------------------------------- other page states -----------------------------------------------
+  // ----------------------------------------------- page states -----------------------------------------------
   if (error) {
-    return <ErrorMessage message={error} size="text-3xl" />
+    return (
+      <ErrorMessage
+        className={error.color}
+        message={error.message}
+        size="text-3xl"
+      />
+    )
   }
 
   if (isLoading) {
