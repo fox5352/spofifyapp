@@ -159,14 +159,14 @@ function Shows() {
         return [...copy].sort((a, b) => {
           const aDate = new Date(a.updated).getTime()
           const bDate = new Date(b.updated).getTime()
-          return bDate - aDate // Sort by updated date descending
+          return aDate - bDate // Sort by updated date ascending
         })
 
       case 'dsc':
         return [...copy].sort((a, b) => {
           const aDate = new Date(a.updated).getTime()
           const bDate = new Date(b.updated).getTime()
-          return aDate - bDate // Sort by updated date ascending
+          return bDate - aDate // Sort by updated date descending
         })
 
       default:
