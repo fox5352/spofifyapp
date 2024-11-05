@@ -1,4 +1,4 @@
-import { ChangeEvent, MouseEvent, useEffect, useRef, useState } from 'react'
+import { ChangeEvent, useEffect, useRef, useState } from 'react'
 import {
   MdArrowCircleLeft,
   MdArrowCircleRight,
@@ -81,7 +81,7 @@ export default function AudioPlayer() {
    * Handles click events on the progress bar to seek to a specific position.
    * Calculates the clicked position as a percentage and updates the audio time.
    */
-  const handleSeekOnProgressBar = (event: MouseEvent<HTMLDivElement>) => {
+  const handleSeekOnProgressBar = (event: MouseEvent) => {
     event.stopPropagation()
     const container = progressBarContainerRef.current
     const audio = audioElementRef.current
