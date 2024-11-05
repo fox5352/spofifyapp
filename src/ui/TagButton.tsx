@@ -1,7 +1,11 @@
 import { MouseEvent, ReactNode, useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import GenreTag from '../../ui/GenreTag'
+//components
+import GenreTag from './GenreTag'
 
+/**
+ * TagButton component for toggling a query parameter in the URL search params.
+ */
 function TagButton({
   param,
   children,
@@ -13,11 +17,19 @@ function TagButton({
   const [isActive, setIsActive] = useState(false)
   const [searchParams, setSearchParams] = useSearchParams()
 
+  /**
+   * Updates the `isActive` state based on the current URL search parameters.
+   */
   useEffect(() => {
     const isActiveParam = searchParams.get(query)
-    setIsActive(isActiveParam == param)
+    setIsActive(isActiveParam === param)
   }, [searchParams, param])
 
+  /**
+   * Toggles the search parameter in the URL between the specified `param` value and empty.
+   *
+   * @param {MouseEvent} event - The click event for the button.
+   */
   const toggleParam = (event: MouseEvent) => {
     event.stopPropagation()
     if (searchParams.get(query) === param) {

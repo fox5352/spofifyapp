@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-//
+// utils
 import type { Season } from '../api/requests'
 
 export interface PlayListData extends Season {

@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+// utils
 import { getfromLocal, saveToLocal } from '../lib/utils'
 
 export type FavShow = {

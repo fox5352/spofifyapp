@@ -7,8 +7,8 @@ import ErrorMessage from '../../ui/ErrorMessage'
 import Loading from '../../ui/Loading'
 import { Card } from '../../ui/Card'
 
-import PreviewFilterBar from '../../assets/components/PreviewFilterBar'
-import PageNavButtons from '../../assets/components/PageNavButtons'
+import PreviewFilterBar from '../../ui/PreviewFilterBar'
+import PageNavButtons from '../../ui/PageNavButtons'
 import SearchBar from '../../ui/SearchBar'
 
 /**
