@@ -6,29 +6,36 @@ import ErrorMessage from '../../../ui/ErrorMessage'
 import { MdArrowLeft, MdArrowRight } from 'react-icons/md'
 import { formatDate } from '../../../lib/utils'
 
-export default function Carousel({
-  previews,
-  error,
-}: {
+interface CarouselProps {
   previews: Preview[] | null
   error: string | null
-}) {
+}
+
+/**
+ * Carousel Component
+ * Displays a carousel of preview images with corresponding information
+ *
+ */
+export default function Carousel({ previews, error }: CarouselProps) {
+  // page state
   const [isLoading, setIsLoading] = useState(true)
   const [activeImageIndex, setActiveImageIndex] = useState(0)
 
+  // handles loading state
   useEffect(() => {
     if (previews) {
       setIsLoading(false)
     }
   }, [previews])
 
+  // increments carousel to next image
   const prevSlide = () => {
     if (!previews) return
     setActiveImageIndex((prev) =>
       activeImageIndex > 0 ? prev - 1 : previews.length - 1
     )
   }
-
+  // decrements carousel to previous image
   const nextSlide = () => {
     if (!previews) return
     const newIndex = activeImageIndex + 1
@@ -76,7 +83,15 @@ export default function Carousel({
   )
 }
 
-export function CarouselImage({
+interface CarouselImageProps extends Preview {
+  index: number
+  activeImageIndex: number
+}
+
+/**
+ * CarouselImage Component use to display image inside carousel component
+ */
+function CarouselImage({
   id,
   image,
   title,
@@ -84,7 +99,7 @@ export function CarouselImage({
   description,
   index,
   activeImageIndex,
-}: Preview & { index: number; activeImageIndex: number }) {
+}: CarouselImageProps) {
   return (
     <Link
       className={`flex basis-full w-full h-full overflow-hidden bg-transparent group/carousel duration-200 transition-all ease-linear absolute left-0 top-0 z-[${index}] ${index === activeImageIndex ? 'scale-100 ' : '-translate-x-full scale-0'} text-white bg-gradient-to-r from-zinc-950 via-zinc-800 to-white`}

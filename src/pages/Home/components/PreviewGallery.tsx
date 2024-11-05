@@ -1,14 +1,21 @@
+// utils
 import type { Preview } from '../../../api/requests'
+// components
 import Loading from '../../../ui/Loading'
 import { Card } from '../../../ui/Card'
 
+interface PreviewGalleryProps {
+  previews: Preview[] | null
+  title: string
+}
+
+/**
+ * PreviewGallery Component - takes title and an array of previews to render
+ */
 export default function PreviewGallery({
   previews,
   title,
-}: {
-  previews: Preview[] | null
-  title: string
-}) {
+}: PreviewGalleryProps) {
   if (!previews) {
     return (
       <div className="min-h-90 flex w-full justify-center">
