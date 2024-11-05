@@ -7,13 +7,18 @@ interface FavoriteCardProps extends SeasonCardProps {
   date: Date
 }
 
+/**
+ * Card preview of favorited episode in season collections
+ */
 export default function FavoriteCard({
   data,
   date,
   className,
   showId,
 }: FavoriteCardProps) {
+  // show title
   const [title, setTitle] = useState('loading...')
+  // date format
   const formatedDate = formatDate(date.toString(), {
     year: '2-digit',
     month: 'short',
@@ -22,6 +27,9 @@ export default function FavoriteCard({
     minute: '2-digit',
   })
 
+  /**
+   * gets title from showId
+   */
   useEffect(() => {
     const fetchData = async () => {
       const res = await getPreview()
@@ -33,7 +41,7 @@ export default function FavoriteCard({
       setTitle(show.title)
     }
     fetchData()
-  }, [])
+  }, [showId])
 
   return (
     <div

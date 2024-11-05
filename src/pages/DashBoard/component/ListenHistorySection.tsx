@@ -1,24 +1,34 @@
 import { useEffect, useState } from 'react'
-
+import { Link } from 'react-router-dom'
+// utils
 import { getFromListened, Listened, resetlisted } from '../../../lib/utils.tsx'
 import { getShow } from '../../../api/requests.ts'
+// components
 import ErrorMessage from '../../../ui/ErrorMessage.tsx'
 import Loading from '../../../ui/Loading.tsx'
-import { Link } from 'react-router-dom'
 
 interface MarkedEpisode extends Listened {
   title: string
 }
 
+/**
+ * displays a list of episodes thats been marked as listned
+ */
 export default function ListenHistorySection() {
+  //page state
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<{ message: string; color: string } | null>(
     null
   )
+
+  //page data
   const [markedEpisodes, setMarkedEpisodes] = useState<MarkedEpisode[] | null>(
     null
   )
 
+  /**
+   * gets episodes markedin localstorage and builds them with a request from the api for missing data
+   */
   useEffect(() => {
     const fetchDate = async (list: Listened[]) => {
       setIsLoading(true)
@@ -51,6 +61,9 @@ export default function ListenHistorySection() {
     fetchDate(getFromListened())
   }, [])
 
+  /**
+   * handles reseting the localstorage and page state
+   */
   const handleReset = () => {
     resetlisted()
     setMarkedEpisodes(null)

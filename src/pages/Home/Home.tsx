@@ -1,16 +1,18 @@
 import { useEffect, useState } from 'react'
-
+// utils
 import { getPreview, Preview } from '../../api/requests'
-
-import Carousel from './components/Carousel'
+// components
 import PreviewGallery from './components/PreviewGallery'
+import Carousel from './components/Carousel'
 
 /**
- * Home component that displays a carousel of latest previews and genre-based preview galleries
- * @returns React component displaying previews in a carousel and genre-based galleries
+ * Home component that displays a carousel of latest previews and genre-based preview galleries with a small selection of preview cards below it
  */
 function Home() {
+  //page state
   const [error, setError] = useState<string | null>(null)
+
+  //page data
   const [previews, setPreviews] = useState<Preview[] | null>(null)
 
   /**
