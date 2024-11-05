@@ -13,7 +13,7 @@ export default function SelectMenu({
   title,
   name,
   options,
-  defaultIdx = 0,
+  defaultIdx,
   className = '',
   onChange,
 }: SelectMenuProps) {
@@ -21,6 +21,7 @@ export default function SelectMenu({
   const [selectedValue, setSelectedValue] = useState(options[0].value)
 
   useEffect(() => {
+    if (!defaultIdx) return
     setSelectedValue(options[defaultIdx].value)
   }, [defaultIdx, options])
 
