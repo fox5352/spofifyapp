@@ -160,8 +160,9 @@ export default function FavoritesCardsSection() {
         role="region"
         aria-label="Favorite Seasons List"
       >
-        {error && <ErrorMessage message={error} size="text-2xl" />}
-        {isLoading || favoriteSeasons == null ? (
+        {error ? (
+          <ErrorMessage message={error} size="text-2xl" />
+        ) : isLoading || favoriteSeasons == null ? (
           <Loading
             className="flex h-full w-auto"
             aria-label="Loading favorite seasons"

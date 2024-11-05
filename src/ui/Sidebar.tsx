@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { FaMinusCircle, FaPlusCircle } from 'react-icons/fa'
+import { NavLink } from 'react-router-dom'
 import {
   MdFavorite,
   MdHeadphones,
@@ -7,23 +8,32 @@ import {
   MdMenu,
   MdSearch,
 } from 'react-icons/md'
-import { NavLink } from 'react-router-dom'
 
+/**
+ * SideBar - A component for navigation
+ */
 function SideBar() {
-  const [isExpanded, setIsExpanded] = useState(false)
+  //refs
   const SideBarRef = useRef<HTMLElement | null>(null)
 
+  // local state
+  const [isExpanded, setIsExpanded] = useState(false)
+
+  /**
+   * toggles focus to component when toggle
+   */
   useEffect(() => {
     if (SideBarRef.current && isExpanded) {
       SideBarRef.current.focus()
     }
   }, [isExpanded])
 
-  // toggle function
+  // toggle function for css styling
   const tf = function <T>(activeStyle: T, defaultStyle: T): T {
     return isExpanded ? activeStyle : defaultStyle
   }
 
+  // toggle functoin for state
   const toggleMenu = () => {
     setIsExpanded((prev) => !prev)
   }

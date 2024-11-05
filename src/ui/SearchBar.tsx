@@ -1,16 +1,24 @@
 import { ChangeEvent, FormEvent, useRef, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { FaTrash } from 'react-icons/fa'
-import { debounce } from '../lib/utils'
 import { MdMenu } from 'react-icons/md'
+// utils
+import { debounce } from '../lib/utils'
+// components
 import QueryFilterModal from './QueryFilterModal'
 import { SelectMenuProps } from './SelectMenu'
 
+/**
+ * SearchBar - componet provides a input to update title query param of current page its in
+ */
 function SearchBar() {
   const [searchParams, setSearchParams] = useSearchParams()
   const [isMenuActive, setIsMenuActive] = useState(false)
   const inputRef = useRef<HTMLInputElement | null>(null)
 
+  /**
+   * takes and onChange event and debounces it as updates the query param
+   */
   const handleInput = debounce((event: ChangeEvent<HTMLInputElement>) => {
     event.preventDefault()
     const value = event.target.value
@@ -24,25 +32,34 @@ function SearchBar() {
     setSearchParams(searchParams)
   }, 600)
 
+  // toggles menu
   const toggleMenu = (event: FormEvent) => {
     event.preventDefault()
     setIsMenuActive((prev) => !prev)
   }
 
+  // clears query param
   const clearQuery = (event: FormEvent) => {
     event.preventDefault()
     event.stopPropagation()
     searchParams.delete('title')
     setSearchParams(searchParams)
-    inputRef.current && (inputRef.current.value = '')
+
+    if (inputRef?.current) {
+      inputRef.current.value = ''
+    }
   }
 
+  /**
+   * updates search param on change event
+   */
   const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
     event.preventDefault()
     searchParams.set(event.target.name, event.target.value)
     setSearchParams(searchParams)
   }
 
+  // SelectMenuProp that sets select options and pass a onChnage function
   const filters: SelectMenuProps[] = [
     {
       title: 'Sort alphabetically',

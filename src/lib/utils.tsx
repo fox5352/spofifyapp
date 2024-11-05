@@ -110,7 +110,10 @@ export interface Listened {
   url: string
   date: Date
 }
-//
+
+/**
+ * saves listen data to locatstorage
+ */
 export function saveToListened(data: Listened) {
   const name = 'listend'
   const list = getfromLocal<Listened[]>(name) || []
@@ -127,11 +130,17 @@ export function saveToListened(data: Listened) {
   }
 }
 
+/**
+ * gets all listen dat a from localstorage
+ */
 export function getFromListened(): Listened[] {
   const name = 'listend'
   return getfromLocal<Listened[]>(name) || []
 }
 
+/**
+ * empties data from localstorage
+ */
 export function resetlisted() {
   const name = 'listend'
   saveToLocal([], name)

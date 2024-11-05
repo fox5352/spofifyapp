@@ -3,6 +3,12 @@ import { getGenres, Preview } from '../api/requests'
 import { useEffect, useState } from 'react'
 import GenreTag from './GenreTag'
 
+/**
+ * Card Component
+ *
+ * Displays a preview card for a podcast show with image, title, description, and genres.
+ * Links to the detailed view of the show when clicked.
+ */
 export function Card({
   id,
   title,
@@ -12,27 +18,36 @@ export function Card({
   genres,
   // updated,
 }: Preview) {
-  const [genreTitles, setGenresTitles] = useState<string[] | null>(null) // genre titles for reel
+  // State to store the fetched genre titles
+  const [genreTitles, setGenresTitles] = useState<string[] | null>(null)
 
-  // Gets the genre titles from api
+  // Fetch genre titles when genres array changes
   useEffect(() => {
-    const getGenresTitles = async () => {
-      const res = await getGenres(genres)
-
-      if (!res) return
-
-      setGenresTitles(res.map((genre) => genre.title))
+    const fetchGenreTitles = async () => {
+      try {
+        const res = await getGenres(genres)
+        if (res) {
+          setGenresTitles(res.map((genre) => genre.title))
+        }
+      } catch (error) {
+        console.error('Failed to fetch genre titles:', error)
+      }
     }
 
-    getGenresTitles()
+    fetchGenreTitles()
   }, [genres])
+
+  const truncatedDescription = description.slice(0, 220)
 
   return (
     <Link to={`/shows/${id}`}>
       <div className="max-w-xs w-full group/card relative">
-        <div className="cursor-pointer relative card h-96 rounded-md shadow-xl  max-w-sm mx-auto backgroundImage flex flex-col justify-between p-4 bg-zinc-950">
+        {/* Card Container */}
+        <div className="cursor-pointer relative card h-96 rounded-md shadow-xl max-w-sm mx-auto backgroundImage flex flex-col justify-between p-4 bg-zinc-950">
+          {/* Overlay */}
           <div className="absolute w-full h-full top-0 left-0" />
-          {/* header */}
+
+          {/* Header Section */}
           <div className="flex flex-row items-center space-x-4 z-10">
             <div className="flex flex-col">
               <p className="font-normal text-base text-gray-50 relative z-10">
@@ -41,23 +56,32 @@ export function Card({
               <p className="text-sm text-white">{seasons} seasons</p>
             </div>
           </div>
-          {/* image */}
+
+          {/* Show Image */}
           <div className="absolute px-1.5 left-0 w-fit h-fit">
-            <div className="absolute inset-0 bg-black opacity-45"></div>
-            <img className="w-full h-auto" loading="lazy" src={image} alt="" />
+            <div className="absolute inset-0 bg-black opacity-45" />
+            <img
+              className="w-full h-auto"
+              loading="lazy"
+              src={image}
+              alt={`${title} show poster`}
+            />
           </div>
-          {/* main content */}
+
+          {/* Content Section */}
           <div className="text content relative">
+            {/* Genre Tags */}
             <div className="relative z-20 flex gap-1 text-sm overflow-x-auto">
-              {genreTitles &&
-                genreTitles.map((title) => (
-                  <GenreTag key={title} variant="filled">
-                    {title}
-                  </GenreTag>
-                ))}
+              {genreTitles?.map((title) => (
+                <GenreTag key={title} variant="filled">
+                  {title}
+                </GenreTag>
+              ))}
             </div>
+
+            {/* Description */}
             <p className="font-normal text-sm text-gray-50 relative z-10 my-4">
-              {description.slice(0, 220)}
+              {truncatedDescription}
             </p>
           </div>
         </div>

@@ -1,6 +1,7 @@
 import { memo, useEffect, useState } from 'react'
+//components
 import TagButton from './TagButton'
-import Loading from '../../ui/Loading'
+import Loading from './Loading'
 
 /**
  * Represents a genre category with its title and ID
@@ -9,18 +10,12 @@ export interface GenreTag {
   title: string
   id: number
 }
+
 /**
  * PreviewFilterBar Component
  *
  * A navigation bar that displays genre filter buttons. Shows a loading state
  * while genres are being fetched.
- *
- * @component
- * @example
- * ```tsx
- * const genres = [{ id: 1, title: 'Action' }, { id: 2, title: 'Comedy' }];
- * return <PreviewFilterBar genres={genres} />;
- * ```
  */
 const PreviewFilterBar = memo(function PreviewFilterBar({
   genres,
