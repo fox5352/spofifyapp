@@ -1,15 +1,17 @@
-import { ChangeEvent, useEffect, useRef, useState } from 'react'
+import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react'
 import {
   MdArrowCircleLeft,
   MdArrowCircleRight,
   MdPauseCircle,
   MdPlayCircle,
 } from 'react-icons/md'
-import { usePlaylist } from '../store/playlist'
+// utils
 import { Listened, saveToListened } from '../lib/utils'
+import { usePlaylist } from '../store/playlist'
+// Component
 import SelectMenu from './SelectMenu'
 
-interface SelectOption {
+type SelectOption = {
   text: string
   value: string
 }
@@ -50,9 +52,9 @@ export default function AudioPlayer() {
   const { data, index, next, previous, setTrack } = usePlaylist()
 
   /**
-   * Updates the progress bar and handles episode completion tracking
+   * Updates the progress bar and handles episode completion tracking.
    */
-  const handleProgressUpdate = () => {
+  const handleProgressUpdate = useCallback(() => {
     const audio = audioElementRef.current
     const progressBar = progressBarElementRef.current
 
@@ -61,10 +63,10 @@ export default function AudioPlayer() {
     const COMPLETION_THRESHOLD = 95 // Percentage threshold to mark as listened
     const currentProgress = (audio.currentTime / audio.duration) * 100
 
-    // Update progress bar
+    // Update progress bar width based on completion percentage
     progressBar.style.width = `${currentProgress}%`
 
-    // Track completion status
+    // Track completion status and save data to local storage
     if (currentProgress >= COMPLETION_THRESHOLD && data) {
       const listenedRecord: Listened = {
         showId: data.showId,
@@ -75,11 +77,10 @@ export default function AudioPlayer() {
       }
       saveToListened(listenedRecord)
     }
-  }
+  }, [data, index])
 
   /**
    * Handles click events on the progress bar to seek to a specific position.
-   * Calculates the clicked position as a percentage and updates the audio time.
    */
   const handleSeekOnProgressBar = (event: MouseEvent) => {
     event.stopPropagation()
@@ -107,7 +108,7 @@ export default function AudioPlayer() {
   }
 
   /**
-   * Loads and auto-plays a new audio file
+   * Loads and auto-plays a new audio file.
    */
   const loadAudioFile = (audioUrl: string) => {
     const audio = audioElementRef.current
@@ -115,13 +116,12 @@ export default function AudioPlayer() {
 
     audio.src = audioUrl
     audio.load()
-
-    if (audio.canPlayType.length > 0) {
-      audio.play()
-      setIsPlaying(true)
-    }
+    audio.play().then(() => setIsPlaying(true))
   }
 
+  /**
+   * loads audio  and sets up select options and listener
+   */
   useEffect(() => {
     if (!data) return
 
@@ -150,7 +150,7 @@ export default function AudioPlayer() {
 
       progressContainer?.removeEventListener('click', handleSeekOnProgressBar)
     }
-  }, [data, index])
+  }, [data, index, handleProgressUpdate])
 
   // Handle page unload warning
   useEffect(() => {
@@ -206,6 +206,9 @@ export default function AudioPlayer() {
     }
   }
 
+  /**
+   * handle playing previous audio file
+   */
   const playPrev = () => {
     if (data && index === 0) {
       setTrack(data.episodes.length - 1)

@@ -2,15 +2,13 @@ import { ReactNode } from 'react'
 
 type Variant = 'outline' | 'filled'
 
-function GenreTag({
-  children,
-  variant = 'outline',
-  className,
-}: {
+interface GenreTagProps {
   children: ReactNode
   variant?: Variant
   className?: string
-}) {
+}
+
+function GenreTag({ children, variant = 'outline', className }: GenreTagProps) {
   const colors = [
     'blue-500',
     'red-500',

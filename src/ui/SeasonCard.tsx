@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+// utils
 import { Season } from '../api/requests'
 
 export interface SeasonCardProps {
@@ -7,6 +8,11 @@ export interface SeasonCardProps {
   className?: string
 }
 
+/**
+ * SeasonCard Component
+ *
+ * A card that links to season and displays seasos number, total episodes and title
+ */
 export default function SeasonCard({
   showId,
   data,
