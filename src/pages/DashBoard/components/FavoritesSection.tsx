@@ -1,34 +1,33 @@
 import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
-
-import { getShow, Season } from '../../../api/requests'
-
+// utils
+import { getShow } from '../../../api/requests'
 import { FavShow, useFavorite } from '../../../store/favorites'
-
+// components
 import ErrorMessage from '../../../ui/ErrorMessage'
 import Loading from '../../../ui/Loading'
-
 import DashBoardFilterModal from './DashBoardFilterModal'
-import FavoriteCard from './FavoriteCard'
+import FavoriteBlock, {
+  FavoriteBlockProps,
+  FavoriteEpisode,
+} from './FavoriteBlock'
 
-/**
- * Extended Season type that includes the show ID for reference
- */
-interface FavoriteSeason extends Season {
+interface GroupedFavorites {
   showId: string
   date: Date
+  episodes: FavShow[]
 }
 
 /**
  * gets favorite episodes and displays cards of them
  */
-export default function FavoritesCardsSection() {
+export default function FavoritesSection() {
   // pages state
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   // page data
   const [favoriteSeasons, setFavoriteSeasons] = useState<
-    FavoriteSeason[] | null
+    FavoriteBlockProps[] | null
   >(null)
 
   // global state
@@ -38,36 +37,59 @@ export default function FavoritesCardsSection() {
   const order = searchParams.get('order') || 'a-z'
 
   /**
-   * Removes duplicate favorite entries based on show ID and season
+   * converts favorite entries into GroupedFavorites
    */
-  const removeDuplicateFavorites = (favorites: FavShow[]): FavShow[] => {
-    return favorites.reduce((unique: FavShow[], current: FavShow) => {
-      const exists = unique.find(
-        (fav) => fav.showId === current.showId && fav.season === current.season
-      )
-      if (!exists) {
-        unique.push(current)
-      }
-      return unique
-    }, [])
+  const rebuildFavorites = (favorites: FavShow[]): GroupedFavorites[] => {
+    return favorites.reduce(
+      (collection: GroupedFavorites[], current: FavShow) => {
+        // Find if a Fav with the current showId already exists
+        const exists = collection.find((fav) => fav.showId === current.showId)
+
+        if (exists) {
+          // If it exists, push the current entry into the children array
+          exists.episodes.push(current)
+        } else {
+          // If it doesn't exist, create a new Fav entry
+          collection.push({
+            showId: current.showId,
+            date: current.date, // or set another default date as required
+            episodes: [current],
+          })
+        }
+
+        return collection
+      },
+      []
+    )
   }
 
   /**
-   * Creates a promise to fetch and transform show data into season information
+   * Creates a promise to fetch and transform GroupedFavorites data into FavoriteBlockProps information
    */
-  const createSeasonPromise = async (
-    favorite: FavShow
-  ): Promise<FavoriteSeason | null> => {
+  const getFormattedFavoriteShow = async (
+    favorite: GroupedFavorites
+  ): Promise<FavoriteBlockProps | null> => {
     try {
       const show = await getShow(favorite.showId)
-      const season = show?.seasons[favorite.season - 1]
 
-      if (!season) return null
+      if (!show) return null
+
+      const mapedEpisodes: FavoriteEpisode[] = favorite.episodes.map(
+        (episode) => ({
+          ...episode,
+          seasonTitle: show.seasons[episode.season - 1].title,
+          episodeTitle:
+            show.seasons[episode.season - 1].episodes[episode.episode - 1]
+              .title,
+        })
+      )
 
       return {
-        ...season,
-        showId: favorite.showId,
-        date: new Date(favorite.date),
+        id: show.id,
+        title: show.title,
+        image: show.image,
+        date: favorite.date,
+        episodes: mapedEpisodes,
       }
     } catch (err) {
       console.error(`Error fetching show ${favorite.showId}:`, err)
@@ -77,8 +99,8 @@ export default function FavoritesCardsSection() {
 
   const filterOrder = (
     order: string,
-    preview: FavoriteSeason[]
-  ): FavoriteSeason[] => {
+    preview: FavoriteBlockProps[]
+  ): FavoriteBlockProps[] => {
     const copy = [...preview]
 
     switch (order) {
@@ -90,15 +112,15 @@ export default function FavoritesCardsSection() {
 
       case 'asc':
         return [...copy].sort((a, b) => {
-          const aDate = a.date.getTime()
-          const bDate = b.date.getTime()
+          const aDate = new Date(a.date).getTime()
+          const bDate = new Date(b.date).getTime()
           return bDate - aDate // Sort by updated date descending
         })
 
       case 'dsc':
         return [...copy].sort((a, b) => {
-          const aDate = a.date.getTime()
-          const bDate = b.date.getTime()
+          const aDate = new Date(a.date).getTime()
+          const bDate = new Date(b.date).getTime()
           return aDate - bDate // Sort by updated date ascending
         })
 
@@ -111,21 +133,11 @@ export default function FavoritesCardsSection() {
    * Fetches favorite shows data and transforms it into season information
    */
   useEffect(() => {
-    const fetchFavoriteSeasons = async () => {
+    const fetchFavoriteData = async () => {
       try {
         setIsLoading(true)
         setFavoriteSeasons(null)
         setError(null)
-
-        // Remove duplicate favorites entries
-        const uniqueFavorites = removeDuplicateFavorites(favoritesData)
-
-        // Fetch detailed show information for each favorite
-        const seasonPromises = uniqueFavorites.map(createSeasonPromise)
-        const seasons = await Promise.all(seasonPromises)
-        const validSeasons = seasons.filter(
-          (season): season is FavoriteSeason => season !== null
-        )
 
         // Handle empty states
         if (favoritesData.length === 0) {
@@ -133,12 +145,26 @@ export default function FavoritesCardsSection() {
           return
         }
 
-        if (validSeasons.length === 0) {
+        // build a collection from favorites
+        const collectionOfFavorites = rebuildFavorites(favoritesData)
+
+        //  Fetch detailed show information for each favorite
+        const populatedFavoriteShowDataPromises = collectionOfFavorites.map(
+          getFormattedFavoriteShow
+        )
+        const populatedFavoriteShowData = await Promise.all(
+          populatedFavoriteShowDataPromises
+        )
+        const validPopulatedFavoriteShowData = populatedFavoriteShowData.filter(
+          (data) => data != null
+        )
+
+        if (validPopulatedFavoriteShowData.length === 0) {
           setError('Unable to retrieve favorite seasons')
           return
         }
 
-        setFavoriteSeasons(validSeasons)
+        setFavoriteSeasons(validPopulatedFavoriteShowData)
       } catch (err) {
         setError('Error loading favorite seasons')
         console.error('Error fetching favorite seasons:', err)
@@ -147,7 +173,7 @@ export default function FavoritesCardsSection() {
       }
     }
 
-    fetchFavoriteSeasons()
+    fetchFavoriteData()
   }, [favoritesData])
 
   return (
@@ -162,26 +188,19 @@ export default function FavoritesCardsSection() {
       <div className="w-full max-w-[90%] h-1 mt-4 mx-auto bg-gradient-to-r from-indigo-500 via-violet-500 to-purple-500 rounded-full" />
 
       <div
-        className="flex flex-row flex-wrap justify-center gap-3 w-full h-full min-h-96 mt-4 px-2"
-        role="region"
+        className="flex flex-col w-full justify-center items-center my-2 space-y-2"
         aria-label="Favorite Seasons List"
       >
         {error ? (
           <ErrorMessage message={error} size="text-2xl" />
         ) : isLoading || favoriteSeasons == null ? (
           <Loading
-            className="flex h-full w-auto"
+            className="flex h-24 w-auto"
             aria-label="Loading favorite seasons"
           />
         ) : (
-          filterOrder(order, favoriteSeasons).map((season) => (
-            <FavoriteCard
-              className="border-2 border-white"
-              key={`${season.showId}-season-${season.season}`}
-              showId={season.showId}
-              data={season}
-              date={season.date}
-            />
+          filterOrder(order, favoriteSeasons).map((fav) => (
+            <FavoriteBlock key={fav.id} {...fav} />
           ))
         )}
       </div>

@@ -1,5 +1,5 @@
-import FavoritesCardsSection from './component/FavoritesCardsSection'
-import ListenHistorySection from './component/ListenHistorySection'
+import FavoritesSection from './components/FavoritesSection'
+import ListenHistorySection from './components/ListenHistorySection'
 
 /**
  * Dashboard component that displays a user's favorite TV show seasons.
@@ -8,7 +8,7 @@ import ListenHistorySection from './component/ListenHistorySection'
 export default function Dashboard() {
   return (
     <div className="flex flex-col items-center w-full">
-      <FavoritesCardsSection />
+      <FavoritesSection />
       <ListenHistorySection />
     </div>
   )
