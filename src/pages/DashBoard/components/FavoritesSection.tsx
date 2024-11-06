@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 // utils
 import { getShow } from '../../../api/requests'
@@ -32,6 +32,12 @@ export default function FavoritesSection() {
 
   // global state
   const { data: favoritesData } = useFavorite()
+
+  // Create's a deep copy of favoritesData
+  const detachedFavoritesData = useMemo(() => {
+    return JSON.parse(JSON.stringify(favoritesData))
+  }, []) // and is left empty to avoid rerenders
+
   // query params
   const [searchParams] = useSearchParams()
   const order = searchParams.get('order') || 'a-z'
@@ -74,7 +80,7 @@ export default function FavoritesSection() {
 
       if (!show) return null
 
-      const mapedEpisodes: FavoriteEpisode[] = favorite.episodes.map(
+      const mappedEpisodes: FavoriteEpisode[] = favorite.episodes.map(
         (episode) => ({
           ...episode,
           seasonTitle: show.seasons[episode.season - 1].title,
@@ -89,7 +95,7 @@ export default function FavoritesSection() {
         title: show.title,
         image: show.image,
         date: favorite.date,
-        episodes: mapedEpisodes,
+        episodes: mappedEpisodes,
       }
     } catch (err) {
       console.error(`Error fetching show ${favorite.showId}:`, err)
@@ -130,7 +136,7 @@ export default function FavoritesSection() {
   }
 
   /**
-   * Fetches favorite shows data and transforms it into season information
+   * Uses detached favorite data and transforms it into FavoriteBlockProps information
    */
   useEffect(() => {
     const fetchFavoriteData = async () => {
@@ -140,13 +146,13 @@ export default function FavoritesSection() {
         setError(null)
 
         // Handle empty states
-        if (favoritesData.length === 0) {
+        if (detachedFavoritesData.length === 0) {
           setError('No favorite shows found')
           return
         }
 
         // build a collection from favorites
-        const collectionOfFavorites = rebuildFavorites(favoritesData)
+        const collectionOfFavorites = rebuildFavorites(detachedFavoritesData)
 
         //  Fetch detailed show information for each favorite
         const populatedFavoriteShowDataPromises = collectionOfFavorites.map(
@@ -174,7 +180,7 @@ export default function FavoritesSection() {
     }
 
     fetchFavoriteData()
-  }, [favoritesData])
+  }, [detachedFavoritesData])
 
   return (
     <section
