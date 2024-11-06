@@ -247,42 +247,47 @@ export default function AudioPlayer() {
               <source type="audio/mp3" />
             </audio>
 
-            {/* Control buttons */}
-            <nav className="flex gap-2 mb-1">
-              <button
-                className="text-4xl text-black rounded-full duration-200 ease-in-out bg-indigo-500 hover:scale-90 transition-all"
-                onClick={playPrev}
-                aria-label="Previous episode"
-              >
-                <MdArrowCircleLeft />
-              </button>
-              <button
-                className="text-4xl text-black rounded-full duration-200 ease-in-out bg-gradient-to-r from-indigo-500 to-purple-500 hover:scale-90 transition-all"
-                onClick={togglePlayback}
-                aria-label={isPlaying ? 'Pause' : 'Play'}
-              >
-                {isPlaying ? <MdPauseCircle /> : <MdPlayCircle />}
-              </button>
-              <button
-                className="text-4xl text-black rounded-full duration-200 ease-in-out bg-purple-500 hover:scale-90 transition-all"
-                onClick={playNext}
-                aria-label="Next episode"
-              >
-                <MdArrowCircleRight />
-              </button>
-            </nav>
+            <div className="flex flex-col items-center max-w-96 min-w-44 w-full">
+              {/* Control buttons */}
+              <nav className="flex gap-2 mb-1">
+                <button
+                  className="text-3xl md:text-4xl text-black rounded-full duration-200 ease-in-out bg-indigo-500 hover:scale-90 transition-all"
+                  onClick={playPrev}
+                  aria-label="Previous episode"
+                >
+                  <MdArrowCircleLeft />
+                </button>
+                <button
+                  className="text-3xl md:text-4xl text-black rounded-full duration-200 ease-in-out bg-gradient-to-r from-indigo-500 to-purple-500 hover:scale-90 transition-all"
+                  onClick={togglePlayback}
+                  aria-label={isPlaying ? 'Pause' : 'Play'}
+                >
+                  {isPlaying ? <MdPauseCircle /> : <MdPlayCircle />}
+                </button>
+                <button
+                  className="text-3xl md:text-4xl text-black rounded-full duration-200 ease-in-out bg-purple-500 hover:scale-90 transition-all"
+                  onClick={playNext}
+                  aria-label="Next episode"
+                >
+                  <MdArrowCircleRight />
+                </button>
+              </nav>
 
-            {/* Progress bar */}
-            <div ref={progressBarContainerRef} className="h-4 max-w-96 w-full">
-              <div className="h-1  max-w-96 w-full bg-stone-700 rounded-xl overflow-hidden">
-                <div
-                  ref={progressBarElementRef}
-                  className={`h-full w-0 ${
-                    isPlaying
-                      ? 'bg-gradient-to-r from-indigo-500 to-purple-500'
-                      : 'bg-gradient-to-r from-red-500 to-rose-500'
-                  }`}
-                />
+              {/* Progress bar */}
+              <div
+                ref={progressBarContainerRef}
+                className="h-4 max-w-96 w-full mt-1 md:mt-1"
+              >
+                <div className="h-1  max-w-96 w-full bg-stone-700 rounded-xl overflow-hidden">
+                  <div
+                    ref={progressBarElementRef}
+                    className={`h-full w-0 ${
+                      isPlaying
+                        ? 'bg-gradient-to-r from-indigo-500 to-purple-500'
+                        : 'bg-gradient-to-r from-red-500 to-rose-500'
+                    }`}
+                  />
+                </div>
               </div>
             </div>
           </div>

@@ -31,10 +31,11 @@ export default function FavoritesSection() {
   >(null)
 
   // global state
-  const { data: favoritesData } = useFavorite()
+  const { sync, data: favoritesData } = useFavorite()
 
   // Create's a deep copy of favoritesData
   const detachedFavoritesData = useMemo(() => {
+    sync()
     return JSON.parse(JSON.stringify(favoritesData))
   }, []) // and is left empty to avoid rerenders
 
