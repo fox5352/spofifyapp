@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
+import Fuse from 'fuse.js'
 // utils
 import { getAllGenres, getPreview, Preview } from '../../api/requests'
 // components
@@ -129,20 +130,28 @@ function Shows() {
       )
     }
 
-    const filterPreviewsByTitle = (previews: Preview[]): Preview[] => {
-      if (titleQuery === '*') return previews
+    const filterPreviews = (previews: Preview[]): Preview[] => {
+      if (titleQuery === '*') {
+        return previews
+      }
 
       const normalizedQuery = titleQuery.toLowerCase()
-      return previews.filter((preview) =>
-        preview.title.toLowerCase().includes(normalizedQuery)
-      )
+
+      const fuseInit = new Fuse(previews, {
+        keys: ['title', 'description'],
+        threshold: 0.3,
+      })
+
+      const result = fuseInit.search(normalizedQuery)
+
+      return result.map((result) => result.item)
     }
 
     // Apply filters sequentially
     const genreFilteredPreviews = await getFilteredPreviewsByGenre()
     if (!genreFilteredPreviews) return
 
-    const filteredPreviews = filterPreviewsByTitle(genreFilteredPreviews)
+    const filteredPreviews = filterPreviews(genreFilteredPreviews)
     setPreviewCards(filteredPreviews)
   }, [selectedGenre, availableGenres, titleQuery, fetchPreviewCards])
 
