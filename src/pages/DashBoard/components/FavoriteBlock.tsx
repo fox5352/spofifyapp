@@ -36,7 +36,7 @@ export default function FavoriteBlock({
   const [isActive, setIsActive] = useState(false)
 
   // Format the date for display
-  const formatedDate = formatDate(date.toString(), {
+  const formattedDate = formatDate(date.toString(), {
     year: '2-digit',
     month: 'short',
     day: '2-digit',
@@ -78,7 +78,7 @@ export default function FavoriteBlock({
         onClick={toggleActive}
       >
         <h3>{title}</h3>
-        <h4>{formatedDate}</h4>
+        <h4>{formattedDate}</h4>
         <div className="h-full w-auto">
           <MdArrowDownward
             className={`h-6 w-auto duration-200 transition-all ease-linear ${isActive ? 'rotate-180' : ''}`}
@@ -135,16 +135,18 @@ function FavoriteSeasonBlock({
  * Component that displays a button for removing a favorite episode
  */
 function FavoriteButton(data: FavoriteEpisode) {
+  const [isRemoved, setIsRemoved] = useState(false)
   const { remove } = useFavorite()
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation()
     remove(data)
+    setIsRemoved(true)
   }
 
   return (
     <button
-      className="flex w-full justify-start p-1.5 border-2 border-rose-500 rounded-md"
+      className={`flex w-full justify-start p-1.5 border-2 border-rose-500 rounded-md ${isRemoved ? 'hidden' : ''}`}
       onClick={handleClick}
     >
       {data.episodeTitle}
