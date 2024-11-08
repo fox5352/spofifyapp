@@ -76,7 +76,7 @@ export default function ListenHistorySection() {
       aria-label="Favorite Shows Dashboard"
     >
       <div className="flex items-center justify-between w-full md:max-w-[90%] md:px-6">
-        <h3 className="flex justify-start w-full text-4xl font-bold py-1 pl-2 bg-gradient-to-r from-[--ac-one] via-violet-500 to-purple-500 bg-clip-text text-transparent">
+        <h3 className="flex justify-start w-full text-4xl font-bold py-1 pl-2 bg-gradient-to-r from-[--ac-one] via-[--ac-two] to-purple-500 bg-clip-text text-transparent">
           History
         </h3>
 
@@ -93,7 +93,7 @@ export default function ListenHistorySection() {
           </button>
         </div>
       </div>
-      <div className="w-full max-w-[90%] h-1 mt-4 mx-auto bg-gradient-to-r from-[--ac-one] via-violet-500 to-purple-500 rounded-full" />
+      <div className="w-full max-w-[90%] h-1 mt-4 mx-auto bg-gradient-to-r from-[--ac-one] via-[--ac-two] to-purple-500 rounded-full" />
       {/**/}
       <div className="flex flex-col w-full text-white min-h-96">
         {error ? (
@@ -132,12 +132,12 @@ function MarkedEpisodeButton({
   return (
     <Link
       to={`/shows/${showId}/${season}`}
-      className={`flex flex-grow items-center w-full max-w-screen-lg p-1.5 border-2 border-violet-500 rounded-md duration-200 transition-all ease-linear`}
+      className={`flex flex-grow items-center w-full max-w-screen-lg p-1.5 border-2 border-[--ac-two] rounded-md duration-200 transition-all ease-linear`}
     >
       <div className="">
         <h3 className="md:text-lg space-x-2">
           <span className="text-[--ac-one] font-bold">{title}</span>
-          <span className="text-violet-500">Season{season}</span>
+          <span className="text-[--ac-two]">Season{season}</span>
           <span className="text-purple-500">Episode{episode}</span>
         </h3>
       </div>

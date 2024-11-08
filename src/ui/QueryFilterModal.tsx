@@ -76,7 +76,7 @@ export default function QueryFilterModal({
         >
           {/* Modal header */}
           <div className="flex items-center justify-between p-4 md:p-5 rounded-t">
-            <h3 className="text-2xl font-semibold bg-gradient-to-r from-[--ac-one] via-violet-500 to-purple-500 bg-clip-text text-transparent">
+            <h3 className="text-2xl font-semibold bg-gradient-to-r from-[--ac-one] via-[--ac-two] to-purple-500 bg-clip-text text-transparent">
               Filter Menu
             </h3>
             <button
@@ -88,7 +88,7 @@ export default function QueryFilterModal({
               <span className="sr-only">Close modal</span>
             </button>
           </div>
-          <div className="w-full max-w-xl h-1 mx-auto bg-gradient-to-r from-[--ac-one] via-violet-500 to-purple-500 rounded-full" />
+          <div className="w-full max-w-xl h-1 mx-auto bg-gradient-to-r from-[--ac-one] via-[--ac-two] to-purple-500 rounded-full" />
           {/* Modal body */}
           <div className="p-4 md:p-5 space-y-4">
             {filters.map((filter, idx) => (

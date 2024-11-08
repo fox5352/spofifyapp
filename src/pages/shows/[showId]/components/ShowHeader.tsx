@@ -47,7 +47,7 @@ export default function ShowHeader({
           </button>
           <Link
             to="./"
-            className="hover:bg-gradient-to-r from-[--ac-one] via-violet-500 to-purple-500 hover:bg-clip-text hover:text-transparent duration-200 transition-all ease-linear"
+            className="hover:bg-gradient-to-r from-[--ac-one] via-[--ac-two] to-purple-500 hover:bg-clip-text hover:text-transparent duration-200 transition-all ease-linear"
             aria-label="Go to show's home page"
           >
             <h1 className="text-4xl font-bold">{show.title}</h1>
