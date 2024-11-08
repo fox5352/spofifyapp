@@ -72,7 +72,7 @@ export default function ListenHistorySection() {
 
   return (
     <section
-      className="flex flex-col items-center max-w-screen-xl w-full min-h-[384px] mx-auto my-2 p-2 bg-zinc-950 rounded-md  "
+      className="flex flex-col items-center max-w-screen-xl w-full min-h-[384px] mx-auto my-2 p-2 bg-[--bg-two] rounded-md  "
       aria-label="Favorite Shows Dashboard"
     >
       <div className="flex items-center justify-between w-full md:max-w-[90%] md:px-6">
@@ -87,7 +87,7 @@ export default function ListenHistorySection() {
             onClick={handleReset}
           >
             <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg" />
-            <div className="px-3 py-1  bg-black rounded-[6px]  relative group transition duration-200 text-white active:bg-transparent">
+            <div className="px-3 py-1  bg-[--bg-two] rounded-[6px]  relative group transition duration-200 text-white active:bg-transparent">
               Reset History
             </div>
           </button>

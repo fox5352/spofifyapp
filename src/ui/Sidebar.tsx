@@ -42,7 +42,7 @@ function SideBar() {
     <div className="md:w-10">
       <button
         onClick={toggleMenu}
-        className="fixed z-30 right-10 bottom-[100px] md:hidden p-0.5 h-12 w-12 text-4xl text-black rounded-full duration-200 ease-in-out bg-gradient-to-r from-indigo-500 to-purple-500 hover:animate-heartbeat active:text-opacity-60 transition-all"
+        className="fixed z-30 right-10 bottom-[100px] md:hidden p-0.5 h-12 w-12 text-4xl text-[--text-two] rounded-full duration-200 ease-in-out bg-gradient-to-r from-indigo-500 to-purple-500 hover:animate-heartbeat active:text-opacity-60 transition-all"
       >
         {tf(
           <FaMinusCircle className="w-full h-full" />,
@@ -51,7 +51,7 @@ function SideBar() {
       </button>
 
       <aside
-        className={`z-40 h-fit my-1 mr-1 text-white bg-zinc-950 rounded-tr-lg rounded-br-lg w-10 overflow-hidden group  ${tf('w-44 fixed', 'hidden md:flex fixed ')} transition-all ease-in-out duration-300`}
+        className={`z-40 h-fit my-1 mr-1 text-white bg-[--bg-two] rounded-tr-lg rounded-br-lg w-10 overflow-hidden group  ${tf('w-44 fixed', 'hidden md:flex fixed ')} transition-all ease-in-out duration-300`}
       >
         <nav
           ref={SideBarRef}

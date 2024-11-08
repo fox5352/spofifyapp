@@ -185,7 +185,7 @@ export default function FavoritesSection() {
 
   return (
     <section
-      className="flex flex-col items-center max-w-screen-xl w-full min-h-[320px] mx-auto my-2 p-2 bg-zinc-950 rounded-md"
+      className="flex flex-col items-center max-w-screen-xl w-full min-h-[320px] mx-auto my-2 p-2 bg-[--bg-two] rounded-md"
       aria-label="Favorite Shows Dashboard"
     >
       <DashBoardFilterModal />

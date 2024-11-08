@@ -43,7 +43,7 @@ export function Card({
     <Link to={`/shows/${id}`}>
       <div className="max-w-xs w-full group/card relative">
         {/* Card Container */}
-        <div className="cursor-pointer relative card h-96 rounded-md shadow-xl max-w-sm mx-auto backgroundImage flex flex-col justify-between p-4 bg-zinc-950">
+        <div className="cursor-pointer relative card h-96 rounded-md shadow-xl max-w-sm mx-auto backgroundImage flex flex-col justify-between p-4 bg-[--bg-two]">
           {/* Overlay */}
           <div className="absolute w-full h-full top-0 left-0" />
 
@@ -59,7 +59,7 @@ export function Card({
 
           {/* Show Image */}
           <div className="absolute px-1.5 left-0 w-fit h-fit">
-            <div className="absolute inset-0 bg-black opacity-45" />
+            <div className="absolute inset-0 bg-[--bg-two] opacity-45" />
             <img
               className="w-full h-auto"
               loading="lazy"

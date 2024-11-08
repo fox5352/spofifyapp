@@ -55,9 +55,9 @@ export default function Carousel({ previews, error }: CarouselProps) {
           <Loading className="h-full w-auto" />
         </div>
       ) : (
-        <div className="max-w-4xl w-full h-full md:m-2 bg-zinc-950 md:rounded-md relative overflow-hidden md:bg-gradient-to-r from-zinc-950 to-white">
+        <div className="max-w-4xl w-full h-full md:m-2 bg-[--bg-two] md:rounded-md relative overflow-hidden md:bg-gradient-to-r from-zinc-950 to-white">
           <button
-            className="absolute z-10 left-0 h-full px-1 text-white bg-zinc-950 opacity-30 duration-200 transition-all ease-linear hover:opacity-65"
+            className="absolute z-10 left-0 h-full px-1 text-white bg-[--bg-two] opacity-30 duration-200 transition-all ease-linear hover:opacity-65"
             onClick={prevSlide}
           >
             <MdArrowLeft className="h-8 w-auto" />
@@ -72,7 +72,7 @@ export default function Carousel({ previews, error }: CarouselProps) {
               />
             ))}
           <button
-            className="absolute z-10 right-0 h-full px-1 text-white bg-zinc-950 opacity-30 duration-200 transition-all ease-linear hover:opacity-65"
+            className="absolute z-10 right-0 h-full px-1 text-white bg-[--bg-two] opacity-30 duration-200 transition-all ease-linear hover:opacity-65"
             onClick={nextSlide}
           >
             <MdArrowRight className="h-8 w-auto" />
@@ -110,13 +110,13 @@ function CarouselImage({
           <h1 className="text-lg md:text-2xl">{title}</h1>
           <h3>Updated: {formatDate(updated)}</h3>
         </div>
-        <div className="max-w-[90%] max-h-[100px]md:max-h-[220px] px-1 py-2 rounded-md bg-gray-500 bg-clip-padding backdrop-filter  backdrop-blur-sm bg-opacity-20 backdrop-saturate-150 backdrop-contrast-100 overflow-y-auto group-hover/carousel:bg-opacity-95 group-hover/carousel:bg-zinc-950 duration-200 transition-all ease-linear">
+        <div className="max-w-[90%] max-h-[100px]md:max-h-[220px] px-1 py-2 rounded-md bg-gray-500 bg-clip-padding backdrop-filter  backdrop-blur-sm bg-opacity-20 backdrop-saturate-150 backdrop-contrast-100 overflow-y-auto group-hover/carousel:bg-opacity-95 group-hover/carousel:bg-[--bg-two] duration-200 transition-all ease-linear">
           <p>{description}</p>
         </div>
       </div>
       <div className="absolute -z-10 bottom-0 right-0 h-full">
         <img className="w-auto h-full" src={image} alt="" />
-        <div className="absolute top-0 w-full h-full bg-zinc-950 opacity-60 md:opacity-0" />
+        <div className="absolute top-0 w-full h-full bg-[--bg-two] opacity-60 md:opacity-0" />
       </div>
     </Link>
   )

@@ -72,7 +72,7 @@ export default function QueryFilterModal({
         {/* Modal content */}
         <div
           ref={modalRef}
-          className="relative text-white bg-zinc-950 rounded-lg shadow"
+          className="relative text-white bg-[--bg-two] rounded-lg shadow"
         >
           {/* Modal header */}
           <div className="flex items-center justify-between p-4 md:p-5 rounded-t">

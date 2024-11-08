@@ -5,12 +5,13 @@
 
 :root {
   --bg-one: #ffffff;
-  --bg-two: #18181b;
+  --bg-two: #000000;
   /* ac colors */
-  --ac-indigo: #4f46e5;
-  --ac-violet: #7c3aed;
-  --ac-purple: #9333ea;
+  --ac-one: #4f46e5;
+  --ac-two: #7c3aed;
+  --ac-three: #9333ea;
   /*text*/
+  --text-two: #000000;
   --text: #ffffff;
   --text-primary: #4f46e5;
   --text-secondary: #9333ea;
