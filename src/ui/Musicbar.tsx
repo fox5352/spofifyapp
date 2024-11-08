@@ -224,7 +224,7 @@ export default function AudioPlayer() {
         <div className="absolute inset-0 bg-gradient-to-r from-[--ac-one] to-[--ac-three] rounded-lg" />
 
         {/* Player container */}
-        <div className="flex justify-between h-16 px-1 md:px-4 py-2 bg-[--bg-two] rounded-[6px] relative group transition duration-200 text-white">
+        <div className="flex justify-between h-16 px-1 md:px-4 py-2 bg-[--bg-two] rounded-[6px] relative group transition duration-200 text-[--text]">
           {/* Reserved space for future episode selection dropdown */}
           <div className="flex justify-center items-center min-w-16 max-w-28">
             {selectOptions ? (

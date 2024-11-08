@@ -68,7 +68,7 @@ export default function SeasonDetail() {
   }
 
   return (
-    <div className="flex flex-col items-center w-full mt-2 text-white bg-[--bg-two] rounded-md">
+    <div className="flex flex-col items-center w-full mt-2 text-[--text] bg-[--bg-two] rounded-md">
       <div className="max-w-4xl w-full px-1 py-2">
         <h2 className="text-2xl">{season.title}</h2>
         <div className="p-1 pt-1.5">
@@ -84,7 +84,7 @@ export default function SeasonDetail() {
             onClick={addAndPlay}
           >
             <div className="absolute inset-0 bg-gradient-to-r from-[--ac-one] to-[--ac-three] rounded-lg" />
-            <div className="flex items-center gap-1 px-2 py-0.5 bg-[--bg-two] rounded-[6px] relative group transition duration-200 text-white hover:bg-transparent">
+            <div className="flex items-center gap-1 px-2 py-0.5 bg-[--bg-two] rounded-[6px] relative group transition duration-200 text-[--text] hover:bg-transparent">
               Play <MdPlayCircle />
             </div>
           </button>

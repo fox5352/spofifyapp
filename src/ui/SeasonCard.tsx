@@ -24,7 +24,7 @@ export default function SeasonCard({
     <Link
       to={`/shows/${showId}/${season}`}
       state={data}
-      className={`max-w-xs w-full cursor-pointer relative h-96 rounded-md shadow-xl text-white bg-[--bg-two] overflow-hidden ${className}`}
+      className={`max-w-xs w-full cursor-pointer relative h-96 rounded-md shadow-xl text-[--text] bg-[--bg-two] overflow-hidden ${className}`}
     >
       <div className="relative w-full h-[85%] top-0 left-0">
         <img className="w-full h-full" src={image} alt="season banner" />

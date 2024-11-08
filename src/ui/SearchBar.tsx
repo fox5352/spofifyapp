@@ -78,7 +78,7 @@ function SearchBar() {
     <>
       <form className="flex w-11/12 my-1.5 max-w-screen-md px-2 p-1 bg-[--bg-two] rounded-full">
         <button
-          className={`flex justify-center items-center w-12 p-1 text-white rounded-md hover:scale-95 duration-200 transition-all ease-linear ${isMenuActive ? 'text-zinc-950 bg-gradient-to-r' : ''} from-[--ac-one] to-[--ac-three] duration-200 transition-all ease-linear`}
+          className={`flex justify-center items-center w-12 p-1 text-[--text] rounded-md hover:scale-95 duration-200 transition-all ease-linear ${isMenuActive ? 'text-zinc-950 bg-gradient-to-r' : ''} from-[--ac-one] to-[--ac-three] duration-200 transition-all ease-linear`}
           onClick={toggleMenu}
         >
           <MdMenu className="h-full w-auto" />
@@ -94,7 +94,7 @@ function SearchBar() {
           type="text"
         />
         <button
-          className="flex justify-center items-center w-12 p-1 text-white rounded-md hover:scale-95 hover:text-[--ac-three] duration-200 transition-all ease-linear"
+          className="flex justify-center items-center w-12 p-1 text-[--text] rounded-md hover:scale-95 hover:text-[--ac-three] duration-200 transition-all ease-linear"
           onClick={clearQuery}
         >
           <FaTrash />

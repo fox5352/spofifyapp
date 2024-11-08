@@ -57,7 +57,7 @@ export default function Carousel({ previews, error }: CarouselProps) {
       ) : (
         <div className="max-w-4xl w-full h-full md:m-2 bg-[--bg-two] md:rounded-md relative overflow-hidden md:bg-gradient-to-r from-zinc-950 to-white">
           <button
-            className="absolute z-10 left-0 h-full px-1 text-white bg-[--bg-two] opacity-30 duration-200 transition-all ease-linear hover:opacity-65"
+            className="absolute z-10 left-0 h-full px-1 text-[--text] bg-[--bg-two] opacity-30 duration-200 transition-all ease-linear hover:opacity-65"
             onClick={prevSlide}
           >
             <MdArrowLeft className="h-8 w-auto" />
@@ -72,7 +72,7 @@ export default function Carousel({ previews, error }: CarouselProps) {
               />
             ))}
           <button
-            className="absolute z-10 right-0 h-full px-1 text-white bg-[--bg-two] opacity-30 duration-200 transition-all ease-linear hover:opacity-65"
+            className="absolute z-10 right-0 h-full px-1 text-[--text] bg-[--bg-two] opacity-30 duration-200 transition-all ease-linear hover:opacity-65"
             onClick={nextSlide}
           >
             <MdArrowRight className="h-8 w-auto" />
@@ -102,7 +102,7 @@ function CarouselImage({
 }: CarouselImageProps) {
   return (
     <Link
-      className={`flex basis-full w-full h-full overflow-hidden bg-transparent group/carousel duration-200 transition-all ease-linear absolute left-0 top-0 z-[${index}] ${index === activeImageIndex ? 'scale-100 ' : '-translate-x-full scale-0'} text-white bg-gradient-to-r from-zinc-950 via-zinc-800 to-white`}
+      className={`flex basis-full w-full h-full overflow-hidden bg-transparent group/carousel duration-200 transition-all ease-linear absolute left-0 top-0 z-[${index}] ${index === activeImageIndex ? 'scale-100 ' : '-translate-x-full scale-0'} text-[--text] bg-gradient-to-r from-zinc-950 via-zinc-800 to-white`}
       to={`/shows/${id}`}
     >
       <div className="pl-10 flex justify-center items-start flex-col w-full">

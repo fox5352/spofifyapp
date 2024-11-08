@@ -53,7 +53,7 @@ export function Card({
               <p className="font-normal text-base text-gray-50 relative z-10">
                 {title}
               </p>
-              <p className="text-sm text-white">{seasons} seasons</p>
+              <p className="text-sm text-[--text]">{seasons} seasons</p>
             </div>
           </div>
 

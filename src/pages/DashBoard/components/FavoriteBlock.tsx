@@ -71,7 +71,7 @@ export default function FavoriteBlock({
 
   return (
     <div
-      className={`flex flex-col items-center w-full max-w-screen-lg text-white border-2 border-[--ac-one] rounded-md overflow-hidden duration-200 transition-all ease-linear ${isActive ? 'h-auto' : 'h-[44px]'}`}
+      className={`flex flex-col items-center w-full max-w-screen-lg text-[--text] border-2 border-[--ac-one] rounded-md overflow-hidden duration-200 transition-all ease-linear ${isActive ? 'h-auto' : 'h-[44px]'}`}
     >
       <button
         className="flex justify-between w-full p-1.5 text-xl"

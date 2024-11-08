@@ -30,7 +30,7 @@ export default function ShowHeader({
 
   return (
     <header
-      className="flex flex-col md:flex-row justify-center p-2 min-h-[320px] text-white bg-[--bg-two] md:rounded-md relative"
+      className="flex flex-col md:flex-row justify-center p-2 min-h-[320px] text-[--text] bg-[--bg-two] md:rounded-md relative"
       aria-label={`Header for ${show.title}`}
     >
       {/* Content Section */}
@@ -93,7 +93,7 @@ export default function ShowHeader({
               className="absolute inset-0 bg-gradient-to-r from-[--ac-one] to-[--ac-three] rounded-lg"
               aria-hidden="true"
             />
-            <div className="px-2 py-0.5 bg-[--bg-two] rounded-[6px] relative group transition duration-200 text-white hover:bg-transparent">
+            <div className="px-2 py-0.5 bg-[--bg-two] rounded-[6px] relative group transition duration-200 text-[--text] hover:bg-transparent">
               {isDescriptionExpanded ? 'Show Less' : 'Show More'}
             </div>
           </button>

@@ -51,7 +51,7 @@ function SideBar() {
       </button>
 
       <aside
-        className={`z-40 h-fit my-1 mr-1 text-white bg-[--bg-two] rounded-tr-lg rounded-br-lg w-10 overflow-hidden group  ${tf('w-44 fixed', 'hidden md:flex fixed ')} transition-all ease-in-out duration-300`}
+        className={`z-40 h-fit my-1 mr-1 text-[--text] bg-[--bg-two] rounded-tr-lg rounded-br-lg w-10 overflow-hidden group  ${tf('w-44 fixed', 'hidden md:flex fixed ')} transition-all ease-in-out duration-300`}
       >
         <nav
           ref={SideBarRef}
@@ -66,7 +66,7 @@ function SideBar() {
               {isExpanded ? <MdHeadphones /> : <MdMenu />}
             </button>
             <span
-              className={`text-transparent underline ${tf('text-white', '')}`}
+              className={`text-transparent underline ${tf('text-[--text]', '')}`}
             >
               Spofify
             </span>
@@ -82,7 +82,7 @@ function SideBar() {
               <span className="text-2xl">
                 <MdHome />
               </span>
-              <span className={`text-transparent ${tf('text-white', '')}`}>
+              <span className={`text-transparent ${tf('text-[--text]', '')}`}>
                 Home
               </span>
             </NavLink>
@@ -95,7 +95,7 @@ function SideBar() {
               <span className="text-2xl">
                 <MdSearch />
               </span>
-              <span className={`text-transparent ${tf('text-white', '')}`}>
+              <span className={`text-transparent ${tf('text-[--text]', '')}`}>
                 Search
               </span>
             </NavLink>
@@ -108,7 +108,7 @@ function SideBar() {
               <span className="text-2xl">
                 <MdFavorite />
               </span>
-              <span className={`text-transparent ${tf('text-white', '')}`}>
+              <span className={`text-transparent ${tf('text-[--text]', '')}`}>
                 Dashboard
               </span>
             </NavLink>

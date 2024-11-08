@@ -48,7 +48,7 @@ export default function ListenHistorySection() {
       }
 
       if (buffer.length === 0) {
-        setError({ message: 'No listen history found', color: 'text-white' })
+        setError({ message: 'No listen history found', color: 'text-[--text]' })
         setIsLoading(false)
         return
       }
@@ -67,7 +67,7 @@ export default function ListenHistorySection() {
   const handleReset = () => {
     resetlisted()
     setMarkedEpisodes(null)
-    setError({ message: 'No listen history found', color: 'text-white' })
+    setError({ message: 'No listen history found', color: 'text-[--text]' })
   }
 
   return (
@@ -87,7 +87,7 @@ export default function ListenHistorySection() {
             onClick={handleReset}
           >
             <div className="absolute inset-0 bg-gradient-to-r from-[--ac-one] to-[--ac-three] rounded-lg" />
-            <div className="px-3 py-1  bg-[--bg-two] rounded-[6px]  relative group transition duration-200 text-white active:bg-transparent">
+            <div className="px-3 py-1  bg-[--bg-two] rounded-[6px]  relative group transition duration-200 text-[--text] active:bg-transparent">
               Reset History
             </div>
           </button>
@@ -95,7 +95,7 @@ export default function ListenHistorySection() {
       </div>
       <div className="w-full max-w-[90%] h-1 mt-4 mx-auto bg-gradient-to-r from-[--ac-one] via-[--ac-two] to-[--ac-three] rounded-full" />
       {/**/}
-      <div className="flex flex-col w-full text-white min-h-96">
+      <div className="flex flex-col w-full text-[--text] min-h-96">
         {error ? (
           <div className={`${error.color} w-full mt my-8`}>
             <ErrorMessage

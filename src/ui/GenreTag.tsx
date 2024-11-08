@@ -24,7 +24,7 @@ function GenreTag({ children, variant = 'outline', className }: GenreTagProps) {
 
   return (
     <span
-      className={`rounded-full border text-nowrap py-1 px-2 text-center text-inherit transition-all shadow-sm ${variant === 'outline' ? 'text-inherit border-zinc-950' : `text-white bg-${randomColor} border-${randomColor}`} ${className}`}
+      className={`rounded-full border text-nowrap py-1 px-2 text-center text-inherit transition-all shadow-sm ${variant === 'outline' ? 'text-inherit border-zinc-950' : `text-[--text] bg-${randomColor} border-${randomColor}`} ${className}`}
     >
       {children}
     </span>
