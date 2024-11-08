@@ -109,7 +109,7 @@ export default function ListenHistorySection() {
             <Loading className="h-full w-auto" />
           </div>
         ) : (
-          <div className="flex flex-col my-2 space-y-2">
+          <div className="flex flex-col items-center my-2 space-y-2">
             {markedEpisodes.map((epi) => (
               <MarkedEpisodeButton
                 key={`${epi.showId}${epi.season}${epi.episode}`}
@@ -132,7 +132,7 @@ function MarkedEpisodeButton({
   return (
     <Link
       to={`/shows/${showId}/${season}`}
-      className={`flex flex-grow items-center p-1.5 border-2 rounded-md duration-200 transition-all ease-linear`}
+      className={`flex flex-grow items-center w-full max-w-screen-lg p-1.5 border-2 border-violet-500 rounded-md duration-200 transition-all ease-linear`}
     >
       <div className="">
         <h3 className="md:text-lg space-x-2">
