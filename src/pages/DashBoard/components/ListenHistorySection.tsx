@@ -76,7 +76,7 @@ export default function ListenHistorySection() {
       aria-label="Favorite Shows Dashboard"
     >
       <div className="flex items-center justify-between w-full md:max-w-[90%] md:px-6">
-        <h3 className="flex justify-start w-full text-4xl font-bold py-1 pl-2 bg-gradient-to-r from-[--ac-one] via-[--ac-two] to-purple-500 bg-clip-text text-transparent">
+        <h3 className="flex justify-start w-full text-4xl font-bold py-1 pl-2 bg-gradient-to-r from-[--ac-one] via-[--ac-two] to-[--ac-three] bg-clip-text text-transparent">
           History
         </h3>
 
@@ -86,14 +86,14 @@ export default function ListenHistorySection() {
             className="p-[3px] text-nowrap relative duration-200 transition hover:scale-x-95"
             onClick={handleReset}
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-[--ac-one] to-purple-500 rounded-lg" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[--ac-one] to-[--ac-three] rounded-lg" />
             <div className="px-3 py-1  bg-[--bg-two] rounded-[6px]  relative group transition duration-200 text-white active:bg-transparent">
               Reset History
             </div>
           </button>
         </div>
       </div>
-      <div className="w-full max-w-[90%] h-1 mt-4 mx-auto bg-gradient-to-r from-[--ac-one] via-[--ac-two] to-purple-500 rounded-full" />
+      <div className="w-full max-w-[90%] h-1 mt-4 mx-auto bg-gradient-to-r from-[--ac-one] via-[--ac-two] to-[--ac-three] rounded-full" />
       {/**/}
       <div className="flex flex-col w-full text-white min-h-96">
         {error ? (
@@ -138,7 +138,7 @@ function MarkedEpisodeButton({
         <h3 className="md:text-lg space-x-2">
           <span className="text-[--ac-one] font-bold">{title}</span>
           <span className="text-[--ac-two]">Season{season}</span>
-          <span className="text-purple-500">Episode{episode}</span>
+          <span className="text-[--ac-three]">Episode{episode}</span>
         </h3>
       </div>
     </Link>

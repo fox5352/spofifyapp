@@ -30,7 +30,7 @@ export default function SeasonCard({
         <img className="w-full h-full" src={image} alt="season banner" />
         <div className="absolute top-0 left-0 m-1 p-0.5 px-2 bg-[--bg-two] rounded-md">
           <h5 className="text-[--ac-one]">Season: {season}</h5>
-          <h6 className="text-sm text-purple-500">
+          <h6 className="text-sm text-[--ac-three]">
             Eposodes: {episodes.length}
           </h6>
         </div>

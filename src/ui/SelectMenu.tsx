@@ -52,7 +52,7 @@ export default function SelectMenu({
       </label>
       <select
         name={name}
-        className="text-white bg-[--bg-two] border border-gray-300 text-sm rounded-lg focus:ring-[--ac-one] focus:border-purple-500 block w-full p-2.5"
+        className="text-white bg-[--bg-two] border border-gray-300 text-sm rounded-lg focus:ring-[--ac-one] focus:border-[--ac-three] block w-full p-2.5"
         value={selectedValue}
         onChange={handleChange}
       >

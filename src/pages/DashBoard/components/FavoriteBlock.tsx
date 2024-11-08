@@ -114,7 +114,7 @@ function FavoriteSeasonBlock({
   return (
     <div className="p-1.5 border-2 border-[--ac-two] rounded-md">
       <Link
-        className="flex w-full border-b-2 text-xl border-white hover:text-purple-500 hover:border-purple-500 duration-200 transition-all ease-linear"
+        className="flex w-full border-b-2 text-xl border-white hover:text-[--ac-three] hover:border-[--ac-three] duration-200 transition-all ease-linear"
         to={link}
       >
         {seasonTitle}

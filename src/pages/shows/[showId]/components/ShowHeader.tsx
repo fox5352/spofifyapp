@@ -47,7 +47,7 @@ export default function ShowHeader({
           </button>
           <Link
             to="./"
-            className="hover:bg-gradient-to-r from-[--ac-one] via-[--ac-two] to-purple-500 hover:bg-clip-text hover:text-transparent duration-200 transition-all ease-linear"
+            className="hover:bg-gradient-to-r from-[--ac-one] via-[--ac-two] to-[--ac-three] hover:bg-clip-text hover:text-transparent duration-200 transition-all ease-linear"
             aria-label="Go to show's home page"
           >
             <h1 className="text-4xl font-bold">{show.title}</h1>
@@ -60,7 +60,7 @@ export default function ShowHeader({
             <span className="sr-only">Number of seasons: </span>
             Seasons {show.seasons.length}
           </p>
-          <p className="text-purple-500">
+          <p className="text-[--ac-three]">
             <span className="sr-only">Last updated: </span>
             Updated {formatDate(show.updated)}
           </p>
@@ -90,7 +90,7 @@ export default function ShowHeader({
             type="button"
           >
             <div
-              className="absolute inset-0 bg-gradient-to-r from-[--ac-one] to-purple-500 rounded-lg"
+              className="absolute inset-0 bg-gradient-to-r from-[--ac-one] to-[--ac-three] rounded-lg"
               aria-hidden="true"
             />
             <div className="px-2 py-0.5 bg-[--bg-two] rounded-[6px] relative group transition duration-200 text-white hover:bg-transparent">

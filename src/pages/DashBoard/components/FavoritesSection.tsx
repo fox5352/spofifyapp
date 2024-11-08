@@ -189,10 +189,10 @@ export default function FavoritesSection() {
       aria-label="Favorite Shows Dashboard"
     >
       <DashBoardFilterModal />
-      <h1 className="flex justify-start w-full md:max-w-[90%] text-4xl font-bold py-1 pl-2 bg-gradient-to-r from-[--ac-one] via-[--ac-two] to-purple-500 bg-clip-text text-transparent">
+      <h1 className="flex justify-start w-full md:max-w-[90%] text-4xl font-bold py-1 pl-2 bg-gradient-to-r from-[--ac-one] via-[--ac-two] to-[--ac-three] bg-clip-text text-transparent">
         Favorites
       </h1>
-      <div className="w-full max-w-[90%] h-1 mt-4 mx-auto bg-gradient-to-r from-[--ac-one] via-[--ac-two] to-purple-500 rounded-full" />
+      <div className="w-full max-w-[90%] h-1 mt-4 mx-auto bg-gradient-to-r from-[--ac-one] via-[--ac-two] to-[--ac-three] rounded-full" />
 
       <div
         className="flex flex-col w-full justify-center items-center my-2 space-y-2"
