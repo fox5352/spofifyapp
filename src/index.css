@@ -17,15 +17,13 @@
   --text-secondary: #9333ea;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg-one: #2C3333;
+[data-theme="dark"] {
+  --bg-one: #2C3333;
 
-    --ac-one: #FF3E00;
-    --ac-two: #F43F5E;
-    --ac-three: #D946EF;
+  --ac-one: #FF3E00;
+  --ac-two: #F43F5E;
+  --ac-three: #D946EF;
 
-  }
 }
 
 body {

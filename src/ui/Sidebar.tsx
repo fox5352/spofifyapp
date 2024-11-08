@@ -2,12 +2,16 @@ import { useEffect, useRef, useState } from 'react'
 import { FaMinusCircle, FaPlusCircle } from 'react-icons/fa'
 import { NavLink } from 'react-router-dom'
 import {
+  MdCircle,
   MdFavorite,
   MdHeadphones,
   MdHome,
   MdMenu,
   MdSearch,
+  MdSunny,
 } from 'react-icons/md'
+
+import useTheme from '../hooks/useTheme'
 
 /**
  * SideBar - A component for navigation
@@ -18,6 +22,9 @@ function SideBar() {
 
   // local state
   const [isExpanded, setIsExpanded] = useState(false)
+
+  // hooks
+  const [theme, toggleTheme] = useTheme()
 
   /**
    * toggles focus to component when toggle
@@ -51,11 +58,11 @@ function SideBar() {
       </button>
 
       <aside
-        className={`z-40 h-fit my-1 mr-1 text-[--text] bg-[--bg-two] rounded-tr-lg rounded-br-lg w-10 overflow-hidden group  ${tf('w-44 fixed', 'hidden md:flex fixed ')} transition-all ease-in-out duration-300`}
+        className={`z-40 h-fit my-1 mr-1 !text-[--text] bg-[--bg-two] rounded-tr-lg rounded-br-lg w-10 overflow-hidden group  ${tf('w-44 fixed', 'hidden md:flex fixed ')} transition-all ease-in-out duration-300`}
       >
         <nav
           ref={SideBarRef}
-          className={`w-10 ${tf('w-40', '')} transition-all ease-in-out duration-300 p-2`}
+          className={`w-10 ${tf('w-40', '')} !text-[--text] transition-all ease-in-out duration-300 p-2`}
         >
           {/*  */}
           <h3 className="flex items-center text-2xl mb-3">
@@ -66,7 +73,7 @@ function SideBar() {
               {isExpanded ? <MdHeadphones /> : <MdMenu />}
             </button>
             <span
-              className={`text-transparent underline ${tf('text-[--text]', '')}`}
+              className={`text-transparent underline ${tf('!text-[--text]', '')}`}
             >
               Spofify
             </span>
@@ -82,7 +89,7 @@ function SideBar() {
               <span className="text-2xl">
                 <MdHome />
               </span>
-              <span className={`text-transparent ${tf('text-[--text]', '')}`}>
+              <span className={`text-transparent ${tf('!text-[--text]', '')}`}>
                 Home
               </span>
             </NavLink>
@@ -95,7 +102,7 @@ function SideBar() {
               <span className="text-2xl">
                 <MdSearch />
               </span>
-              <span className={`text-transparent ${tf('text-[--text]', '')}`}>
+              <span className={`text-transparent ${tf('!text-[--text]', '')}`}>
                 Search
               </span>
             </NavLink>
@@ -108,10 +115,23 @@ function SideBar() {
               <span className="text-2xl">
                 <MdFavorite />
               </span>
-              <span className={`text-transparent ${tf('text-[--text]', '')}`}>
+              <span className={`text-transparent ${tf('!text-[--text]', '')}`}>
                 Dashboard
               </span>
             </NavLink>
+
+            <button
+              className={`flex items-center gap-1 text-lg ${theme == "light" ? "text-yellow-300" : "text-white"} hover:scale-95 duration-200 transition-colors ease-linear`}
+              onClick={toggleTheme}
+            >
+              <span className="text-2xl">
+                {theme == "light" ? <MdSunny /> : <MdCircle />}
+              </span>
+              <span className={`text-transparent ${tf('!text-[--text]', '')}`}>
+                {theme == "light" ? "Dark" : "Light"}
+              </span>
+            </button>
+
           </div>
         </nav>
       </aside>
