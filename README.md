@@ -4,6 +4,8 @@
 
 ## [Link to deployed site](https://spofifyapp.netlify.app/)
 
+## [WIKI PAGES](https://github.com/fox5352/CHRVOS352_PTO2401_GroupA_Christopher-Vos_DJS11/wiki)
+
 <!-- omit in toc -->
 
 **Table of Contents**
