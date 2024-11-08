@@ -67,7 +67,7 @@ function SideBar() {
           {/*  */}
           <h3 className="flex items-center text-2xl mb-3">
             <button
-              className="text-2xl hover:text-[--ac-three]"
+              className="text-2xl hover:text-[--ac-one]"
               onClick={toggleMenu}
             >
               {isExpanded ? <MdHeadphones /> : <MdMenu />}
@@ -95,7 +95,7 @@ function SideBar() {
             </NavLink>
             <NavLink
               className={({ isActive }) =>
-                `flex items-center gap-1 text-lg hover:text-[--ac-three] ${isActive ? 'text-[--ac-three]' : ''}`
+                `flex items-center gap-1 text-lg hover:text-[--ac-one] ${isActive ? 'text-[--ac-one]' : ''}`
               }
               to="/shows"
             >
@@ -108,7 +108,7 @@ function SideBar() {
             </NavLink>
             <NavLink
               className={({ isActive }) =>
-                `flex items-center gap-1 text-lg hover:text-[--ac-three] ${isActive ? 'text-[--ac-three]' : ''}`
+                `flex items-center gap-1 text-lg hover:text-[--ac-one] ${isActive ? 'text-[--ac-one]' : ''}`
               }
               to="dashboard"
             >
