@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+:root {
+  --bg-one: #ffffff;
+  --bg-two: #18181b;
+  /* ac colors */
+  --ac-indigo: #4f46e5;
+  --ac-violet: #7c3aed;
+  --ac-purple: #9333ea;
+  /*text*/
+  --text: #ffffff;
+  --text-primary: #4f46e5;
+  --text-secondary: #9333ea;
+}
