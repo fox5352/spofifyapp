@@ -199,7 +199,11 @@ export default function FavoritesSection() {
         aria-label="Favorite Seasons List"
       >
         {error ? (
-          <ErrorMessage message={error} size="text-2xl" />
+          <ErrorMessage
+            message={error}
+            className="!text-[--text]"
+            size="text-2xl"
+          />
         ) : isLoading || favoriteSeasons == null ? (
           <Loading
             className="flex h-24 w-auto"

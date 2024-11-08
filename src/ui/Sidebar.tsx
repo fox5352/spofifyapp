@@ -121,17 +121,16 @@ function SideBar() {
             </NavLink>
 
             <button
-              className={`flex items-center gap-1 text-lg ${theme == "light" ? "text-yellow-300" : "text-white"} hover:scale-95 duration-200 transition-colors ease-linear`}
+              className={`flex items-center gap-1 text-lg ${theme == 'light' ? 'text-yellow-300' : 'text-white'} hover:scale-95 duration-200 transition-colors ease-linear`}
               onClick={toggleTheme}
             >
               <span className="text-2xl">
-                {theme == "light" ? <MdSunny /> : <MdCircle />}
+                {theme == 'light' ? <MdSunny /> : <MdCircle />}
               </span>
               <span className={`text-transparent ${tf('!text-[--text]', '')}`}>
-                {theme == "light" ? "Dark" : "Light"}
+                {theme == 'light' ? 'Dark' : 'Light'}
               </span>
             </button>
-
           </div>
         </nav>
       </aside>

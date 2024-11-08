@@ -99,7 +99,7 @@ export default function ListenHistorySection() {
         {error ? (
           <div className={`${error.color} w-full mt my-8`}>
             <ErrorMessage
-              className={error.color}
+              className={`!${error.color}`}
               message={error.message}
               size="text-2xl"
             />
