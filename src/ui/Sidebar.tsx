@@ -42,7 +42,7 @@ function SideBar() {
     <div className="md:w-10">
       <button
         onClick={toggleMenu}
-        className="fixed z-30 right-10 bottom-[100px] md:hidden p-0.5 h-12 w-12 text-4xl text-[--text-two] rounded-full duration-200 ease-in-out bg-gradient-to-r from-indigo-500 to-purple-500 hover:animate-heartbeat active:text-opacity-60 transition-all"
+        className="fixed z-30 right-10 bottom-[100px] md:hidden p-0.5 h-12 w-12 text-4xl text-[--text-two] rounded-full duration-200 ease-in-out bg-gradient-to-r from-[--ac-one] to-purple-500 hover:animate-heartbeat active:text-opacity-60 transition-all"
       >
         {tf(
           <FaMinusCircle className="w-full h-full" />,
@@ -75,7 +75,7 @@ function SideBar() {
           <div className="flex flex-col gap-2">
             <NavLink
               className={({ isActive }) =>
-                `flex items-center gap-1 text-lg hover:text-indigo-500 ${isActive ? 'text-indigo-500' : ''}`
+                `flex items-center gap-1 text-lg hover:text-[--ac-one] ${isActive ? 'text-[--ac-one]' : ''}`
               }
               to="/"
             >
