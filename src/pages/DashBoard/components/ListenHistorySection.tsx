@@ -48,7 +48,7 @@ export default function ListenHistorySection() {
       }
 
       if (buffer.length === 0) {
-        setError({ message: 'No listen history found', color: 'text-white' })
+        setError({ message: 'No listen history found', color: 'text-[--text]' })
         setIsLoading(false)
         return
       }
@@ -67,16 +67,16 @@ export default function ListenHistorySection() {
   const handleReset = () => {
     resetlisted()
     setMarkedEpisodes(null)
-    setError({ message: 'No listen history found', color: 'text-white' })
+    setError({ message: 'No listen history found', color: 'text-[--text]' })
   }
 
   return (
     <section
-      className="flex flex-col items-center max-w-screen-xl w-full min-h-[384px] mx-auto my-2 p-2 bg-zinc-950 rounded-md  "
+      className="flex flex-col items-center max-w-screen-xl w-full min-h-[384px] mx-auto my-2 p-2 bg-[--bg-two] rounded-md  "
       aria-label="Favorite Shows Dashboard"
     >
       <div className="flex items-center justify-between w-full md:max-w-[90%] md:px-6">
-        <h3 className="flex justify-start w-full text-4xl font-bold py-1 pl-2 bg-gradient-to-r from-indigo-500 via-violet-500 to-purple-500 bg-clip-text text-transparent">
+        <h3 className="flex justify-start w-full text-4xl font-bold py-1 pl-2 bg-gradient-to-r from-[--ac-one] via-[--ac-two] to-[--ac-three] bg-clip-text text-transparent">
           History
         </h3>
 
@@ -86,20 +86,20 @@ export default function ListenHistorySection() {
             className="p-[3px] text-nowrap relative duration-200 transition hover:scale-x-95"
             onClick={handleReset}
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg" />
-            <div className="px-3 py-1  bg-black rounded-[6px]  relative group transition duration-200 text-white active:bg-transparent">
+            <div className="absolute inset-0 bg-gradient-to-r from-[--ac-one] to-[--ac-three] rounded-lg" />
+            <div className="px-3 py-1  bg-[--bg-two] rounded-[6px]  relative group transition duration-200 text-[--text] active:bg-transparent">
               Reset History
             </div>
           </button>
         </div>
       </div>
-      <div className="w-full max-w-[90%] h-1 mt-4 mx-auto bg-gradient-to-r from-indigo-500 via-violet-500 to-purple-500 rounded-full" />
+      <div className="w-full max-w-[90%] h-1 mt-4 mx-auto bg-gradient-to-r from-[--ac-one] via-[--ac-two] to-[--ac-three] rounded-full" />
       {/**/}
-      <div className="flex flex-col w-full text-white min-h-96">
+      <div className="flex flex-col w-full text-[--text] min-h-96">
         {error ? (
           <div className={`${error.color} w-full mt my-8`}>
             <ErrorMessage
-              className={error.color}
+              className={`!${error.color}`}
               message={error.message}
               size="text-2xl"
             />
@@ -109,7 +109,7 @@ export default function ListenHistorySection() {
             <Loading className="h-full w-auto" />
           </div>
         ) : (
-          <div className="flex flex-col my-2 space-y-2">
+          <div className="flex flex-col items-center my-2 space-y-2">
             {markedEpisodes.map((epi) => (
               <MarkedEpisodeButton
                 key={`${epi.showId}${epi.season}${epi.episode}`}
@@ -132,13 +132,13 @@ function MarkedEpisodeButton({
   return (
     <Link
       to={`/shows/${showId}/${season}`}
-      className={`flex flex-grow items-center p-1.5 border-2 rounded-md duration-200 transition-all ease-linear`}
+      className={`flex flex-grow items-center w-full max-w-screen-lg p-1.5 border-2 border-[--ac-two] rounded-md duration-200 transition-all ease-linear`}
     >
       <div className="">
         <h3 className="md:text-lg space-x-2">
-          <span className="text-indigo-500 font-bold">{title}</span>
-          <span className="text-violet-500">Season{season}</span>
-          <span className="text-purple-500">Episode{episode}</span>
+          <span className="text-[--ac-one] font-bold">{title}</span>
+          <span className="text-[--ac-two]">Season{season}</span>
+          <span className="text-[--ac-three]">Episode{episode}</span>
         </h3>
       </div>
     </Link>

@@ -52,10 +52,10 @@ export default function EpisodeButton({
     <li className="w-full" key={title}>
       <div className="flex items-center gap-1.5 w-full text-start">
         <button
-          className={`flex flex-grow items-center p-1.5 border-2 rounded-md duration-200 transition-all ease-linear ${isMarkedAsListened ? 'border-zinc-400' : 'border-indigo-500'}`}
+          className={`flex flex-grow items-center p-1.5 border-2 rounded-md duration-200 transition-all ease-linear ${isMarkedAsListened ? 'border-zinc-400' : 'border-[--ac-one]'}`}
           onClick={handleClick}
         >
-          <MdPlayCircle className="mr-0.5 text-xl text-zinc-950 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full duration-200 transition-all ease-linear" />
+          <MdPlayCircle className="mr-0.5 text-xl text-zinc-950 bg-gradient-to-r from-[--ac-one] to-[--ac-three] rounded-full duration-200 transition-all ease-linear" />
           {title}
         </button>
         <FavButton ep={episode} showId={id || '0'} season={season?.season} />

@@ -221,10 +221,10 @@ export default function AudioPlayer() {
     <div className="fixed z-50 bottom-1 left-1/2 -translate-x-1/2 w-[95%] max-w-3xl">
       <div className="p-[3px] relative">
         {/* Gradient border */}
-        <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[--ac-one] to-[--ac-three] rounded-lg" />
 
         {/* Player container */}
-        <div className="flex justify-between h-16 px-1 md:px-4 py-2 bg-black rounded-[6px] relative group transition duration-200 text-white">
+        <div className="flex justify-between h-16 px-1 md:px-4 py-2 bg-[--bg-two] rounded-[6px] relative group transition duration-200 text-[--text]">
           {/* Reserved space for future episode selection dropdown */}
           <div className="flex justify-center items-center min-w-16 max-w-28">
             {selectOptions ? (
@@ -251,21 +251,21 @@ export default function AudioPlayer() {
               {/* Control buttons */}
               <nav className="flex gap-2 mb-1">
                 <button
-                  className="text-3xl md:text-4xl text-black rounded-full duration-200 ease-in-out bg-indigo-500 hover:scale-90 transition-all"
+                  className="text-3xl md:text-4xl text-[--text-two] rounded-full duration-200 ease-in-out bg-[--ac-one] hover:scale-90 transition-all"
                   onClick={playPrev}
                   aria-label="Previous episode"
                 >
                   <MdArrowCircleLeft />
                 </button>
                 <button
-                  className="text-3xl md:text-4xl text-black rounded-full duration-200 ease-in-out bg-gradient-to-r from-indigo-500 to-purple-500 hover:scale-90 transition-all"
+                  className="text-3xl md:text-4xl text-[--text-two] rounded-full duration-200 ease-in-out bg-gradient-to-r from-[--ac-one] to-[--ac-three] hover:scale-90 transition-all"
                   onClick={togglePlayback}
                   aria-label={isPlaying ? 'Pause' : 'Play'}
                 >
                   {isPlaying ? <MdPauseCircle /> : <MdPlayCircle />}
                 </button>
                 <button
-                  className="text-3xl md:text-4xl text-black rounded-full duration-200 ease-in-out bg-purple-500 hover:scale-90 transition-all"
+                  className="text-3xl md:text-4xl text-[--text-two] rounded-full duration-200 ease-in-out bg-[--ac-three] hover:scale-90 transition-all"
                   onClick={playNext}
                   aria-label="Next episode"
                 >
@@ -283,7 +283,7 @@ export default function AudioPlayer() {
                     ref={progressBarElementRef}
                     className={`h-full w-0 ${
                       isPlaying
-                        ? 'bg-gradient-to-r from-indigo-500 to-purple-500'
+                        ? 'bg-gradient-to-r from-[--ac-one] to-[--ac-three]'
                         : 'bg-gradient-to-r from-red-500 to-rose-500'
                     }`}
                   />

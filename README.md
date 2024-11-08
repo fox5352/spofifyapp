@@ -1,13 +1,68 @@
 # 🎵 PODCAST APP | PORTFOLIO PIECE 💿
 
-[DJS11] Starter Instructions for the Final Portfolio Piece Submission 🚀
+A modern web application built with React and TypeScript, offering a seamless music experience.
 
-## [Link to deployed site](https://spofifyapp.netlify.app/)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/9e7dc2e9-457b-40dd-af38-34546a391ba9/deploy-status)](https://app.netlify.com/sites/spofifyapp/deploys)
 
-## [WIKI PAGES](https://github.com/fox5352/CHRVOS352_PTO2401_GroupA_Christopher-Vos_DJS11/wiki)
+## 🚀 Quick Links
+
+- [Live Demo](https://spofifyapp.netlify.app/)
+- [Wiki explanation](https://github.com/fox5352/CHRVOS352_PTO2401_GroupA_Christopher-Vos_DJS11/wiki)
+
+## ✨ Features
+
+- Mode styling podcast app
+- Light/dark mode
+- Tracking favorites
+- Listen history
+- Fuzzy search and ordering and tag search
+- Responsive
+- Global audio player
+
+## 🛠️ Technologies
+
+| Technology   | Purpose              |
+| ------------ | -------------------- |
+| TypeScript   | Type-safe JavaScript |
+| React        | UI Framework         |
+| React Router | Navigation           |
+| TailwindCSS  | Styling              |
+| Zustand      | State Management     |
+
+## 🏗️ Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/your-username/your-repo-name.git
+
+# Navigate to project directory
+cd your-repo-name
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+```
+
+## 📦 Building for Production
+
+```bash
+# Create production build
+npm run build
+
+# Preview production build locally
+npm run preview
+```
+
+## 👥 Team
+
+- Christopher Vos - Developer
+
+# -------------------------------------------------------------------------
 
 <!-- omit in toc -->
-
+<!--
 **Table of Contents**
 
 - [🤖 Technology](#-technology)
@@ -118,7 +173,7 @@ Since genre information is only exposed on `PREVIEW` by means of the specific `G
 | 8   | News                     |
 | 9   | Kids and Family          |
 
-## 🧑 User Stories
+## 🧑 User Stories -->
 
 Please refer to the DJS rubric found in your dashboard spreadsheet for more detail.
 

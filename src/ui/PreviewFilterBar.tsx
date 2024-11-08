@@ -51,7 +51,7 @@ const PreviewFilterBar = memo(function PreviewFilterBar({
   return (
     <nav
       aria-label="Genre filters"
-      className="flex justify-center items-center flex-wrap gap-x-1 gap-y-1.5 my-2 px-2 py-1 text-black w-5/6 max-w-xl md:max-w-2xl rounded-md relative"
+      className="flex justify-center items-center flex-wrap gap-x-1 gap-y-1.5 my-2 px-2 py-1 text-[--text-two] w-5/6 max-w-xl md:max-w-2xl rounded-md relative"
     >
       {isLoading ? (
         <div

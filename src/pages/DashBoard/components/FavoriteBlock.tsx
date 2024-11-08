@@ -71,7 +71,7 @@ export default function FavoriteBlock({
 
   return (
     <div
-      className={`flex flex-col items-center w-full max-w-screen-lg text-white border-2 border-indigo-500 rounded-md overflow-hidden duration-200 transition-all ease-linear ${isActive ? 'h-auto' : 'h-[44px]'}`}
+      className={`flex flex-col items-center w-full max-w-screen-lg text-[--text] border-2 border-[--ac-one] rounded-md overflow-hidden duration-200 transition-all ease-linear ${isActive ? 'h-auto' : 'h-[44px]'}`}
     >
       <button
         className="flex justify-between w-full p-1.5 text-xl"
@@ -112,9 +112,9 @@ function FavoriteSeasonBlock({
 }: FavoriteSeasonBlockProps) {
   const link = `/shows/${episodes[0].showId}/${episodes[0].season}`
   return (
-    <div className="p-1.5 border-2 border-violet-500 rounded-md">
+    <div className="p-1.5 border-2 border-[--ac-two] rounded-md">
       <Link
-        className="flex w-full border-b-2 text-xl border-white hover:text-purple-500 hover:border-purple-500 duration-200 transition-all ease-linear"
+        className="flex w-full border-b-2 text-xl border-white hover:text-[--ac-three] hover:border-[--ac-three] duration-200 transition-all ease-linear"
         to={link}
       >
         {seasonTitle}

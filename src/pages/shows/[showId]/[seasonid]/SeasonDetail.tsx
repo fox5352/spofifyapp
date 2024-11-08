@@ -68,12 +68,12 @@ export default function SeasonDetail() {
   }
 
   return (
-    <div className="flex flex-col items-center w-full mt-2 text-white bg-zinc-950 rounded-md">
+    <div className="flex flex-col items-center w-full mt-2 text-[--text] bg-[--bg-two] rounded-md">
       <div className="max-w-4xl w-full px-1 py-2">
         <h2 className="text-2xl">{season.title}</h2>
         <div className="p-1 pt-1.5">
-          <h4 className="text-xl text-indigo-500">Season: {season.season}</h4>
-          <h5 className="text-xl text-purple-500">
+          <h4 className="text-xl text-[--ac-one]">Season: {season.season}</h4>
+          <h5 className="text-xl text-[--ac-three]">
             Episodes: {season.episodes.length}
           </h5>
         </div>
@@ -83,8 +83,8 @@ export default function SeasonDetail() {
             aria-controls="show-description"
             onClick={addAndPlay}
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg" />
-            <div className="flex items-center gap-1 px-2 py-0.5 bg-black rounded-[6px] relative group transition duration-200 text-white hover:bg-transparent">
+            <div className="absolute inset-0 bg-gradient-to-r from-[--ac-one] to-[--ac-three] rounded-lg" />
+            <div className="flex items-center gap-1 px-2 py-0.5 bg-[--bg-two] rounded-[6px] relative group transition duration-200 text-[--text] hover:bg-transparent">
               Play <MdPlayCircle />
             </div>
           </button>

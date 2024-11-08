@@ -43,13 +43,13 @@ export default function DashBoardFilterModal() {
   return (
     <div className="flex flex-start w-full">
       <button
-        className="w-10 h-10 border-2 rounded-full border-transparent bg-zinc-950 hover:scale-90 duration-200 transition-all ease-linear overflow-hidden"
+        className="w-10 h-10 border-2 rounded-full border-transparent bg-[--bg-two] hover:scale-90 duration-200 transition-all ease-linear overflow-hidden"
         onClick={toggleMenu}
         aria-label="Go back to previous page"
         type="button"
       >
         <MdMenu
-          className={`w-full h-full p-0.5 ${isMenuActive ? 'text-indigo-500' : 'text-white'} bg-zinc-950 duration-200 transition-all ease-linear overflow-hidden`}
+          className={`w-full h-full p-0.5 ${isMenuActive ? 'text-[--ac-one]' : 'text-[--text]'} bg-[--bg-two] duration-200 transition-all ease-linear overflow-hidden`}
         />
       </button>
       <QueryFilterModal

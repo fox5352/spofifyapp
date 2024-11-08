@@ -24,13 +24,13 @@ export default function SeasonCard({
     <Link
       to={`/shows/${showId}/${season}`}
       state={data}
-      className={`max-w-xs w-full cursor-pointer relative h-96 rounded-md shadow-xl text-white bg-zinc-950 overflow-hidden ${className}`}
+      className={`max-w-xs w-full cursor-pointer relative h-96 rounded-md shadow-xl text-[--text] bg-[--bg-two] overflow-hidden ${className}`}
     >
       <div className="relative w-full h-[85%] top-0 left-0">
         <img className="w-full h-full" src={image} alt="season banner" />
-        <div className="absolute top-0 left-0 m-1 p-0.5 px-2 bg-zinc-950 rounded-md">
-          <h5 className="text-indigo-500">Season: {season}</h5>
-          <h6 className="text-sm text-purple-500">
+        <div className="absolute top-0 left-0 m-1 p-0.5 px-2 bg-[--bg-two] rounded-md">
+          <h5 className="text-[--ac-one]">Season: {season}</h5>
+          <h6 className="text-sm text-[--ac-three]">
             Eposodes: {episodes.length}
           </h6>
         </div>

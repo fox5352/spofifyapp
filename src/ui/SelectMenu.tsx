@@ -46,13 +46,13 @@ export default function SelectMenu({
     <form className={`max-w-sm mx-auto ${className}`}>
       <label
         htmlFor="countries"
-        className="block mb-2 text-sm font-medium text-white"
+        className="block mb-2 text-sm font-medium text-[--text]"
       >
         {title}
       </label>
       <select
         name={name}
-        className="text-white bg-zinc-950 border border-gray-300 text-sm rounded-lg focus:ring-indigo-500 focus:border-purple-500 block w-full p-2.5"
+        className="text-[--text] bg-[--bg-two] border border-gray-300 text-sm rounded-lg focus:ring-[--ac-one] focus:border-[--ac-three] block w-full p-2.5"
         value={selectedValue}
         onChange={handleChange}
       >

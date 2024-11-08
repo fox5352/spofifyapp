@@ -13,7 +13,7 @@ export default function RootLayout() {
   }, [sync])
 
   return (
-    <>
+    <div className="bg-[--bg-one] text-[--text] duration-300 transition-colors ease-linear">
       {/* TODO: header */}
       <main className="flex mb-[5rem]">
         <Sidebar />
@@ -23,6 +23,6 @@ export default function RootLayout() {
       </main>
       {/* audio controls */}
       <Musicbar />
-    </>
+    </div>
   )
 }

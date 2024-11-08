@@ -2,12 +2,16 @@ import { useEffect, useRef, useState } from 'react'
 import { FaMinusCircle, FaPlusCircle } from 'react-icons/fa'
 import { NavLink } from 'react-router-dom'
 import {
+  MdCircle,
   MdFavorite,
   MdHeadphones,
   MdHome,
   MdMenu,
   MdSearch,
+  MdSunny,
 } from 'react-icons/md'
+
+import useTheme from '../hooks/useTheme'
 
 /**
  * SideBar - A component for navigation
@@ -18,6 +22,9 @@ function SideBar() {
 
   // local state
   const [isExpanded, setIsExpanded] = useState(false)
+
+  // hooks
+  const [theme, toggleTheme] = useTheme()
 
   /**
    * toggles focus to component when toggle
@@ -42,7 +49,7 @@ function SideBar() {
     <div className="md:w-10">
       <button
         onClick={toggleMenu}
-        className="fixed z-30 right-10 bottom-[100px] md:hidden p-0.5 h-12 w-12 text-4xl text-black rounded-full duration-200 ease-in-out bg-gradient-to-r from-indigo-500 to-purple-500 hover:animate-heartbeat active:text-opacity-60 transition-all"
+        className="fixed z-30 right-10 bottom-[100px] md:hidden p-0.5 h-12 w-12 text-4xl text-[--text-two] rounded-full duration-200 ease-in-out bg-gradient-to-r from-[--ac-one] to-[--ac-three] hover:animate-heartbeat active:text-opacity-60 transition-all"
       >
         {tf(
           <FaMinusCircle className="w-full h-full" />,
@@ -51,22 +58,22 @@ function SideBar() {
       </button>
 
       <aside
-        className={`z-40 h-fit my-1 mr-1 text-white bg-zinc-950 rounded-tr-lg rounded-br-lg w-10 overflow-hidden group  ${tf('w-44 fixed', 'hidden md:flex fixed ')} transition-all ease-in-out duration-300`}
+        className={`z-40 h-fit my-1 mr-1 !text-[--text] bg-[--bg-two] rounded-tr-lg rounded-br-lg w-10 overflow-hidden group  ${tf('w-44 fixed', 'hidden md:flex fixed ')} transition-all ease-in-out duration-300`}
       >
         <nav
           ref={SideBarRef}
-          className={`w-10 ${tf('w-40', '')} transition-all ease-in-out duration-300 p-2`}
+          className={`w-10 ${tf('w-40', '')} !text-[--text] transition-all ease-in-out duration-300 p-2`}
         >
           {/*  */}
           <h3 className="flex items-center text-2xl mb-3">
             <button
-              className="text-2xl hover:text-purple-500"
+              className="text-2xl hover:text-[--ac-one]"
               onClick={toggleMenu}
             >
               {isExpanded ? <MdHeadphones /> : <MdMenu />}
             </button>
             <span
-              className={`text-transparent underline ${tf('text-white', '')}`}
+              className={`text-transparent underline ${tf('!text-[--text]', '')}`}
             >
               Spofify
             </span>
@@ -75,43 +82,55 @@ function SideBar() {
           <div className="flex flex-col gap-2">
             <NavLink
               className={({ isActive }) =>
-                `flex items-center gap-1 text-lg hover:text-indigo-500 ${isActive ? 'text-indigo-500' : ''}`
+                `flex items-center gap-1 text-lg hover:text-[--ac-one] ${isActive ? 'text-[--ac-one]' : ''}`
               }
               to="/"
             >
               <span className="text-2xl">
                 <MdHome />
               </span>
-              <span className={`text-transparent ${tf('text-white', '')}`}>
+              <span className={`text-transparent ${tf('!text-[--text]', '')}`}>
                 Home
               </span>
             </NavLink>
             <NavLink
               className={({ isActive }) =>
-                `flex items-center gap-1 text-lg hover:text-purple-500 ${isActive ? 'text-purple-500' : ''}`
+                `flex items-center gap-1 text-lg hover:text-[--ac-one] ${isActive ? 'text-[--ac-one]' : ''}`
               }
               to="/shows"
             >
               <span className="text-2xl">
                 <MdSearch />
               </span>
-              <span className={`text-transparent ${tf('text-white', '')}`}>
+              <span className={`text-transparent ${tf('!text-[--text]', '')}`}>
                 Search
               </span>
             </NavLink>
             <NavLink
               className={({ isActive }) =>
-                `flex items-center gap-1 text-lg hover:text-purple-500 ${isActive ? 'text-purple-500' : ''}`
+                `flex items-center gap-1 text-lg hover:text-[--ac-one] ${isActive ? 'text-[--ac-one]' : ''}`
               }
               to="dashboard"
             >
               <span className="text-2xl">
                 <MdFavorite />
               </span>
-              <span className={`text-transparent ${tf('text-white', '')}`}>
+              <span className={`text-transparent ${tf('!text-[--text]', '')}`}>
                 Dashboard
               </span>
             </NavLink>
+
+            <button
+              className={`flex items-center gap-1 text-lg ${theme == 'light' ? 'text-yellow-300' : 'text-white'} hover:scale-95 duration-200 transition-colors ease-linear`}
+              onClick={toggleTheme}
+            >
+              <span className="text-2xl">
+                {theme == 'light' ? <MdSunny /> : <MdCircle />}
+              </span>
+              <span className={`text-transparent ${tf('!text-[--text]', '')}`}>
+                {theme == 'light' ? 'Dark' : 'Light'}
+              </span>
+            </button>
           </div>
         </nav>
       </aside>

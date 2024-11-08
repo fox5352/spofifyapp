@@ -42,7 +42,7 @@ function PageNavButtons({ currentPage }: { currentPage: number }) {
     <div className="flex gap-2 my-2 ">
       <button
         type="button"
-        className="bg-transparent hover:bg-zinc-950 hover:text-white focus:ring-4 focus:outline-none focus:ring-zinc-300 font-medium rounded-full border-[1px] border-zinc-950 text-zinc-950 text-sm p-1.5 text-center inline-flex items-center duration-200 transition-all ease-linear"
+        className="bg-transparent hover:bg-[--bg-two] hover:text-[--text] focus:ring-4 focus:outline-none focus:ring-zinc-300 font-medium rounded-full border-[1px] border-zinc-950 text-zinc-950 text-sm p-1.5 text-center inline-flex items-center duration-200 transition-all ease-linear"
         onClick={navigateToPreviousPage}
       >
         <MdArrowBack />
@@ -51,7 +51,7 @@ function PageNavButtons({ currentPage }: { currentPage: number }) {
 
       <button
         type="button"
-        className="bg-transparent hover:bg-zinc-950 hover:text-white focus:ring-4 focus:outline-none focus:ring-zinc-300 font-medium rounded-full border-[1px] border-zinc-950 text-zinc-950 text-sm p-1.5 text-center inline-flex items-center duration-200 transition-all ease-linear"
+        className="bg-transparent hover:bg-[--bg-two] hover:text-[--text] focus:ring-4 focus:outline-none focus:ring-zinc-300 font-medium rounded-full border-[1px] border-zinc-950 text-zinc-950 text-sm p-1.5 text-center inline-flex items-center duration-200 transition-all ease-linear"
         onClick={navigateToNextPage}
       >
         <MdArrowForward />
