@@ -87,7 +87,7 @@ function SearchBar() {
           search bar
         </label>
         <input
-          className="w-full rounded-full border border-zinc-950 text-nowrap py-1 px-2 text-center"
+          className="w-full rounded-full border border-zinc-950 text-nowrap py-1 px-2 text-center text-black"
           ref={inputRef}
           id="search-bar"
           onChange={handleInput}
