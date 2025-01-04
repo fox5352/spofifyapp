@@ -40,8 +40,8 @@ jobs:
       # Copy the build output to the 'doc' folder
       - name: copy doc folder
         run: |
-          mkdir doc
-          cp -r dist/* ./doc
+          mkdir docs
+          cp -r dist/* ./docs
 
       - name: commit doc folder 
         run: |
