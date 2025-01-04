@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - main
-    paths-ignore:
-      - './doc/**'
   pull_request:
     branches:
       - main
@@ -48,6 +46,9 @@ jobs:
       - name: commit doc folder 
         run: |
           git add ./doc
-
-          git commit -m "Build output committed by GitHub Actions"
-          git push origin main
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Build output committed by GitHub Actions"
+            git push origin main
+          fi
