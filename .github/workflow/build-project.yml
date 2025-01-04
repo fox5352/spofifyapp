@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths-ignore:
-      - 'doc/**'
+      - './doc/**'
   pull_request:
     branches:
       - main
@@ -23,11 +23,11 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18' # Specify the Node.js version your project requires
+          node-version: '22' # Specify the Node.js version your project requires
 
       # Install dependencies
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       # Build the project
       - name: Build the project
@@ -39,14 +39,15 @@ jobs:
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
 
+      # Copy the build output to the 'doc' folder
       - name: copy doc folder
         run: |
-          cp -r dist/*../doc
-
+          mkdir doc
+          cp -r dist/* ./doc
 
       - name: commit doc folder 
         run: |
-          git add  ./doc
+          git add ./doc
 
           git commit -m "Build output committed by GitHub Actions"
           git push origin main
