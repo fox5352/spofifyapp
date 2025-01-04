@@ -1,0 +1,41 @@
+name: Build project
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22' # Specify the Node.js version your project requires
+      
+      # Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Build the project
+      - name: Build the project
+        run: npm run build
+
+      # Commit the 'dist' folder to a separate branch
+      - name: Commit build output
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git checkout -b build-output
+          git add dist
+          git commit -m "Build output committed by GitHub Actions"
+          git push origin build-output --force
