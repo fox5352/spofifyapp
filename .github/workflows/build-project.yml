@@ -24,7 +24,7 @@ jobs:
       
       # Install dependencies
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
       # Build the project
       - name: Build the project
@@ -39,6 +39,3 @@ jobs:
           git add dist -f
           git commit -m "Build output committed by GitHub Actions"
           git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} build-output --force
-
-      
-
