@@ -45,7 +45,7 @@ jobs:
 
       - name: commit doc folder 
         run: |
-          git add ./doc
+          git add ./docs
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
