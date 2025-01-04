@@ -36,6 +36,12 @@ jobs:
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
           git checkout -b build-output
-          git add dist -f
+
+          mkdir doc
+
+          cp -r dist/* docs/
+
+          git add docs/
+
           git commit -m "Build output committed by GitHub Actions"
           git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} build-output --force
